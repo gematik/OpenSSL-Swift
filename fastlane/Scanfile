@@ -1,0 +1,2 @@
+derived_data_path("./DerivedData")
+configuration("Debug")

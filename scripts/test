@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# scripts/test: Run test suite for application. Optionally pass in a path to an
+#              individual test file to run a single test.
+
+set -evo pipefail
+
+cd "$(dirname "$0")/.."
+
+echo "==> Testing…"
+
+bundle exec fastlane test

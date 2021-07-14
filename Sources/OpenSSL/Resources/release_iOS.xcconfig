@@ -1,0 +1,4 @@
+#include "base.xcconfig"
+
+OTHER_LDFLAGS[sdk=iphonesimulator*] = -lssl_release_iphonesimulator -lcrypto_release_iphonesimulator
+OTHER_LDFLAGS[sdk=iphoneos*] = -lssl_release_iphoneos -lcrypto_release_iphoneos

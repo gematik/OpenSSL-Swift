@@ -1,0 +1,10 @@
+output: docs
+author: gematik GmbH
+author_url: http://www.gematik.de
+exclude: /*/internal*
+module: OpenSSL
+github_url: https://github.com/gematik/OpenSSL-Swift
+theme: jony
+xcodebuild_arguments:
+- "-project"
+- 'OpenSSL-Swift.xcodeproj'

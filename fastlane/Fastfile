@@ -1,0 +1,72 @@
+xcversion(version: ENV["FL_XCODE_VERSION"] || "12.5")
+
+lane :cibuild do
+  test
+end
+
+lane :test do
+  scan(
+    scheme: "OpenSSL_macOS"
+    )
+  scan(
+    scheme: "OpenSSL_iOS",
+    device: "iPhone 11"
+    )
+end
+
+lane :build_all do
+  scan(
+    scheme: "OpenSSL_macOS",
+    build_for_testing: true
+    )
+  scan(
+    scheme: "OpenSSL_iOS",
+    device: "iPhone 11",
+    build_for_testing: true
+    )
+end
+
+lane :static_code_analysis do
+  swiftlint_mint="mint run swiftlint"
+  swiftlint(
+    executable: swiftlint_mint,
+    mode: :lint,
+    ignore_exit_status: false,
+    quiet: true,
+    strict: true
+    )
+  sh "cd .. && swiftformat . --config .swiftformat --lint --quiet; cd -"
+end
+
+desc "Setup dependencies and project"
+desc ""
+lane :setup do
+  carthage_resolve_dependencies
+end
+
+desc "Lane that (auto) genarates API documentation from inline comments."
+lane :generate_documentation do
+  jazzy(
+    config: ".jazzy.yml"
+    )
+end
+
+desc "Lane that resolves the project dependencies using Carthage."
+lane :carthage_resolve_dependencies do
+  carthage_mint="mint run carthage"
+  carthage(executable: carthage_mint, command: "bootstrap", no_build: true)
+
+  # Create Xcodeproj when necessary for Carthage dependencies
+  sh("find", "../Carthage/Checkouts/", "-type", "d", "-mindepth", "1", "-maxdepth", "1", "!", "-exec", "sh", "-c", "test -e {}/*.xcodeproj", ";", "-execdir", "sh", "-c", "cd {}; if [ -e project.yml ]; then xcodegen; fi;", ";")
+  sh("find", "../Carthage/Checkouts/", "-type", "d", "-mindepth", "1", "-maxdepth", "1", "!", "-exec", "sh", "-c", "test -e {}/*.xcodeproj", ";", "-execdir", "sh", "-c", "cd {}; if [ -e Package.swift ] && [ -e Package.xcconfig ]; then swift package generate-xcodeproj --xcconfig-overrides Package.xcconfig; elif [ -e Package.swift ]; then swift package generate-xcodeproj; fi;", ";")
+
+  carthage(
+    executable: carthage_mint,
+    command: "build",
+    use_binaries: false,
+    platform: "Mac,iOS",
+    use_xcframeworks: true,
+    cache_builds: true,
+    configuration: "Debug"
+    )
+end

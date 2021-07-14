@@ -1,0 +1,6 @@
+HEADER_SEARCH_PATHS = $(inherited) $(SRCROOT)/lib/include $(SRCROOT)/lib/include/openssl/**
+LIBRARY_SEARCH_PATHS = $(inherited) $(SRCROOT)/lib
+SWIFT_INCLUDE_PATHS = $(SRCROOT)/Sources/OpenSSL/COpenSSL
+CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES
+PRODUCT_NAME = OpenSSL
+INFOPLIST_FILE = Sources/OpenSSL/Resources/Info.plist

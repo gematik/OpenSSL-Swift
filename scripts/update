@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# scripts/update: Update all dependencies that the application requires to
+#                   run.
+
+set -ev
+
+cd "$(dirname "$0")/.."
+
+scripts/bootstrap
+
+if [[ -f "Cartfile" || -f "Cartfile.private" ]]; then
+  carthage update --no-build &2>/dev/null
+fi
+if [ -f "Gemfile" ]; then
+  bundle update
+fi
+if [ -f "Package.swift" ]; then
+  swift package update &2>/dev/null
+fi
+
+scripts/setup

@@ -1,0 +1,1148 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0263C27066EEA68A4A1A48B1 /* ECDSASignatureTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323ABF09C5671A8196B8C6CC /* ECDSASignatureTest.swift */; };
+		0596BC8246295B11D58AD1E1 /* EllipticCurvePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018DD078C615C61829BF1667 /* EllipticCurvePoint.swift */; };
+		05D293C0DECDD178B11F7B94 /* ECPublicKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1874508FAF49B569B6334F8 /* ECPublicKeyTests.swift */; };
+		074B6555666C39D1300FCABC /* Resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 69A9C75C6C0FB69FBEC09EC2 /* Resources.bundle */; };
+		0BB8BEF594A2FC58F830C376 /* X509Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980695CC9D7E2CC66D71D7AD /* X509Tests.swift */; };
+		1114A169F2089C6B7B0CCDA3 /* OCSPResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F402F7A0A0E3A1A5D7763A60 /* OCSPResponseTests.swift */; };
+		1E72ED001363EF772790CF25 /* ECPrivateKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841206DCDCE4481956992307 /* ECPrivateKeyTests.swift */; };
+		2126651679A45A83C4C9CA5E /* ECDSASignatureTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323ABF09C5671A8196B8C6CC /* ECDSASignatureTest.swift */; };
+		21590B4452007B0E80CCD517 /* HashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F338114212FCC0D416F83C /* HashTests.swift */; };
+		2B15C0D566F9A5C3FB46E0AF /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D761C86A6012F4608C229C /* Hash.swift */; };
+		2BA6A8EF5D2D347FBBB34064 /* BrainpoolP256r1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0A01DA7E3E8F1A1A85BA13 /* BrainpoolP256r1.swift */; };
+		2F76D4C5CA39B9C17F312054 /* shim.h in Headers */ = {isa = PBXBuildFile; fileRef = C27677DFDEFC86C33A5D2CC0 /* shim.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		34E35163B5A684A122AB9B20 /* BrainpoolP256r1KeyGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801E4919888D317525BE2A7 /* BrainpoolP256r1KeyGenerationTests.swift */; };
+		3939472E02E6449758397B37 /* Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F442471C43CE4629809312 /* Signature.swift */; };
+		3B63549531B46C32B0D4D50C /* DiffieHellman.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FD9B33FD79547A3D49F44A /* DiffieHellman.swift */; };
+		3C06AA0BEF7F276D39DF403E /* OpenSSL.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B2EE9CCEB49DB655DB72A428 /* OpenSSL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		45C08A92C3A63EB68DAEB2B5 /* ResourceFileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A8A2988D16F73AF17886D /* ResourceFileReader.swift */; };
+		4BA689480919ACCBE6FDFAA6 /* shim.h in Headers */ = {isa = PBXBuildFile; fileRef = C27677DFDEFC86C33A5D2CC0 /* shim.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55C026710AEDB7D9659A0254 /* BrainpoolP256r1ExtECDSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD23D24A268DA516413E4BB3 /* BrainpoolP256r1ExtECDSATests.swift */; };
+		57CACB6CD0B0B5F8BB9FC77C /* ResourceFileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A8A2988D16F73AF17886D /* ResourceFileReader.swift */; };
+		59B6317BD012648FAC288EE3 /* BrainpoolP256r1ExtDiffieHellmanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4E9F15CA0878DCC195047 /* BrainpoolP256r1ExtDiffieHellmanTests.swift */; };
+		5DA611CF7CC79F1EB8E83DA6 /* OCSPResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18321F686D1B67CAE292EDD /* OCSPResponse.swift */; };
+		5EC9B59B7052FF0B1A7D1D6C /* CMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EC7A27EE1BAC633B19AB4A /* CMAC.swift */; };
+		63F88CAE043DC6429183AEFD /* OpenSSL.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB848ACF1C7938356BB01DC /* OpenSSL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		669B6C03355FAD692A2F0081 /* PACE.swift in Sources */ = {isa = PBXBuildFile; fileRef = D874E72468D0DAE8AFF32CC7 /* PACE.swift */; };
+		66C0CC68473AC2707CD23BC3 /* PACE.swift in Sources */ = {isa = PBXBuildFile; fileRef = D874E72468D0DAE8AFF32CC7 /* PACE.swift */; };
+		6720290E6A63A1184F9EE632 /* X509.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0807A57075ACBC0CEB01DCF1 /* X509.swift */; };
+		7F0866C24FA4DC6A6B91CD0C /* BrainpoolP256r1+DiffieHellman.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76E8E4771A9198DA4A10CB /* BrainpoolP256r1+DiffieHellman.swift */; };
+		7FE3BC0A0FD0992C15D7AB0B /* OpenSSLECGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A087A57FEEB0E9744E496537 /* OpenSSLECGroup.swift */; };
+		80DEB104829F5C98A65ABF67 /* OpenSSLECGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A087A57FEEB0E9744E496537 /* OpenSSLECGroup.swift */; };
+		8873F70A7202525E68E72FA8 /* OpenSSLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E722D3F87A7EC151E1ED3052 /* OpenSSLError.swift */; };
+		8B9A8BC3E262F0203DDD38AB /* BigNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAED9E0245F9A1802C8F8E /* BigNumber.swift */; };
+		8FC711558AFADD58337E8AFB /* BrainpoolP256r1ExtDiffieHellmanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4E9F15CA0878DCC195047 /* BrainpoolP256r1ExtDiffieHellmanTests.swift */; };
+		8FE3862A7A62D54829B4566A /* ECDSASignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F91DE2ED118BBD23F37BAE /* ECDSASignature.swift */; };
+		9555AE1B25E702EACEA7B772 /* Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F442471C43CE4629809312 /* Signature.swift */; };
+		971FC24B594E7F6DEE109287 /* EllipticCurvePointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3145A1FF98CC5FB37C75FA95 /* EllipticCurvePointTests.swift */; };
+		9D581DD4907EC4D1C7C14BBF /* DiffieHellman.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FD9B33FD79547A3D49F44A /* DiffieHellman.swift */; };
+		A38645AE1BFB73F6FDBF2E88 /* EllipticCurvePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018DD078C615C61829BF1667 /* EllipticCurvePoint.swift */; };
+		A39C2B52D4DC4831345B2379 /* BrainpoolP256r1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0A01DA7E3E8F1A1A85BA13 /* BrainpoolP256r1.swift */; };
+		A3ACC9B5586EF826B8E5D927 /* DataKit in Frameworks */ = {isa = PBXBuildFile; productRef = E86B8D829ACFCB234CE2E908 /* DataKit */; };
+		A4375842C8DF7D380D5FC63D /* BigNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BAED9E0245F9A1802C8F8E /* BigNumber.swift */; };
+		A9C5073F82995F0D16204842 /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2EE9CCEB49DB655DB72A428 /* OpenSSL.framework */; };
+		AB0AF2FDCB37DD32E0DDFA28 /* HashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F338114212FCC0D416F83C /* HashTests.swift */; };
+		B4C90E173D912F3BD7B0E275 /* BrainpoolP256r1ExtPACETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298391796EC25ADBC45EC955 /* BrainpoolP256r1ExtPACETests.swift */; };
+		B647F02C5CB9A681806B8203 /* DataKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4B58CEEB3791C799DA65EF49 /* DataKit */; };
+		B651F15EA7EAD77D7B1A4172 /* OpenSSLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E722D3F87A7EC151E1ED3052 /* OpenSSLError.swift */; };
+		B6B6C1CC063E9746278DFC87 /* ECPublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BB6C2F419F1BEE6BED171D /* ECPublicKey.swift */; };
+		B881000D26830557E910F05A /* DataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E8D896CD4F1536441ED556 /* DataKit.xcframework */; };
+		BAFDF03A33171A18CAA069D1 /* OCSPResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F402F7A0A0E3A1A5D7763A60 /* OCSPResponseTests.swift */; };
+		BBF1FF7005CCB96633EFA0F2 /* Resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 69A9C75C6C0FB69FBEC09EC2 /* Resources.bundle */; };
+		BCB15BD7414D05CCE3EDB479 /* ECPrivateKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841206DCDCE4481956992307 /* ECPrivateKeyTests.swift */; };
+		C0FB2CB4C84490B700D6D5B6 /* ECPublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BB6C2F419F1BEE6BED171D /* ECPublicKey.swift */; };
+		C198A56BA2ED9D5280CDA030 /* BrainpoolP256r1+ECDSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C7795568F6D9CA3689E83 /* BrainpoolP256r1+ECDSA.swift */; };
+		C215EE752A7059BA7158C7B0 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D761C86A6012F4608C229C /* Hash.swift */; };
+		C5A1985108122BFCFEF6EC66 /* ECPrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EB9C8261A66AA12FD03724 /* ECPrivateKey.swift */; };
+		C89D9C4B70ECA55FF0BC22EA /* CMACTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0644BF46C9D276B5286D7199 /* CMACTests.swift */; };
+		CD8420B94E86C33E6C70304E /* OCSPResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18321F686D1B67CAE292EDD /* OCSPResponse.swift */; };
+		CE1BE0A032BCF1D7CA65F9E5 /* CMACTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0644BF46C9D276B5286D7199 /* CMACTests.swift */; };
+		D219792801E9ABE24D178BAE /* FiniteBigNumberFieldArithmeticContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6B29BDDF9F1F0758939963 /* FiniteBigNumberFieldArithmeticContext.swift */; };
+		D98A4AADA92350DB02C5F1B3 /* ECPublicKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1874508FAF49B569B6334F8 /* ECPublicKeyTests.swift */; };
+		DA00E1C8B45C51EC54B3BB4E /* FiniteBigNumberFieldArithmeticContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6B29BDDF9F1F0758939963 /* FiniteBigNumberFieldArithmeticContext.swift */; };
+		E1A411998B02EF7D5A4957D0 /* X509.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0807A57075ACBC0CEB01DCF1 /* X509.swift */; };
+		E1A7934BEC3308FE461E9DFF /* CMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EC7A27EE1BAC633B19AB4A /* CMAC.swift */; };
+		E2FC99482173BF7FBD5A6B97 /* X509Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980695CC9D7E2CC66D71D7AD /* X509Tests.swift */; };
+		E3EB155C5125238DE894D860 /* ECDSASignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F91DE2ED118BBD23F37BAE /* ECDSASignature.swift */; };
+		EA87562D57CEEAD927312518 /* BrainpoolP256r1+DiffieHellman.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76E8E4771A9198DA4A10CB /* BrainpoolP256r1+DiffieHellman.swift */; };
+		ECAFFF30E720C115A54266F0 /* BrainpoolP256r1KeyGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801E4919888D317525BE2A7 /* BrainpoolP256r1KeyGenerationTests.swift */; };
+		ED845AD68ADAFB0EACD631C1 /* EllipticCurvePointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3145A1FF98CC5FB37C75FA95 /* EllipticCurvePointTests.swift */; };
+		F0BCD4297F1D6B51B7B7F455 /* DataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E8D896CD4F1536441ED556 /* DataKit.xcframework */; };
+		F0FC074B1AF8B13425C538FA /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB848ACF1C7938356BB01DC /* OpenSSL.framework */; };
+		F1E926B92039476033EF16C7 /* ECPrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EB9C8261A66AA12FD03724 /* ECPrivateKey.swift */; };
+		FAE8DDF372A6633B2E39737E /* BrainpoolP256r1+ECDSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C7795568F6D9CA3689E83 /* BrainpoolP256r1+ECDSA.swift */; };
+		FC5F35CEA4BF6888C04DC6FB /* BrainpoolP256r1ExtPACETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298391796EC25ADBC45EC955 /* BrainpoolP256r1ExtPACETests.swift */; };
+		FD343FB731892C25C36FCB34 /* BrainpoolP256r1ExtECDSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD23D24A268DA516413E4BB3 /* BrainpoolP256r1ExtECDSATests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AFF161D6BF754840D467138C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 62F6CAC110BDD0378C410174 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C1FC1BE045B25FD2D54212E1;
+			remoteInfo = OpenSSL_iOS;
+		};
+		F948EB6E9106A38C6DC44C03 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 62F6CAC110BDD0378C410174 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F70379BF82A1509A762AD7F5;
+			remoteInfo = OpenSSL_macOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9F8743854164EBA55FEE458C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3C06AA0BEF7F276D39DF403E /* OpenSSL.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F26122F0FB03BAB42BAC2BD1 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				63F88CAE043DC6429183AEFD /* OpenSSL.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		018DD078C615C61829BF1667 /* EllipticCurvePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipticCurvePoint.swift; sourceTree = "<group>"; };
+		043355B0D17898A775FA316C /* debug_iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = debug_iOS.xcconfig; sourceTree = "<group>"; };
+		0644BF46C9D276B5286D7199 /* CMACTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMACTests.swift; sourceTree = "<group>"; };
+		07D761C86A6012F4608C229C /* Hash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
+		0807A57075ACBC0CEB01DCF1 /* X509.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X509.swift; sourceTree = "<group>"; };
+		0A0A01DA7E3E8F1A1A85BA13 /* BrainpoolP256r1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrainpoolP256r1.swift; sourceTree = "<group>"; };
+		0A6B29BDDF9F1F0758939963 /* FiniteBigNumberFieldArithmeticContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiniteBigNumberFieldArithmeticContext.swift; sourceTree = "<group>"; };
+		20E8D896CD4F1536441ED556 /* DataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = DataKit.xcframework; path = Carthage/Build/DataKit.xcframework; sourceTree = "<group>"; };
+		298391796EC25ADBC45EC955 /* BrainpoolP256r1ExtPACETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrainpoolP256r1ExtPACETests.swift; sourceTree = "<group>"; };
+		2B76E8E4771A9198DA4A10CB /* BrainpoolP256r1+DiffieHellman.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrainpoolP256r1+DiffieHellman.swift"; sourceTree = "<group>"; };
+		2EB848ACF1C7938356BB01DC /* OpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3145A1FF98CC5FB37C75FA95 /* EllipticCurvePointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipticCurvePointTests.swift; sourceTree = "<group>"; };
+		323ABF09C5671A8196B8C6CC /* ECDSASignatureTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECDSASignatureTest.swift; sourceTree = "<group>"; };
+		3AF4E9F15CA0878DCC195047 /* BrainpoolP256r1ExtDiffieHellmanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrainpoolP256r1ExtDiffieHellmanTests.swift; sourceTree = "<group>"; };
+		4ED975E440918854AD05CC65 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		56B5F3FD511B244684B6057E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		69A9C75C6C0FB69FBEC09EC2 /* Resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cfbundle; path = Resources.bundle; sourceTree = "<group>"; };
+		7401E0718BF105FCF739715F /* OpenSSLTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = OpenSSLTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		841206DCDCE4481956992307 /* ECPrivateKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECPrivateKeyTests.swift; sourceTree = "<group>"; };
+		89BAED9E0245F9A1802C8F8E /* BigNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigNumber.swift; sourceTree = "<group>"; };
+		8D50EECD5A4DF2DBF871834C /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		93EC7A27EE1BAC633B19AB4A /* CMAC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMAC.swift; sourceTree = "<group>"; };
+		97EB9C8261A66AA12FD03724 /* ECPrivateKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECPrivateKey.swift; sourceTree = "<group>"; };
+		980695CC9D7E2CC66D71D7AD /* X509Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X509Tests.swift; sourceTree = "<group>"; };
+		9F6F730B061F18C11E118C3C /* release_iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = release_iOS.xcconfig; sourceTree = "<group>"; };
+		A087A57FEEB0E9744E496537 /* OpenSSLECGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSSLECGroup.swift; sourceTree = "<group>"; };
+		AA8AF509BC34126DE37C5AD6 /* release_macOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = release_macOS.xcconfig; sourceTree = "<group>"; };
+		B0FD9B33FD79547A3D49F44A /* DiffieHellman.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffieHellman.swift; sourceTree = "<group>"; };
+		B18321F686D1B67CAE292EDD /* OCSPResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCSPResponse.swift; sourceTree = "<group>"; };
+		B2EE9CCEB49DB655DB72A428 /* OpenSSL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OpenSSL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8F442471C43CE4629809312 /* Signature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signature.swift; sourceTree = "<group>"; };
+		C1F338114212FCC0D416F83C /* HashTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashTests.swift; sourceTree = "<group>"; };
+		C27677DFDEFC86C33A5D2CC0 /* shim.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shim.h; sourceTree = "<group>"; };
+		C801E4919888D317525BE2A7 /* BrainpoolP256r1KeyGenerationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrainpoolP256r1KeyGenerationTests.swift; sourceTree = "<group>"; };
+		D6BB6C2F419F1BEE6BED171D /* ECPublicKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECPublicKey.swift; sourceTree = "<group>"; };
+		D874E72468D0DAE8AFF32CC7 /* PACE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PACE.swift; sourceTree = "<group>"; };
+		D91C7795568F6D9CA3689E83 /* BrainpoolP256r1+ECDSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrainpoolP256r1+ECDSA.swift"; sourceTree = "<group>"; };
+		D97DD1CD76E8C5A0AF7EE8F7 /* debug_macOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = debug_macOS.xcconfig; sourceTree = "<group>"; };
+		DD23D24A268DA516413E4BB3 /* BrainpoolP256r1ExtECDSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrainpoolP256r1ExtECDSATests.swift; sourceTree = "<group>"; };
+		E52A8A2988D16F73AF17886D /* ResourceFileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceFileReader.swift; sourceTree = "<group>"; };
+		E722D3F87A7EC151E1ED3052 /* OpenSSLError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSSLError.swift; sourceTree = "<group>"; };
+		F0E789CACCF7D76C81C05886 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F1874508FAF49B569B6334F8 /* ECPublicKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECPublicKeyTests.swift; sourceTree = "<group>"; };
+		F1F91DE2ED118BBD23F37BAE /* ECDSASignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECDSASignature.swift; sourceTree = "<group>"; };
+		F402F7A0A0E3A1A5D7763A60 /* OCSPResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCSPResponseTests.swift; sourceTree = "<group>"; };
+		FCC86C413489D2F745D573D8 /* base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = base.xcconfig; sourceTree = "<group>"; };
+		FFDB74EE1DFC8D47420E0655 /* OpenSSLTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenSSLTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		21F5149CBEE34065742EC943 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0BCD4297F1D6B51B7B7F455 /* DataKit.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		584232571F7907DB1B4C299E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B881000D26830557E910F05A /* DataKit.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6413DA82B7E04F62FB245F4B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0FC074B1AF8B13425C538FA /* OpenSSL.framework in Frameworks */,
+				B647F02C5CB9A681806B8203 /* DataKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95518E2799BCE0BAE21EE072 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9C5073F82995F0D16204842 /* OpenSSL.framework in Frameworks */,
+				A3ACC9B5586EF826B8E5D927 /* DataKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0B53564068F621247E0E2FE8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FCC86C413489D2F745D573D8 /* base.xcconfig */,
+				043355B0D17898A775FA316C /* debug_iOS.xcconfig */,
+				D97DD1CD76E8C5A0AF7EE8F7 /* debug_macOS.xcconfig */,
+				56B5F3FD511B244684B6057E /* Info.plist */,
+				9F6F730B061F18C11E118C3C /* release_iOS.xcconfig */,
+				AA8AF509BC34126DE37C5AD6 /* release_macOS.xcconfig */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		122C3A33B7FD6B0F3AF6A0F5 /* OpenSSL */ = {
+			isa = PBXGroup;
+			children = (
+				89BAED9E0245F9A1802C8F8E /* BigNumber.swift */,
+				0A6B29BDDF9F1F0758939963 /* FiniteBigNumberFieldArithmeticContext.swift */,
+				E722D3F87A7EC151E1ED3052 /* OpenSSLError.swift */,
+				8189E5CAA1F138BA238F839B /* Certificate */,
+				4485AA59A98E7A340276DDDD /* COpenSSL */,
+				933991A4DB8067CE3DDE6EF6 /* EC */,
+				514C789B0E4C83E45B3F911D /* Hash */,
+				2673E0327E1E5486D725E01F /* KeyExchange */,
+				188B631F7AACF463078ABA9C /* Mac */,
+				0B53564068F621247E0E2FE8 /* Resources */,
+				CFCA3D57D691ADA52E610E8B /* Signature */,
+			);
+			path = OpenSSL;
+			sourceTree = "<group>";
+		};
+		16C3C25068CD56C220C09475 /* Certificate */ = {
+			isa = PBXGroup;
+			children = (
+				F402F7A0A0E3A1A5D7763A60 /* OCSPResponseTests.swift */,
+				E52A8A2988D16F73AF17886D /* ResourceFileReader.swift */,
+				980695CC9D7E2CC66D71D7AD /* X509Tests.swift */,
+			);
+			path = Certificate;
+			sourceTree = "<group>";
+		};
+		188B631F7AACF463078ABA9C /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				93EC7A27EE1BAC633B19AB4A /* CMAC.swift */,
+			);
+			path = Mac;
+			sourceTree = "<group>";
+		};
+		1F5C15CBD18D9CF4B63217AF /* EC */ = {
+			isa = PBXGroup;
+			children = (
+				841206DCDCE4481956992307 /* ECPrivateKeyTests.swift */,
+				F1874508FAF49B569B6334F8 /* ECPublicKeyTests.swift */,
+				3145A1FF98CC5FB37C75FA95 /* EllipticCurvePointTests.swift */,
+			);
+			path = EC;
+			sourceTree = "<group>";
+		};
+		2673E0327E1E5486D725E01F /* KeyExchange */ = {
+			isa = PBXGroup;
+			children = (
+				2B76E8E4771A9198DA4A10CB /* BrainpoolP256r1+DiffieHellman.swift */,
+				B0FD9B33FD79547A3D49F44A /* DiffieHellman.swift */,
+				D874E72468D0DAE8AFF32CC7 /* PACE.swift */,
+			);
+			path = KeyExchange;
+			sourceTree = "<group>";
+		};
+		3C083FADF805FC29D5FEA28D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2EB848ACF1C7938356BB01DC /* OpenSSL.framework */,
+				B2EE9CCEB49DB655DB72A428 /* OpenSSL.framework */,
+				7401E0718BF105FCF739715F /* OpenSSLTests.xctest */,
+				FFDB74EE1DFC8D47420E0655 /* OpenSSLTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3F36F6ADC02A92389AA07854 /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				0644BF46C9D276B5286D7199 /* CMACTests.swift */,
+			);
+			path = Mac;
+			sourceTree = "<group>";
+		};
+		4485AA59A98E7A340276DDDD /* COpenSSL */ = {
+			isa = PBXGroup;
+			children = (
+				C27677DFDEFC86C33A5D2CC0 /* shim.h */,
+				61DEDE211CA7D691D32E5224 /* module */,
+			);
+			path = COpenSSL;
+			sourceTree = "<group>";
+		};
+		514C789B0E4C83E45B3F911D /* Hash */ = {
+			isa = PBXGroup;
+			children = (
+				07D761C86A6012F4608C229C /* Hash.swift */,
+			);
+			path = Hash;
+			sourceTree = "<group>";
+		};
+		5934BFA296B9A5C7372048FF /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				122C3A33B7FD6B0F3AF6A0F5 /* OpenSSL */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		61DEDE211CA7D691D32E5224 /* module */ = {
+			isa = PBXGroup;
+			children = (
+				4ED975E440918854AD05CC65 /* module.modulemap */,
+			);
+			path = module;
+			sourceTree = "<group>";
+		};
+		70B86AE08876EF712DBA66C1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				20E8D896CD4F1536441ED556 /* DataKit.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8189E5CAA1F138BA238F839B /* Certificate */ = {
+			isa = PBXGroup;
+			children = (
+				B18321F686D1B67CAE292EDD /* OCSPResponse.swift */,
+				0807A57075ACBC0CEB01DCF1 /* X509.swift */,
+			);
+			path = Certificate;
+			sourceTree = "<group>";
+		};
+		84E465309BCEE03F2F237455 /* Hash */ = {
+			isa = PBXGroup;
+			children = (
+				C1F338114212FCC0D416F83C /* HashTests.swift */,
+			);
+			path = Hash;
+			sourceTree = "<group>";
+		};
+		8D2589C865346B9D8CCBFBD0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F0E789CACCF7D76C81C05886 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		933991A4DB8067CE3DDE6EF6 /* EC */ = {
+			isa = PBXGroup;
+			children = (
+				0A0A01DA7E3E8F1A1A85BA13 /* BrainpoolP256r1.swift */,
+				97EB9C8261A66AA12FD03724 /* ECPrivateKey.swift */,
+				D6BB6C2F419F1BEE6BED171D /* ECPublicKey.swift */,
+				018DD078C615C61829BF1667 /* EllipticCurvePoint.swift */,
+				A087A57FEEB0E9744E496537 /* OpenSSLECGroup.swift */,
+			);
+			path = EC;
+			sourceTree = "<group>";
+		};
+		C29837C66D2D61CB41B85A28 /* OpenSSLTests */ = {
+			isa = PBXGroup;
+			children = (
+				69A9C75C6C0FB69FBEC09EC2 /* Resources.bundle */,
+				16C3C25068CD56C220C09475 /* Certificate */,
+				1F5C15CBD18D9CF4B63217AF /* EC */,
+				84E465309BCEE03F2F237455 /* Hash */,
+				D757CA07907A02264CCAEB23 /* KeyExchange */,
+				3F36F6ADC02A92389AA07854 /* Mac */,
+				8D2589C865346B9D8CCBFBD0 /* Resources */,
+				DFA64C92C2A59B4F9B17B69C /* Signature */,
+			);
+			path = OpenSSLTests;
+			sourceTree = "<group>";
+		};
+		CFCA3D57D691ADA52E610E8B /* Signature */ = {
+			isa = PBXGroup;
+			children = (
+				D91C7795568F6D9CA3689E83 /* BrainpoolP256r1+ECDSA.swift */,
+				F1F91DE2ED118BBD23F37BAE /* ECDSASignature.swift */,
+				B8F442471C43CE4629809312 /* Signature.swift */,
+			);
+			path = Signature;
+			sourceTree = "<group>";
+		};
+		D757CA07907A02264CCAEB23 /* KeyExchange */ = {
+			isa = PBXGroup;
+			children = (
+				3AF4E9F15CA0878DCC195047 /* BrainpoolP256r1ExtDiffieHellmanTests.swift */,
+				298391796EC25ADBC45EC955 /* BrainpoolP256r1ExtPACETests.swift */,
+				C801E4919888D317525BE2A7 /* BrainpoolP256r1KeyGenerationTests.swift */,
+			);
+			path = KeyExchange;
+			sourceTree = "<group>";
+		};
+		DA19132C30E6BD6563D83892 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				8D50EECD5A4DF2DBF871834C /* .gitkeep */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		DFA64C92C2A59B4F9B17B69C /* Signature */ = {
+			isa = PBXGroup;
+			children = (
+				DD23D24A268DA516413E4BB3 /* BrainpoolP256r1ExtECDSATests.swift */,
+				323ABF09C5671A8196B8C6CC /* ECDSASignatureTest.swift */,
+			);
+			path = Signature;
+			sourceTree = "<group>";
+		};
+		E3C669AE1FA818CA131FFD38 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				C29837C66D2D61CB41B85A28 /* OpenSSLTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		E9095D9B512C84EF78657EAC = {
+			isa = PBXGroup;
+			children = (
+				EEA23D476112A6FC78D505B0 /* lib */,
+				5934BFA296B9A5C7372048FF /* Sources */,
+				E3C669AE1FA818CA131FFD38 /* Tests */,
+				70B86AE08876EF712DBA66C1 /* Frameworks */,
+				3C083FADF805FC29D5FEA28D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EEA23D476112A6FC78D505B0 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				DA19132C30E6BD6563D83892 /* include */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		130030CCDD19F2C3077553A8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F76D4C5CA39B9C17F312054 /* shim.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C7788457F5C02501768E1AF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BA689480919ACCBE6FDFAA6 /* shim.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		0428AED1D125BFA5D262274E /* OpenSSLTests_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7B42DBBE69B5D6861E228311 /* Build configuration list for PBXNativeTarget "OpenSSLTests_iOS" */;
+			buildPhases = (
+				2D74F3E9CB228B554F0F53BE /* Sources */,
+				9B09C3335546C8EFFDB163D5 /* Resources */,
+				6413DA82B7E04F62FB245F4B /* Frameworks */,
+				F26122F0FB03BAB42BAC2BD1 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F56DA2A3ED4E0E145ABD5F49 /* PBXTargetDependency */,
+			);
+			name = OpenSSLTests_iOS;
+			packageProductDependencies = (
+				4B58CEEB3791C799DA65EF49 /* DataKit */,
+			);
+			productName = OpenSSLTests_iOS;
+			productReference = 7401E0718BF105FCF739715F /* OpenSSLTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		35A54B63734DAEDFA7CB5B34 /* OpenSSLTests_macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA7764D241DA12CB21DA5979 /* Build configuration list for PBXNativeTarget "OpenSSLTests_macOS" */;
+			buildPhases = (
+				DAFC68F32A06887EC30146B6 /* Sources */,
+				4F88F5EED67E0286481CDB91 /* Resources */,
+				95518E2799BCE0BAE21EE072 /* Frameworks */,
+				9F8743854164EBA55FEE458C /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				96BAD2D094E8CCA2924231AF /* PBXTargetDependency */,
+			);
+			name = OpenSSLTests_macOS;
+			packageProductDependencies = (
+				E86B8D829ACFCB234CE2E908 /* DataKit */,
+			);
+			productName = OpenSSLTests_macOS;
+			productReference = FFDB74EE1DFC8D47420E0655 /* OpenSSLTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C1FC1BE045B25FD2D54212E1 /* OpenSSL_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9912E33C445C2967A381A499 /* Build configuration list for PBXNativeTarget "OpenSSL_iOS" */;
+			buildPhases = (
+				5997BEAE3D6A4D1E7A662032 /* Install OpenSSL */,
+				130030CCDD19F2C3077553A8 /* Headers */,
+				08D649F2DCDE27782CE7F458 /* Sources */,
+				584232571F7907DB1B4C299E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenSSL_iOS;
+			productName = OpenSSL_iOS;
+			productReference = 2EB848ACF1C7938356BB01DC /* OpenSSL.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F70379BF82A1509A762AD7F5 /* OpenSSL_macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2B00AB63B162FD62CDC48898 /* Build configuration list for PBXNativeTarget "OpenSSL_macOS" */;
+			buildPhases = (
+				B0B751BE4EB17530CE476004 /* Install OpenSSL */,
+				3C7788457F5C02501768E1AF /* Headers */,
+				0083CFB491411C75F1E7C390 /* Sources */,
+				21F5149CBEE34065742EC943 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenSSL_macOS;
+			productName = OpenSSL_macOS;
+			productReference = B2EE9CCEB49DB655DB72A428 /* OpenSSL.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		62F6CAC110BDD0378C410174 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1200;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 1EA9BEB0C3F567A6D91EB1BD /* Build configuration list for PBXProject "OpenSSL-Swift" */;
+			compatibilityVersion = "Xcode 10.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = E9095D9B512C84EF78657EAC;
+			packageReferences = (
+				360189D2005F6B5384D2523D /* XCRemoteSwiftPackageReference "DataKit" */,
+			);
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0428AED1D125BFA5D262274E /* OpenSSLTests_iOS */,
+				35A54B63734DAEDFA7CB5B34 /* OpenSSLTests_macOS */,
+				C1FC1BE045B25FD2D54212E1 /* OpenSSL_iOS */,
+				F70379BF82A1509A762AD7F5 /* OpenSSL_macOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4F88F5EED67E0286481CDB91 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				074B6555666C39D1300FCABC /* Resources.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B09C3335546C8EFFDB163D5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BBF1FF7005CCB96633EFA0F2 /* Resources.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5997BEAE3D6A4D1E7A662032 /* Install OpenSSL */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Install OpenSSL";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"$SRCROOT\"\n./scripts/install_openssl\n";
+		};
+		B0B751BE4EB17530CE476004 /* Install OpenSSL */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Install OpenSSL";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"$SRCROOT\"\n./scripts/install_openssl\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0083CFB491411C75F1E7C390 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A4375842C8DF7D380D5FC63D /* BigNumber.swift in Sources */,
+				7F0866C24FA4DC6A6B91CD0C /* BrainpoolP256r1+DiffieHellman.swift in Sources */,
+				C198A56BA2ED9D5280CDA030 /* BrainpoolP256r1+ECDSA.swift in Sources */,
+				2BA6A8EF5D2D347FBBB34064 /* BrainpoolP256r1.swift in Sources */,
+				5EC9B59B7052FF0B1A7D1D6C /* CMAC.swift in Sources */,
+				9D581DD4907EC4D1C7C14BBF /* DiffieHellman.swift in Sources */,
+				E3EB155C5125238DE894D860 /* ECDSASignature.swift in Sources */,
+				C5A1985108122BFCFEF6EC66 /* ECPrivateKey.swift in Sources */,
+				C0FB2CB4C84490B700D6D5B6 /* ECPublicKey.swift in Sources */,
+				0596BC8246295B11D58AD1E1 /* EllipticCurvePoint.swift in Sources */,
+				D219792801E9ABE24D178BAE /* FiniteBigNumberFieldArithmeticContext.swift in Sources */,
+				2B15C0D566F9A5C3FB46E0AF /* Hash.swift in Sources */,
+				5DA611CF7CC79F1EB8E83DA6 /* OCSPResponse.swift in Sources */,
+				80DEB104829F5C98A65ABF67 /* OpenSSLECGroup.swift in Sources */,
+				8873F70A7202525E68E72FA8 /* OpenSSLError.swift in Sources */,
+				66C0CC68473AC2707CD23BC3 /* PACE.swift in Sources */,
+				9555AE1B25E702EACEA7B772 /* Signature.swift in Sources */,
+				E1A411998B02EF7D5A4957D0 /* X509.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08D649F2DCDE27782CE7F458 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B9A8BC3E262F0203DDD38AB /* BigNumber.swift in Sources */,
+				EA87562D57CEEAD927312518 /* BrainpoolP256r1+DiffieHellman.swift in Sources */,
+				FAE8DDF372A6633B2E39737E /* BrainpoolP256r1+ECDSA.swift in Sources */,
+				A39C2B52D4DC4831345B2379 /* BrainpoolP256r1.swift in Sources */,
+				E1A7934BEC3308FE461E9DFF /* CMAC.swift in Sources */,
+				3B63549531B46C32B0D4D50C /* DiffieHellman.swift in Sources */,
+				8FE3862A7A62D54829B4566A /* ECDSASignature.swift in Sources */,
+				F1E926B92039476033EF16C7 /* ECPrivateKey.swift in Sources */,
+				B6B6C1CC063E9746278DFC87 /* ECPublicKey.swift in Sources */,
+				A38645AE1BFB73F6FDBF2E88 /* EllipticCurvePoint.swift in Sources */,
+				DA00E1C8B45C51EC54B3BB4E /* FiniteBigNumberFieldArithmeticContext.swift in Sources */,
+				C215EE752A7059BA7158C7B0 /* Hash.swift in Sources */,
+				CD8420B94E86C33E6C70304E /* OCSPResponse.swift in Sources */,
+				7FE3BC0A0FD0992C15D7AB0B /* OpenSSLECGroup.swift in Sources */,
+				B651F15EA7EAD77D7B1A4172 /* OpenSSLError.swift in Sources */,
+				669B6C03355FAD692A2F0081 /* PACE.swift in Sources */,
+				3939472E02E6449758397B37 /* Signature.swift in Sources */,
+				6720290E6A63A1184F9EE632 /* X509.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D74F3E9CB228B554F0F53BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59B6317BD012648FAC288EE3 /* BrainpoolP256r1ExtDiffieHellmanTests.swift in Sources */,
+				FD343FB731892C25C36FCB34 /* BrainpoolP256r1ExtECDSATests.swift in Sources */,
+				FC5F35CEA4BF6888C04DC6FB /* BrainpoolP256r1ExtPACETests.swift in Sources */,
+				34E35163B5A684A122AB9B20 /* BrainpoolP256r1KeyGenerationTests.swift in Sources */,
+				CE1BE0A032BCF1D7CA65F9E5 /* CMACTests.swift in Sources */,
+				2126651679A45A83C4C9CA5E /* ECDSASignatureTest.swift in Sources */,
+				BCB15BD7414D05CCE3EDB479 /* ECPrivateKeyTests.swift in Sources */,
+				05D293C0DECDD178B11F7B94 /* ECPublicKeyTests.swift in Sources */,
+				971FC24B594E7F6DEE109287 /* EllipticCurvePointTests.swift in Sources */,
+				AB0AF2FDCB37DD32E0DDFA28 /* HashTests.swift in Sources */,
+				BAFDF03A33171A18CAA069D1 /* OCSPResponseTests.swift in Sources */,
+				57CACB6CD0B0B5F8BB9FC77C /* ResourceFileReader.swift in Sources */,
+				0BB8BEF594A2FC58F830C376 /* X509Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAFC68F32A06887EC30146B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8FC711558AFADD58337E8AFB /* BrainpoolP256r1ExtDiffieHellmanTests.swift in Sources */,
+				55C026710AEDB7D9659A0254 /* BrainpoolP256r1ExtECDSATests.swift in Sources */,
+				B4C90E173D912F3BD7B0E275 /* BrainpoolP256r1ExtPACETests.swift in Sources */,
+				ECAFFF30E720C115A54266F0 /* BrainpoolP256r1KeyGenerationTests.swift in Sources */,
+				C89D9C4B70ECA55FF0BC22EA /* CMACTests.swift in Sources */,
+				0263C27066EEA68A4A1A48B1 /* ECDSASignatureTest.swift in Sources */,
+				1E72ED001363EF772790CF25 /* ECPrivateKeyTests.swift in Sources */,
+				D98A4AADA92350DB02C5F1B3 /* ECPublicKeyTests.swift in Sources */,
+				ED845AD68ADAFB0EACD631C1 /* EllipticCurvePointTests.swift in Sources */,
+				21590B4452007B0E80CCD517 /* HashTests.swift in Sources */,
+				1114A169F2089C6B7B0CCDA3 /* OCSPResponseTests.swift in Sources */,
+				45C08A92C3A63EB68DAEB2B5 /* ResourceFileReader.swift in Sources */,
+				E2FC99482173BF7FBD5A6B97 /* X509Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		96BAD2D094E8CCA2924231AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F70379BF82A1509A762AD7F5 /* OpenSSL_macOS */;
+			targetProxy = F948EB6E9106A38C6DC44C03 /* PBXContainerItemProxy */;
+		};
+		F56DA2A3ED4E0E145ABD5F49 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C1FC1BE045B25FD2D54212E1 /* OpenSSL_iOS */;
+			targetProxy = AFF161D6BF754840D467138C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0DE03080227E6D26B7B420BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "-1";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = incremental;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		16984F071A02FE501292F334 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D97DD1CD76E8C5A0AF7EE8F7 /* debug_macOS.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Carthage/Build\"",
+				);
+				INFOPLIST_FILE = Sources/OpenSSL/Resources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de.gematik.ti.swift.openssl.OpenSSL-macOS";
+				PRODUCT_NAME = OpenSSL;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		1CB7092F3526B4DFF88F27F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = Tests/OpenSSLTests/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de.gematik.ti.swift.openssl.OpenSSLTests-iOS";
+				PRODUCT_NAME = OpenSSLTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1E859412692DE0B159CEE2CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "-1";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		4C662E9B31506C5DBE7E902D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F6F730B061F18C11E118C3C /* release_iOS.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Carthage/Build\"",
+				);
+				INFOPLIST_FILE = Sources/OpenSSL/Resources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de.gematik.ti.swift.openssl.OpenSSL-iOS";
+				PRODUCT_NAME = OpenSSL;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		562624B0FDC5B4D17229B166 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 043355B0D17898A775FA316C /* debug_iOS.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Carthage/Build\"",
+				);
+				INFOPLIST_FILE = Sources/OpenSSL/Resources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de.gematik.ti.swift.openssl.OpenSSL-iOS";
+				PRODUCT_NAME = OpenSSL;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		5F8F6B69601E63820C8AC5D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Tests/OpenSSLTests/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de.gematik.ti.swift.openssl.OpenSSLTests-macOS";
+				PRODUCT_NAME = OpenSSLTests;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		98B92BFB54A6FA6B2CB7D98B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Tests/OpenSSLTests/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de.gematik.ti.swift.openssl.OpenSSLTests-macOS";
+				PRODUCT_NAME = OpenSSLTests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		B61DEDE942F7079A642E8E9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = Tests/OpenSSLTests/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de.gematik.ti.swift.openssl.OpenSSLTests-iOS";
+				PRODUCT_NAME = OpenSSLTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FD6E3985B30E3DFE965DD271 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA8AF509BC34126DE37C5AD6 /* release_macOS.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"Carthage/Build\"",
+				);
+				INFOPLIST_FILE = Sources/OpenSSL/Resources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "de.gematik.ti.swift.openssl.OpenSSL-macOS";
+				PRODUCT_NAME = OpenSSL;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1EA9BEB0C3F567A6D91EB1BD /* Build configuration list for PBXProject "OpenSSL-Swift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DE03080227E6D26B7B420BF /* Debug */,
+				1E859412692DE0B159CEE2CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		2B00AB63B162FD62CDC48898 /* Build configuration list for PBXNativeTarget "OpenSSL_macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16984F071A02FE501292F334 /* Debug */,
+				FD6E3985B30E3DFE965DD271 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7B42DBBE69B5D6861E228311 /* Build configuration list for PBXNativeTarget "OpenSSLTests_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1CB7092F3526B4DFF88F27F3 /* Debug */,
+				B61DEDE942F7079A642E8E9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		9912E33C445C2967A381A499 /* Build configuration list for PBXNativeTarget "OpenSSL_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				562624B0FDC5B4D17229B166 /* Debug */,
+				4C662E9B31506C5DBE7E902D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DA7764D241DA12CB21DA5979 /* Build configuration list for PBXNativeTarget "OpenSSLTests_macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98B92BFB54A6FA6B2CB7D98B /* Debug */,
+				5F8F6B69601E63820C8AC5D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		360189D2005F6B5384D2523D /* XCRemoteSwiftPackageReference "DataKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftCommon/DataKit";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4B58CEEB3791C799DA65EF49 /* DataKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 360189D2005F6B5384D2523D /* XCRemoteSwiftPackageReference "DataKit" */;
+			productName = DataKit;
+		};
+		E86B8D829ACFCB234CE2E908 /* DataKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 360189D2005F6B5384D2523D /* XCRemoteSwiftPackageReference "DataKit" */;
+			productName = DataKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 62F6CAC110BDD0378C410174 /* Project object */;
+}

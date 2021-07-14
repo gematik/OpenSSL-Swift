@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# scripts/cibuild: Setup environment for CI to run tests. This is primarily
+#                 designed to run on the continuous integration server.
+
+set -ev
+
+cd "$(dirname "$0")/.."
+
+echo "CI started at…"
+date "+%H:%M:%S"
+
+# Setup project
+scripts/setup
+
+rm -f lib/*.a
+scripts/build
+
+# Lint
+echo "Linting"
+date "+%H:%M:%S"
+scripts/lint
+
+# run tests
+echo "Running tests…"
+date "+%H:%M:%S"
+scripts/test
+
+echo "Done"
+date "+%H:%M:%S"

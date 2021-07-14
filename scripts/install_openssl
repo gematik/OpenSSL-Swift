@@ -1,0 +1,225 @@
+#!/bin/sh
+
+# scripts/install_openssl: Download, verify and unpack OpenSSL
+# $ ./scripts/install_openssl {VERSION:1.1.0j} {SHA256:31...46}
+
+set -o pipefail
+
+# The install script uses the PLATFORM_NAME environment variable to decide wether to build for iOS or MacOS
+# Xcodebuild preBuildPhase scripts get this variable injected automatically and will therefore
+# be there. Only when building manually from command line this variable needs to be set beforehand.
+: ${PLATFORM_NAME?"Need to set PLATFORM_NAME (e.g. macosx, iphoneos)"}
+echo "PLATFORM_NAME: $PLATFORM_NAME"
+echo "ARCHS: $ARCHS"
+
+cd "$(dirname $0)/.."
+DIRNAME=$(pwd)
+
+VERSION=${1-"1.1.1k"}
+VERSION_SHA256_CHECKSUM=${2-"892a0875b9872acd04a9fde79b1f943075d5ea162415de3047c327df33fbaee5"}
+
+####################################
+OPENSSL_IMAGE="${DIRNAME}/openssl-${VERSION}.tar.gz"
+
+function deleteWhenExists() {
+  [ ! -d "$1" ] || {
+    echo "==> Delete (-Rf) [$1]"
+    rm -Rf "$1" &2>/dev/null
+  }
+  [ ! -f "$1" ] || {
+    echo "==> Delete (file) [$1]"
+    rm -f "$1" &2>/dev/null
+  }
+  [ ! -L "$1" ] || {
+    echo "==> Delete (symlink) [$1]"
+    rm -f "$1" &2>/dev/null
+  }
+}
+
+# Build for a given configuration
+function build_for()
+{
+  PLATFORM=$1
+  ARCH=$2
+  CROSS_TOP_ENV=CROSS_TOP_$3
+  CROSS_SDK_ENV=CROSS_SDK_$3
+  PLATFORM_DIR="openssl_${PLATFORM}_${VERSION}"
+
+  TARGET_DIR="${DIRNAME}/tmp/${PLATFORM_DIR}"
+  deleteWhenExists "$TARGET_DIR"
+
+  # Unzip into platform folder
+  cd "$DIRNAME"
+
+  OPENSSL_SRC_DIR_VERSION="openssl-$VERSION"
+  deleteWhenExists "$OPENSSL_SRC_DIR_VERSION"
+  deleteWhenExists "$PLATFORM_DIR"
+
+  tar -xzf "${OPENSSL_IMAGE}"
+  mv "$OPENSSL_SRC_DIR_VERSION" "$PLATFORM_DIR"
+
+  pushd "$PLATFORM_DIR"
+  patch "Configurations/10-main.conf" < "${DIRNAME}/Config/ios-conf.patch"
+
+  if [ ! -z $3 ]; then
+    echo "Setting CROSS_TOP and CROSS_SDK"
+    export CROSS_TOP="${!CROSS_TOP_ENV}"
+    export CROSS_SDK="${!CROSS_SDK_ENV}"
+  fi
+  ./Configure $PLATFORM "-arch $ARCH -fembed-bitcode" no-shared no-asm no-ssl3 no-comp no-hw no-engine no-async --prefix="${TARGET_DIR}" || exit 1
+  # problem of concurrent build; make -j8
+  echo "Building $PLATFORM:$ARCH static library..."
+  make >> /dev/null 2>&1 || exit 1
+  make install_sw >> /dev/null 2>&1 || exit 1
+  unset CROSS_TOP
+  unset CROSS_SDK
+
+  popd
+  deleteWhenExists "$PLATFORM_DIR"
+}
+
+function createLibInputFilePaths() {
+   DIRNAME=$1
+   LIBNAME=$2
+   VERSION=$3
+
+   IFS=',' read -ra PLATFORM_NAMES <<< "$4"
+   for NAME in "${PLATFORM_NAMES[@]}";
+      do
+        echo "${DIRNAME}/tmp/openssl_${NAME}_${VERSION}/lib/lib${LIBNAME}.a "
+      done
+}
+
+# Create FAT binaries for a given lib and put them into out dir
+function pack_for()
+{
+  LIBNAME=$1
+  OUT_DIR=$2
+  PLATFORMS=$3
+  PLATFORM_SUFFIX=$4
+
+  CREATE_ARGUMENT=$(createLibInputFilePaths $DIRNAME $LIBNAME $VERSION $PLATFORMS)
+
+  ${DEVROOT}/usr/bin/lipo -create ${CREATE_ARGUMENT} \
+    -output "${OUT_DIR}/lib${LIBNAME}_release_${VERSION}_${PLATFORM_SUFFIX}.a"
+
+  PLATFORM=$(echo $PLATFORMS | sed 's/,.*//')
+  cp -r "${DIRNAME}/tmp/openssl_${PLATFORM}_${VERSION}/include" "${OUT_DIR}/"
+}
+
+OPENSSL_CRYPTO_LIBNAME="crypto"
+OPENSSL_SSL_LIBNAME="ssl"
+OPENSSL_LIB_FOLDER="$DIRNAME/lib"
+TARGET_OPENSSL_CRYPTO_LIB_IOS="${OPENSSL_LIB_FOLDER}/lib${OPENSSL_CRYPTO_LIBNAME}_release_${VERSION}_iphoneos.a"
+TARGET_OPENSSL_SSL_LIB_IOS="${OPENSSL_LIB_FOLDER}/lib${OPENSSL_SSL_LIBNAME}_release_${VERSION}_iphoneos.a"
+TARGET_OPENSSL_CRYPTO_LIB_SIMULATOR="${OPENSSL_LIB_FOLDER}/lib${OPENSSL_CRYPTO_LIBNAME}_release_${VERSION}_iphonesimulator.a"
+TARGET_OPENSSL_SSL_LIB_SIMULATOR="${OPENSSL_LIB_FOLDER}/lib${OPENSSL_SSL_LIBNAME}_release_${VERSION}_iphonesimulator.a"
+TARGET_OPENSSL_CRYPTO_LIB_MAC="${OPENSSL_LIB_FOLDER}/lib${OPENSSL_CRYPTO_LIBNAME}_release_${VERSION}_macOS.a"
+TARGET_OPENSSL_SSL_LIB_MAC="${OPENSSL_LIB_FOLDER}/lib${OPENSSL_SSL_LIBNAME}_release_${VERSION}_macOS.a"
+
+SKIP_BUILD=1
+if [ ${PLATFORM_NAME} == "macosx" ]; then
+  if [[ ! -f ${TARGET_OPENSSL_CRYPTO_LIB_MAC} || ! -f ${TARGET_OPENSSL_SSL_LIB_MAC} ]]; then
+    SKIP_BUILD=0
+  fi
+else
+  # iphoneos missing
+  if [[ ! -f ${TARGET_OPENSSL_CRYPTO_LIB_IOS} || ! -f ${TARGET_OPENSSL_SSL_LIB_IOS} ]]; then
+    SKIP_BUILD=0
+  fi
+  # iphonesimulator missing
+  if [[ ! -f ${TARGET_OPENSSL_CRYPTO_LIB_SIMULATOR} || ! -f ${TARGET_OPENSSL_SSL_LIB_SIMULATOR} ]]; then
+    SKIP_BUILD=0
+  fi
+fi
+
+if [ $SKIP_BUILD != 1 ]; then
+  # Download when needed
+  echo "Download OpenSSL when needed..."
+  if [ ! -f ${OPENSSL_IMAGE} ]; then
+    curl -SsLO "https://www.openssl.org/source/openssl-$VERSION.tar.gz"
+  else
+    echo "Skipping download..."
+  fi
+
+  # Run a checksum to ensure this file wasn't tampered with
+  FILE_CHECKSUM=$(shasum -a 256 "${OPENSSL_IMAGE}" | awk '{print $1; exit}')
+  if [ "$FILE_CHECKSUM" != "$VERSION_SHA256_CHECKSUM" ]; then
+    echo "FILE_CHECKSUM: $FILE_CHECKSUM"
+    echo "OpenSSL v$VERSION failed checksum. Please ensure that you are on a trusted network."
+    exit 1
+  fi
+
+  if [ ${PLATFORM_NAME} == "macosx" ]; then
+    # Build openssl_x86_64
+    build_for darwin64-x86_64-cc x86_64 || exit 1
+    build_for darwin64-arm64-cc arm64 || exit 1
+  else
+    # Build for Simulator
+    CROSS_TOP_SIM="`xcode-select --print-path`/Platforms/iPhoneSimulator.platform/Developer"
+    CROSS_SDK_SIM="iPhoneSimulator.sdk"
+    # Build for iOS
+    CROSS_TOP_IOS="`xcode-select --print-path`/Platforms/iPhoneOS.platform/Developer"
+    CROSS_SDK_IOS="iPhoneOS.sdk"
+
+    export CROSS_COMPILE=`xcode-select --print-path`/Toolchains/XcodeDefault.xctoolchain/usr/bin/
+
+    build_for ios64sim-cross x86_64 SIM || exit 1
+    build_for ios64-cross arm64 IOS || exit 1
+
+    export CROSS_COMPILE="" # set via `CC` within ios-conf.patch
+
+    build_for ios64sim-arm64-cross arm64 SIM || exit 1
+
+    unset CROSS_COMPILE
+  fi
+
+  # Copy include and License into main OpenSSL folder (done after configure so <openssl/opensslconf.h> can be generated)
+  #cp "${DIRNAME}/openssl_ios64-cross_${VERSION}/LICENSE" "${OPENSSL_LIB_FOLDER}" # Copy License
+
+  # Link
+  echo "Linking..."
+  if [ ${PLATFORM_NAME} == "macosx" ]; then
+    # macOS
+    pack_for $OPENSSL_SSL_LIBNAME "$OPENSSL_LIB_FOLDER" darwin64-x86_64-cc,darwin64-arm64-cc macOS || exit 1
+    pack_for $OPENSSL_CRYPTO_LIBNAME "$OPENSSL_LIB_FOLDER" darwin64-x86_64-cc,darwin64-arm64-cc macOS || exit 1
+  else
+    # iOS
+    pack_for $OPENSSL_SSL_LIBNAME "$OPENSSL_LIB_FOLDER" ios64-cross iphoneos || exit 1
+    pack_for $OPENSSL_CRYPTO_LIBNAME "$OPENSSL_LIB_FOLDER" ios64-cross iphoneos || exit 1
+    pack_for $OPENSSL_SSL_LIBNAME "$OPENSSL_LIB_FOLDER" ios64sim-cross,ios64sim-arm64-cross iphonesimulator || exit 1
+    pack_for $OPENSSL_CRYPTO_LIBNAME "$OPENSSL_LIB_FOLDER" ios64sim-cross,ios64sim-arm64-cross iphonesimulator || exit 1
+  fi
+else
+  echo "Skipping build..."
+fi
+
+pushd "$OPENSSL_LIB_FOLDER"
+if [ ${PLATFORM_NAME} == "macosx" ]; then
+  ln -sf "lib${OPENSSL_CRYPTO_LIBNAME}_release_${VERSION}_macOS.a" "lib${OPENSSL_CRYPTO_LIBNAME}_release_macOS.a"
+  ln -sf "lib${OPENSSL_SSL_LIBNAME}_release_${VERSION}_macOS.a" "lib${OPENSSL_SSL_LIBNAME}_release_macOS.a"
+else
+  if [ ${PLATFORM_NAME} == "iphoneos" ]; then
+    ln -sf "lib${OPENSSL_CRYPTO_LIBNAME}_release_${VERSION}_iphoneos.a" "lib${OPENSSL_CRYPTO_LIBNAME}_release_iphoneos.a"
+    ln -sf "lib${OPENSSL_SSL_LIBNAME}_release_${VERSION}_iphoneos.a" "lib${OPENSSL_SSL_LIBNAME}_release_iphoneos.a"
+  else
+    ln -sf "lib${OPENSSL_CRYPTO_LIBNAME}_release_${VERSION}_iphonesimulator.a" "lib${OPENSSL_CRYPTO_LIBNAME}_release_iphonesimulator.a"
+    ln -sf "lib${OPENSSL_SSL_LIBNAME}_release_${VERSION}_iphonesimulator.a" "lib${OPENSSL_SSL_LIBNAME}_release_iphonesimulator.a"
+  fi
+fi
+
+rm "${OPENSSL_LIB_FOLDER}/include/openssl/asn1_mac.h" &2>/dev/null
+
+echo "# OpenSSL info - $(date "+%H:%M:%S")
+# VERSION=\"${VERSION}\"
+# VERSION_SHA256_CHECKSUM=\"${VERSION_SHA256_CHECKSUM}\" \
+" > hash.txt
+
+popd
+
+# Cleanup
+echo "Cleaning..."
+rm "${OPENSSL_IMAGE}"
+rm -Rf "${DIRNAME}/tmp"
+
+echo "Finished OpenSSL generation script."

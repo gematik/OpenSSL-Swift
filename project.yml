@@ -1,0 +1,61 @@
+name: OpenSSL-Swift
+options:
+  bundleIdPrefix: de.gematik.ti.swift.openssl
+  createIntermediateGroups: true
+  deploymentTarget:
+    macOS: 10.15
+    iOS: 13.0
+packages:
+  DataKit:
+    url: https://github.com/SwiftCommon/DataKit
+    version: 1.0.2
+settings:
+  base:
+    CURRENT_PROJECT_VERSION: -1
+    CODE_SIGN_IDENTITY: ""
+    SWIFT_VERSION: 5.0
+    ALWAYS_SEARCH_USER_PATHS: NO
+    FRAMEWORK_SEARCH_PATHS: "$(inherited)"
+    BUILD_LIBRARY_FOR_DISTRIBUTION: YES
+  configs:
+    Release:
+      SWIFT_COMPILATION_MODE: wholemodule
+    Debug:
+      SWIFT_COMPILATION_MODE: incremental
+targets:
+  OpenSSL:
+    configFiles:
+      Debug: Sources/OpenSSL/Resources/debug_${platform}.xcconfig
+      Release: Sources/OpenSSL/Resources/release_${platform}.xcconfig
+    type: framework
+    platform: [iOS,macOS]
+    sources:
+      - path: Sources/OpenSSL
+        excludes:
+          - "**/.swiftlint.yml"
+      - path: lib/include
+        copyFiles:
+          destination: productsDirectory
+          subpath: include/openssl
+    preBuildScripts:
+      - name: "Install OpenSSL"
+        script: |
+                cd "$SRCROOT"
+                ./scripts/install_openssl
+    scheme:
+      testTargets:
+        - OpenSSLTests_${platform}
+      gatherCoverageData: true
+    dependencies:
+        - framework: Carthage/Build/DataKit.xcframework
+  OpenSSLTests:
+    type: bundle.unit-test
+    platform: [iOS,macOS]
+    settings:
+      INFOPLIST_FILE: Tests/OpenSSLTests/Resources/Info.plist
+    sources:
+      - Tests/OpenSSLTests
+    dependencies:
+      - target: OpenSSL_${platform}
+      - package: DataKit
+buildImplicitDependencies: true

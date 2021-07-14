@@ -1,0 +1,4 @@
+disabled_rules:
+  - force_unwrapping
+  - force_try
+  - line_length
