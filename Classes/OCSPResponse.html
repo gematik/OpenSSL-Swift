@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>OCSPResponse Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+	<meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0" />
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/OCSPResponse" class="dashAnchor"></a>
+    <a title="OCSPResponse Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p>
+          <a href="../index.html">OpenSSL Docs</a>
+          <span class="no-mobile"> (83% documented)</span>
+        </p>
+    
+        <p class="header-right">
+          <a href="https://github.com/gematik/OpenSSL-Swift">
+            <img src="../img/gh.png"/>
+            <span class="no-mobile">View on GitHub</span>
+          </a>
+        </p>
+    
+      </div>
+    </header>
+    <div id="breadcrumbs-container">
+      <div class="content-wrapper">
+        <p id="breadcrumbs">
+          <span class="no-mobile">
+            <a href="../index.html">OpenSSL Reference</a>
+            <img id="carat" src="../img/carat.png" />
+          </span>
+          OCSPResponse Class Reference
+        </p>
+      </div>
+    </div>
+    <div class="wrapper">
+      <div class="article-wrapper">
+        <article class="main-content">
+          <section>
+            <section class="section">
+              <h1>OCSPResponse</h1>
+                <div class="declaration">
+                  <div class="language">
+                    
+                    <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">OCSPResponse</span></code></pre>
+
+                  </div>
+                </div>
+              <p>OCSP Response</p>
+
+            </section>
+            <section class="section task-group-section">
+              <div class="task-group">
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL12OCSPResponseC3derAC10Foundation4DataV_tKcfc"></a>
+                      <a name="//apple_ref/swift/Method/init(der:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL12OCSPResponseC3derAC10Foundation4DataV_tKcfc">init(der:<wbr>)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Initialize a OCSP Response from DER representation</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code><a href="../Structs/OpenSSLError.html">OpenSSLError</a></code> when the response could not be initialized
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">der</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>derRepresentation</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>raw DER bytes</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL12OCSPResponseC6StatusO"></a>
+                      <a name="//apple_ref/swift/Enum/Status" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL12OCSPResponseC6StatusO">Status</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Undocumented</p>
+
+                          <a href="../Classes/OCSPResponse/Status.html" class="slightly-smaller">See more</a>
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Status</span> <span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL12OCSPResponseC6statusAC6StatusOyF"></a>
+                      <a name="//apple_ref/swift/Method/status()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL12OCSPResponseC6statusAC6StatusOyF">status()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Returns the response status value</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">status</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/OCSPResponse/Status.html">Status</a></span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p><code>OCSP.Status</code> value</p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL12OCSPResponseC10producedAt10Foundation4DateVyKF"></a>
+                      <a name="//apple_ref/swift/Method/producedAt()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL12OCSPResponseC10producedAt10Foundation4DateVyKF">producedAt()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Extract the <em>producedAt</em> field from the basis response.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    OpenSSL error on internal error
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">producedAt</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Date</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p><code>Date</code> from the <em>producedAt</em> field</p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL12OCSPResponseC10CertStatusO"></a>
+                      <a name="//apple_ref/swift/Enum/CertStatus" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL12OCSPResponseC10CertStatusO">CertStatus</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Undocumented</p>
+
+                          <a href="../Classes/OCSPResponse/CertStatus.html" class="slightly-smaller">See more</a>
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CertStatus</span> <span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL12OCSPResponseC17certificateStatus3for6issuerAC04CertE0OAA4X509C_AJtKF"></a>
+                      <a name="//apple_ref/swift/Method/certificateStatus(for:issuer:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL12OCSPResponseC17certificateStatus3for6issuerAC04CertE0OAA4X509C_AJtKF">certificateStatus(for:<wbr>issuer:<wbr>)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Search the OCSP response for a status information for a given <code><a href="../Classes/X509.html">X509</a></code> certificate.
+Note: the issuer of the certificate has also to be provided</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code><a href="../Structs/OpenSSLError.html">OpenSSLError</a></code> on internal error
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">certificateStatus</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="kt"><a href="../Classes/X509.html">X509</a></span><span class="p">,</span> <span class="nv">issuer</span><span class="p">:</span> <span class="kt"><a href="../Classes/X509.html">X509</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/OCSPResponse/CertStatus.html">CertStatus</a></span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>for</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>the certificate the status is requested for</p>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>issuer</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>the issuer of the status requested certificate</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p><code><a href="../Classes/OCSPResponse/CertStatus.html">OCSPResponse.CertStatus</a></code> value</p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL12OCSPResponseC9getSignerAA4X509CSgyKF"></a>
+                      <a name="//apple_ref/swift/Method/getSigner()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL12OCSPResponseC9getSignerAA4X509CSgyKF">getSigner()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Attempts to retrieve the certificate that directly signed this response.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    OpenSSL error when internal error error certificate parsing error.
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getSigner</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/X509.html">X509</a></span><span class="p">?</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>The signing certificate if it was included in the certs field of the response.</p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL12OCSPResponseC15basicVerifyWith12trustedStore7optionsSbx_AC05BasicE7OptionsVtKSlRzAA4X509C7ElementRtzlF"></a>
+                      <a name="//apple_ref/swift/Method/basicVerifyWith(trustedStore:options:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL12OCSPResponseC15basicVerifyWith12trustedStore7optionsSbx_AC05BasicE7OptionsVtKSlRzAA4X509C7ElementRtzlF">basicVerifyWith(trustedStore:<wbr>options:<wbr>)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Checks that the basic response message is correctly signed and that the signer certificate can be validated.
+For further info see <a href="https://www.openssl.org/docs/man1.1.0/man3/OCSP_resp_get0.html">https://www.openssl.org/docs/man1.1.0/man3/OCSP_resp_get0.html</a> -&gt; OCSP_basic_verify()</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    OpenSSLError on a fatal internal error
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">basicVerifyWith</span><span class="o">&lt;</span><span class="kt">C</span><span class="p">:</span> <span class="kt">Collection</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">trustedStore</span><span class="p">:</span> <span class="kt">C</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="kt"><a href="../Classes/OCSPResponse/BasicVerifyOptions.html">BasicVerifyOptions</a></span> <span class="o">=</span> <span class="p">[])</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+    <span class="k">where</span> <span class="kt">C</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt"><a href="../Classes/X509.html">X509</a></span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>trustedStore</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>a collection of trusted certificates</p>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>options</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>flags for taking influence on the behavior of the function</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>true if the OCSP response is correctly signed and the signer certificate can be validated</p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL12OCSPResponseC18BasicVerifyOptionsV"></a>
+                      <a name="//apple_ref/swift/Struct/BasicVerifyOptions" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL12OCSPResponseC18BasicVerifyOptionsV">BasicVerifyOptions</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Flags for function <code>basicVerify()</code>.
+For usage info refer to <a href="https://www.openssl.org/docs/man1.1.0/man3/OCSP_resp_get0.html">https://www.openssl.org/docs/man1.1.0/man3/OCSP_resp_get0.html</a> -&gt; OCSP_basic_verify()</p>
+
+                          <a href="../Classes/OCSPResponse/BasicVerifyOptions.html" class="slightly-smaller">See more</a>
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">BasicVerifyOptions</span> <span class="p">:</span> <span class="kt">OptionSet</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </section>
+          </section>
+        </article>
+      </div>
+      <div class="nav-wrapper">
+        <nav class="nav-bottom">
+          <ul class="nav-groups">
+            <li class="nav-group-name">
+              <a href="../Classes.html">Classes</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Classes/OCSPResponse.html">OCSPResponse</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/OCSPResponse/Status.html">– Status</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/OCSPResponse/CertStatus.html">– CertStatus</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/OCSPResponse/BasicVerifyOptions.html">– BasicVerifyOptions</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/OpenSSLECGroup.html">OpenSSLECGroup</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/OpenSSLECGroup/Name.html">– Name</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/X509.html">X509</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/X509/SignatureAlgorithm.html">– SignatureAlgorithm</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Enums.html">Enumerations</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Enums/BrainpoolP256r1.html">BrainpoolP256r1</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Enums/BrainpoolP256r1/KeyExchange.html">– KeyExchange</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Enums/BrainpoolP256r1/Verify.html">– Verify</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Enums/CMAC.html">CMAC</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Enums/Hash.html">Hash</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Enums/Hash/SHA256.html">– SHA256</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Protocols.html">Protocols</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Protocols/DiffieHellman.html">DiffieHellman</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/DigestSigner.html">DigestSigner</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/ECCurve.html">ECCurve</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/ECPrivateKey.html">ECPrivateKey</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/ECPublicKey.html">ECPublicKey</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/ECSignature.html">ECSignature</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/PACE.html">PACE</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/SignatureVerifier.html">SignatureVerifier</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/Signer.html">Signer</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Structs.html">Structures</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Structs/OpenSSLError.html">OpenSSLError</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Typealiases.html">Type Aliases</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Typealiases.html#/s:7OpenSSL6Digesta">Digest</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-wrapper">
+        <section id="footer">
+          <p>&copy; 2021 <a class="link" href="http://www.gematik.de" target="_blank" rel="external">gematik GmbH</a>. All rights reserved. (Last updated: 2021-07-14)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.7</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </div>
+    </div>
+  </body>
+</div>
+</html>

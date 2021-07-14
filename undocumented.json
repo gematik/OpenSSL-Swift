@@ -1,0 +1,173 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 33,
+      "symbol": "OCSPResponse.Status",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 34,
+      "symbol": "OCSPResponse.Status.successful",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 35,
+      "symbol": "OCSPResponse.Status.malformedRequest",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 36,
+      "symbol": "OCSPResponse.Status.internalError",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 37,
+      "symbol": "OCSPResponse.Status.tryLater",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 38,
+      "symbol": "OCSPResponse.Status.sigRequired",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 39,
+      "symbol": "OCSPResponse.Status.unauthorized",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 69,
+      "symbol": "OCSPResponse.CertStatus",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 70,
+      "symbol": "OCSPResponse.CertStatus.good",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 71,
+      "symbol": "OCSPResponse.CertStatus.revoked",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 72,
+      "symbol": "OCSPResponse.CertStatus.unknown",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 73,
+      "symbol": "OCSPResponse.CertStatus.requestedCertificateNotInResponse",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 175,
+      "symbol": "OCSPResponse.BasicVerifyOptions.noIntern",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 176,
+      "symbol": "OCSPResponse.BasicVerifyOptions.noSigs",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 177,
+      "symbol": "OCSPResponse.BasicVerifyOptions.noVerify",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 178,
+      "symbol": "OCSPResponse.BasicVerifyOptions.trustOther",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 179,
+      "symbol": "OCSPResponse.BasicVerifyOptions.noChain",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 180,
+      "symbol": "OCSPResponse.BasicVerifyOptions.noChecks",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Certificate/OCSPResponse.swift",
+      "line": 181,
+      "symbol": "OCSPResponse.BasicVerifyOptions.noExplicit",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/OpenSSLError.swift",
+      "line": 7,
+      "symbol": "OpenSSLError",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/OpenSSLError.swift",
+      "line": 8,
+      "symbol": "OpenSSLError.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/OpenSSLError.swift",
+      "line": 9,
+      "symbol": "OpenSSLError.info",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/OpenSSLError.swift",
+      "line": 11,
+      "symbol": "OpenSSLError.init(name:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare/Sources/OpenSSL/Signature/BrainpoolP256r1+ECDSA.swift",
+      "line": 76,
+      "symbol": "BrainpoolP256r1.Verify.Signature",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/tst_tt_build/jenkins/workspace/iOS-OpenSSL-Swift-Publish-Prepare"
+}

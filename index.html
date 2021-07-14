@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>OpenSSL  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+	<meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0" />
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="OpenSSL  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p>
+          <a href="index.html">OpenSSL Docs</a>
+          <span class="no-mobile"> (83% documented)</span>
+        </p>
+    
+        <p class="header-right">
+          <a href="https://github.com/gematik/OpenSSL-Swift">
+            <img src="img/gh.png"/>
+            <span class="no-mobile">View on GitHub</span>
+          </a>
+        </p>
+    
+      </div>
+    </header>
+    <div id="breadcrumbs-container">
+      <div class="content-wrapper">
+        <p id="breadcrumbs">
+          <span class="no-mobile">
+            <a href="index.html">OpenSSL Reference</a>
+            <img id="carat" src="img/carat.png" />
+          </span>
+          OpenSSL  Reference
+        </p>
+      </div>
+    </div>
+    <div class="wrapper">
+      <div class="article-wrapper">
+        <article class="main-content">
+          <section>
+            <section class="section">
+              
+              <h1 id='openssl-swift' class='heading'>OpenSSL-Swift</h1>
+
+<p>Swift extension wrapper for gematik specific crypto operations with embedded OpenSSL</p>
+<h2 id='overview' class='heading'>Overview</h2>
+
+<p>This Xcode-project downloads, compiles and embeds OpenSSL version 1.1.0j in a Swift framework that can be included
+in MacOS/iOS Frameworks and Apps.</p>
+
+<p>There are three main parts of this project.</p>
+
+<ol>
+<li>PreBuildPhase script &lsquo;Install OpenSSL&rsquo; that runs before the OpenSSL target is build.
+Execution of this script [e.g. first time run] takes a while since it compiles and links
+for both MacOS x86_64 and iOS arm64 architectures. Consecutive runs of the script will
+check whether the desired target version is already there and skipping the superfluous steps.</li>
+<li>COpenSSL module(map) that bridges and exposes the OpenSSL C headers to Swift.</li>
+<li>OpenSSL target and resulting framework that can be included in external projects.
+In this target there is only a limited set of OpenSSL operations available and exposed.
+Generally speaking the ones that are not available in any of the Apple platform included frameworks:
+Security.framework, CommonCrypto and even CryptoKit.</li>
+<li>Makefile and scripts to support setting up the Xcodeproj and building OpenSSL libraries</li>
+</ol>
+<h3 id='motivation' class='heading'>Motivation</h3>
+
+<p>As mentioned in the overview, some crypto and security operations are missing in the Apple platform(s)
+crypto frameworks. Most significant for Gematik&rsquo;s use-case(s) on iOS is the absence of brainpool elliptic curve support.
+These curves are <a href="https://tools.ietf.org/html/rfc4492#section-5.1.1">not part of the TLS standard</a> and therefore not mandatory for normal HTTPS implementations.
+However, Gematik uses brainpool curves exclusively for its &lsquo;gem&rsquo; standard as <a href="https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TR03111/BSI-TR-03111_V-2-1_pdf.pd">advised by BSI</a> - Chapter 6.
+This leaves us with a gap between what is included in the Apple platforms and Gematik&rsquo;s use-cases.
+Therefore we&rsquo;ve decided to build a wrapper around a well established and maintained <a href="https://github.com/openssl/openssl">open source crypto
+library</a> that we can access directly from Swift source code.
+Accessing OpenSSL crypto operations directly from Swift allows us to not having to manually free the
+memory that was allocated by the low-level OpenSSL operation, but instead hide this complex code from
+the casual user/developer that may need to use some of the features provided by this framework.</p>
+<h2 id='installation' class='heading'>Installation</h2>
+
+<p>Installation is only possible with Carthage at this point in time, since SPM doesn&rsquo;t support including and linking to
+the binary libraries that are built by this project. [We don&rsquo;t support CocoaPods at all, however it might also work when setup accordingly]</p>
+<pre class="highlight plaintext"><code>
+git "https://github.com/gematik/openssl-swift.git" ~&gt; 1.0
+</code></pre>
+
+<p>&ldquo;`shell script
+$ carthage build &ndash;no-use-binaries &ndash;platform macOS,iOS [&ndash;cache-builds]</p>
+<pre class="highlight plaintext"><code>
+Import it to your Xcodeproj [accordingly](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
+Or use [Xcodegen to add the carthage dependency](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/Usage.md#carthage) to your project.yml.
+
+## Supported operations
+
+As mentioned in the Overview section of this document, only a small subset of OpenSSL's operations is made available.
+This section describes the operations that are supported.
+
+### X.509 Certificate
+
+Some basic operations on **X.509 based Certificates** are available by this framework's API. Since it's
+backed by `OpenSSL` a lot more signature algorithms are supported.
+
+You can instantiate `X509` objects either by `Data` in raw DER-representation or in PEM-representation
+(originating form a string which usually starts with *-----BEGIN CERTIFICATE-----*).
+
+```swift
+let derEncodedX509Data = Data(base64Encoded: "MIICsTC...")
+let x509 = try X509(der: derEncodedX509Data)   
+// or
+let x509 = try X509(pem: "-----BEGIN CERTIFICATE-----.....".data(using: .ascii))
+
+let issuerOneLine = try x509.issuerOneLine() // "/C=DE/O=gematik GmbH NOT-VALID/OU=Komponenten-CA der Telematikinfrastruktur/CN=GEM.KOMP-CA10 TEST-ONLY"
+let sha256Fingerprint = try x509.sha256Fingerprint()
+let validatedWithTrustStore = x509.validateWithTrustStore([rootCaCert, otherCaCert])
+
+// If the certificate holder is using a BrainpoolP256r1 key for signing, you can retrieve the public counterpart conveniently
+let brainpoolP256r1PublicKey = x509.brainpoolP256r1PublicKey() // `BrainpoolP256r1.Verify.PublicKey?`
+</code></pre>
+<h3 id='ocsp-response' class='heading'>OCSP Response</h3>
+
+<p>Use OSCP responses to try to validate a status of a given <code><a href="Classes/X509.html">X509</a></code> certificate. </p>
+
+<p>You can instantiate <code><a href="Classes/OCSPResponse.html">OCSPResponse</a></code> objects by <code>Data</code> in raw DER-representation.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">ocspResponse</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">OCSPResponse</span><span class="p">(</span><span class="nv">der</span><span class="p">:</span> <span class="kt">Base64</span><span class="o">.</span><span class="nf">decode</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="s">"MIIHBQoBAKCCBv4wggb6Bgkr..."</span><span class="p">))</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">ocspResponse</span><span class="o">.</span><span class="nf">status</span><span class="p">())</span> <span class="c1">// the `OCSPResponse.Status` of the response itself, e.g. .successful, .tryLater ...</span>
+<span class="nf">print</span><span class="p">(</span><span class="k">try</span> <span class="n">vauOcspResponseNoKnownSignerCa</span><span class="o">.</span><span class="nf">producedAt</span><span class="p">())</span> <span class="c1">// the `Date` held in the `producedAt` field of the response </span>
+
+<span class="c1">// Check the revocation status `OCSPResponse.CertStatus` for a given certificate with a ocspResponse.</span>
+<span class="k">let</span> <span class="nv">certificate</span><span class="p">,</span> <span class="nv">certificateIssuer</span><span class="p">:</span> <span class="kt">X509</span><span class="o">!</span>
+<span class="nf">print</span><span class="p">(</span><span class="k">try</span> <span class="n">ocspResponse</span><span class="o">.</span><span class="nf">certificateStatus</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="n">certificate</span><span class="p">,</span> <span class="nv">issuer</span><span class="p">:</span> <span class="n">certificateIssuer</span><span class="p">))</span> <span class="c1">// .good, .revoked ...</span>
+
+<span class="c1">// Verify the signature on a ocspResponse against a given trust store</span>
+<span class="k">let</span> <span class="nv">ocspSignerCa</span><span class="p">,</span> <span class="nv">rootCa</span><span class="p">:</span> <span class="kt">X509</span><span class="o">!</span>
+<span class="nf">print</span><span class="p">(</span><span class="k">try</span> <span class="n">ocspResponse</span><span class="o">.</span><span class="nf">basicVerifyWith</span><span class="p">(</span><span class="nv">trustedStore</span><span class="p">:</span> <span class="p">[</span><span class="n">ocspSignerCa</span><span class="p">,</span> <span class="n">rootCa</span><span class="p">]))</span> <span class="c1">// true, false</span>
+<span class="c1">// Use `OCSPResponse.BasicVerifyOptions` to set certain basic-verify check flags </span>
+<span class="c1">// refer to: https://www.openssl.org/docs/man1.1.0/man3/OCSP_resp_get0.html -&gt; OCSP_basic_verify()</span>
+<span class="c1">// After successful path validation the function returns success if the OCSP_NOCHECKS flag is set.</span>
+<span class="k">let</span> <span class="nv">options</span><span class="p">:</span> <span class="kt">OCSPResponse</span><span class="o">.</span><span class="kt">BasicVerifyOptions</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="n">noChecks</span><span class="p">]</span>
+<span class="k">try</span> <span class="n">vauOcspResponse</span><span class="o">.</span><span class="nf">basicVerifyWith</span><span class="p">(</span><span class="nv">trustedStore</span><span class="p">:</span> <span class="p">[</span><span class="n">ocspSignerCa</span><span class="p">,</span> <span class="n">rootCa</span><span class="p">],</span> <span class="nv">options</span><span class="p">:</span> <span class="n">options</span><span class="p">)</span>
+</code></pre>
+<h3 id='key-management' class='heading'>Key Management</h3>
+
+<p>Cryptographic operations are often based on public / private keys that here are represented by the
+<code><a href="Protocols/ECPublicKey.html">ECPublicKey</a></code> and <code>PrivateKey</code> protocols.
+You can instantiate them by picking implementing classes according to your use case,
+e.g. <code><a href="Enums/BrainpoolP256r1/KeyExchange/PublicKey.html">BrainpoolP256r1.KeyExchange.PublicKey</a></code>, <code><a href="Enums/BrainpoolP256r1/KeyExchange/PrivateKey.html">BrainpoolP256r1.KeyExchange.PrivateKey</a></code>,&hellip; and going on from there.
+The public key can be initialized by passing in the elliptic curve point ( 0x4 || x || y) [ANSI X9.62 format] and the
+private key as well (0x4 || x || y || k). Where <code>k</code> is the private key. The private key can also be initialized by
+just <code>k</code> as the raw parameter.
+A private key can also be randomly generated.</p>
+<h3 id='generate-private-key-keypair' class='heading'>Generate Private Key (KeyPair)</h3>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">key</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">BrainpoolP256r1</span><span class="o">.</span><span class="kt">KeyExchange</span><span class="o">.</span><span class="nf">generateKey</span><span class="p">(</span><span class="nv">compactRepresentable</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+</code></pre>
+<h3 id='ecdh-shared-secret-computation' class='heading'>ECDH Shared Secret computation</h3>
+
+<p>Deriving a <strong>BrainpoolP256r1</strong> shared secret can be done with the use of <code><a href="Enums/BrainpoolP256r1/KeyExchange/PublicKey.html">BrainpoolP256r1.KeyExchange.PublicKey</a></code> and its
+counterpart <code><a href="Enums/BrainpoolP256r1/KeyExchange/PrivateKey.html">BrainpoolP256r1.KeyExchange.PrivateKey</a></code> and calling <code>.sharedSecret(with: peerKey)</code> method on the said
+private key and passing in the public key as the peer.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pubKeyx962</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">Data</span><span class="p">(</span><span class="nv">hex</span><span class="p">:</span> <span class="s">"048634212830DAD457CA05305E6687134166B9C21A65FFEBF555F4E75DFB04888866E4B6843624CBDA43C97EA89968BC41FD53576F82C03EFA7D601B9FACAC2B29"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">privateKeyRaw</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">Data</span><span class="p">(</span><span class="nv">hex</span><span class="p">:</span> <span class="s">"83456D98DEA3435C166385A4E644EBCA588E8A0AA7C811F51FCC736368630206"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">pubKey</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">BrainpoolP256r1</span><span class="o">.</span><span class="kt">KeyExchange</span><span class="o">.</span><span class="kt">PublicKey</span><span class="p">(</span><span class="nv">x962</span><span class="p">:</span> <span class="n">pubKeyx962</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">privateKey</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">BrainpoolP256r1</span><span class="o">.</span><span class="kt">KeyExchange</span><span class="o">.</span><span class="kt">PrivateKey</span><span class="p">(</span><span class="nv">raw</span><span class="p">:</span> <span class="n">privateKeyRaw</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">sharedSecretData</span> <span class="o">=</span> <span class="k">try</span> <span class="n">privateKey</span><span class="o">.</span><span class="nf">sharedSecret</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">pubKey</span><span class="p">)</span>
+</code></pre>
+<h3 id='verify-brainpoolp256r1-signature' class='heading'>Verify BrainpoolP256r1 signature</h3>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pubkeyraw</span> <span class="o">=</span> <span class="kt">Data</span><span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">pubKey</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">BrainpoolP256r1</span><span class="o">.</span><span class="kt">Verify</span><span class="o">.</span><span class="kt">PublicKey</span><span class="p">(</span><span class="nv">x962</span><span class="p">:</span> <span class="n">pubkeyraw</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">derSignature</span> <span class="o">=</span> <span class="kt">Data</span><span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">signature</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">BrainpoolP256r1</span><span class="o">.</span><span class="kt">Verify</span><span class="o">.</span><span class="kt">Signature</span><span class="p">(</span><span class="nv">derRepresentation</span><span class="p">:</span> <span class="n">derSignature</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">message</span> <span class="o">=</span> <span class="s">"A signed message"</span>
+
+<span class="k">try</span> <span class="n">pubKey</span><span class="o">.</span><span class="nf">verify</span><span class="p">(</span><span class="nv">signature</span><span class="p">:</span> <span class="n">signature</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="n">message</span><span class="o">.</span><span class="nf">data</span><span class="p">(</span><span class="nv">using</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+</code></pre>
+<h3 id='pace-protocol-map-nonce-for-shared-secret-derivation' class='heading'>PACE protocol map Nonce for Shared Secret derivation</h3>
+
+<p>The PACE protocol sets up a SecureMessaging channel with strong session keys based on a shared password,
+possibly of low entropy.</p>
+
+<p>see: <a href="https://www.bsi.bund.de/EN/Publications/TechnicalGuidelines/TR03110/BSITR03110.html">BSI TR-03110</a></p>
+
+<p>This implementation follows PACE protocol conformance as specified in
+<a href="https://www.vesta-gematik.de/standard/formhandler/64/gemSpec_COS_V3_10_0.pdf">gemSpec_COS_V3.11.0</a> (N085.064)
+for establishing a secure communication channel with German health cards (eGK) using <strong>BrainpoolP256r1</strong>.</p>
+
+<p>The algorithm will return a public key to be sent to the peer and a generated keyPair2 for internal use.
+The actual secret has then to be derived from a further peer&rsquo;s public key and the previously mentioned keyPair2.</p>
+
+<p>Deriving a <strong>BrainpoolP256r1 PACE</strong> shared secret can be done with the use of a
+<code><a href="Enums/BrainpoolP256r1/KeyExchange/PrivateKey.html">BrainpoolP256r1.KeyExchange.PrivateKey</a></code>, its peer key counterpart <code><a href="Enums/BrainpoolP256r1/KeyExchange/PublicKey.html">BrainpoolP256r1.KeyExchange.PublicKey</a></code>,
+and the plain nonce password (as <code>Data</code>) calling <code>.paceMapNonce(nonce: nonce with: peerKey)</code> method on the said
+private key, passing in the nonce and the public key as the peer.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">nonce</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">Data</span><span class="p">(</span><span class="nv">hex</span><span class="p">:</span> <span class="s">"A44248628B8E8B94072EF3843C56E844"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">ownKeyPair1Raw</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">Data</span><span class="p">(</span><span class="nv">hex</span><span class="p">:</span> <span class="s">"0D7DFFAC3558C4C3C075A0479F4C3A4864DBD8E686CDB154DD0BDD0BA7CE4D51"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">ownKeyPair1</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">ECPrivateKeyImpl</span><span class="o">&lt;</span><span class="kt">BrainpoolP256r1</span><span class="o">.</span><span class="kt">Curve</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">raw</span><span class="p">:</span> <span class="n">ownKeyPair1Raw</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">peerKeyRaw</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">Data</span><span class="p">(</span><span class="nv">hex</span><span class="p">:</span> <span class="s">"045CAC41779F548CBE714A08CBCEB40F616B5EFDD59DD3345802027DCB0C3FB02B20DC7A458B7744102DE98D350D4399FEC0F8CC5CCE50317A2CEE3CB418A4DA41"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">peerKey1</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">ECPublicKeyImpl</span><span class="o">&lt;</span><span class="kt">BrainpoolP256r1</span><span class="o">.</span><span class="kt">Curve</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">x962</span><span class="p">:</span> <span class="n">peerKeyRaw</span><span class="p">)</span>
+<span class="nf">let</span> <span class="p">(</span><span class="n">ownPubKey2</span><span class="p">,</span> <span class="n">ownKeyPair2</span><span class="p">)</span> <span class="o">=</span> <span class="k">try</span> <span class="n">ownPrivateKey1</span><span class="o">.</span><span class="nf">paceMapNonce</span><span class="p">(</span><span class="nv">nonce</span><span class="p">:</span> <span class="n">nonce</span><span class="p">,</span> <span class="nv">peerKey1</span><span class="p">:</span> <span class="n">peerKey1</span><span class="p">)</span>
+
+<span class="c1">// receive the peer's second publicKey peerPubKey2</span>
+<span class="k">let</span> <span class="nv">sharedSecret</span> <span class="o">=</span> <span class="k">try</span> <span class="n">ownKeyPair2</span><span class="o">.</span><span class="nf">sharedSecret</span><span class="p">(</span><span class="n">peerPubKey2</span><span class="p">)</span>
+</code></pre>
+<h3 id='mac-calculation' class='heading'>MAC calculation</h3>
+
+<p>Generation of a MAC via 128-bit AES-CMAC (CBC-MAC) algorithm as described in 
+<a href="https://tools.ietf.org/html/rfc4493">RFC: The AES-CMAC Algorithm</a> is supported.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">key</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Data</span><span class="p">(</span><span class="nv">hex</span><span class="p">:</span> <span class="s">"2b7e151628aed2a6abf7158809cf4f3c"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">message</span> <span class="o">=</span> <span class="k">try!</span> <span class="kt">Data</span><span class="p">(</span><span class="nv">hex</span><span class="p">:</span> <span class="s">""</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">cmac</span> <span class="o">=</span> <span class="kt">CMAC</span><span class="o">.</span><span class="nf">aes128cbc</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="n">message</span><span class="p">)</span> <span class="c1">// == hex: "bb1d6929e95937287fa37d129b756746"</span>
+</code></pre>
+<h2 id='openssl-version-update' class='heading'>OpenSSL version update</h2>
+
+<p>To update the OpenSSL version embedded with the library you simply update the <code>scripts/install_openssl</code> on lines 11:12
+with the new OpenSSL version and appropriate SHA256 hash value.</p>
+
+            </section>
+          </section>
+        </article>
+      </div>
+      <div class="nav-wrapper">
+        <nav class="nav-bottom">
+          <ul class="nav-groups">
+            <li class="nav-group-name">
+              <a href="Classes.html">Classes</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="Classes/OCSPResponse.html">OCSPResponse</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Classes/OCSPResponse/Status.html">– Status</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Classes/OCSPResponse/CertStatus.html">– CertStatus</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Classes/OCSPResponse/BasicVerifyOptions.html">– BasicVerifyOptions</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Classes/OpenSSLECGroup.html">OpenSSLECGroup</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Classes/OpenSSLECGroup/Name.html">– Name</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Classes/X509.html">X509</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Classes/X509/SignatureAlgorithm.html">– SignatureAlgorithm</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="Enums.html">Enumerations</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="Enums/BrainpoolP256r1.html">BrainpoolP256r1</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Enums/BrainpoolP256r1/KeyExchange.html">– KeyExchange</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Enums/BrainpoolP256r1/Verify.html">– Verify</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Enums/CMAC.html">CMAC</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Enums/Hash.html">Hash</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Enums/Hash/SHA256.html">– SHA256</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="Protocols.html">Protocols</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="Protocols/DiffieHellman.html">DiffieHellman</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Protocols/DigestSigner.html">DigestSigner</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Protocols/ECCurve.html">ECCurve</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Protocols/ECPrivateKey.html">ECPrivateKey</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Protocols/ECPublicKey.html">ECPublicKey</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Protocols/ECSignature.html">ECSignature</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Protocols/PACE.html">PACE</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Protocols/SignatureVerifier.html">SignatureVerifier</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Protocols/Signer.html">Signer</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="Structs.html">Structures</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="Structs/OpenSSLError.html">OpenSSLError</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="Typealiases.html">Type Aliases</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="Typealiases.html#/s:7OpenSSL6Digesta">Digest</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-wrapper">
+        <section id="footer">
+          <p>&copy; 2021 <a class="link" href="http://www.gematik.de" target="_blank" rel="external">gematik GmbH</a>. All rights reserved. (Last updated: 2021-07-14)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.7</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </div>
+    </div>
+  </body>
+</div>
+</html>

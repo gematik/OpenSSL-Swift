@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>X509 Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+	<meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0" />
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/X509" class="dashAnchor"></a>
+    <a title="X509 Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p>
+          <a href="../index.html">OpenSSL Docs</a>
+          <span class="no-mobile"> (83% documented)</span>
+        </p>
+    
+        <p class="header-right">
+          <a href="https://github.com/gematik/OpenSSL-Swift">
+            <img src="../img/gh.png"/>
+            <span class="no-mobile">View on GitHub</span>
+          </a>
+        </p>
+    
+      </div>
+    </header>
+    <div id="breadcrumbs-container">
+      <div class="content-wrapper">
+        <p id="breadcrumbs">
+          <span class="no-mobile">
+            <a href="../index.html">OpenSSL Reference</a>
+            <img id="carat" src="../img/carat.png" />
+          </span>
+          X509 Class Reference
+        </p>
+      </div>
+    </div>
+    <div class="wrapper">
+      <div class="article-wrapper">
+        <article class="main-content">
+          <section>
+            <section class="section">
+              <h1>X509</h1>
+                <div class="declaration">
+                  <div class="language">
+                    
+                    <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">X509</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">X509</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+
+                  </div>
+                </div>
+              <p>X509 certificate</p>
+
+            </section>
+            <section class="section task-group-section">
+              <div class="task-group">
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C18SignatureAlgorithmO"></a>
+                      <a name="//apple_ref/swift/Enum/SignatureAlgorithm" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C18SignatureAlgorithmO">SignatureAlgorithm</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Corresponding signature algorithms of <code>X.509</code> certificates.</p>
+
+                          <a href="../Classes/X509/SignatureAlgorithm.html" class="slightly-smaller">See more</a>
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">SignatureAlgorithm</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C3derAC10Foundation4DataV_tKcfc"></a>
+                      <a name="//apple_ref/swift/Method/init(der:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C3derAC10Foundation4DataV_tKcfc">init(der:<wbr>)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Initialize a X509 certificate from DER representation</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code><a href="../Structs/OpenSSLError.html">OpenSSLError</a></code> when the certificate could not be initialized
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">der</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>derRepresentation</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>raw DER bytes</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C3pemAC10Foundation4DataV_tKcfc"></a>
+                      <a name="//apple_ref/swift/Method/init(pem:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C3pemAC10Foundation4DataV_tKcfc">init(pem:<wbr>)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Initialize a X509 certificate from PEM encoded data (contains <em>&mdash;&ndash;BEGIN CERTIFICATE&mdash;&ndash;</em>)</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code><a href="../Structs/OpenSSLError.html">OpenSSLError</a></code> when the certificate could not be initialized
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">pem</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>pem</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p><code>Data</code> encoding the PEM string</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C8derBytes10Foundation4DataVSgvp"></a>
+                      <a name="//apple_ref/swift/Property/derBytes" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C8derBytes10Foundation4DataVSgvp">derBytes</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Return the raw bytes of the DER representation</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">derBytes</span><span class="p">:</span> <span class="kt">Data</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C12serialNumberSSyKF"></a>
+                      <a name="//apple_ref/swift/Method/serialNumber()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C12serialNumberSSyKF">serialNumber()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Return the certificates serial number as decimal <code>String</code></p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code><a href="../Structs/OpenSSLError.html">OpenSSLError</a></code> when reading or converting the serial number
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">serialNumber</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>serial number as decimal <code>String</code></p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C18signatureAlgorithmAC09SignatureE0OyF"></a>
+                      <a name="//apple_ref/swift/Method/signatureAlgorithm()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C18signatureAlgorithmAC09SignatureE0OyF">signatureAlgorithm()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Return the the signature algorithm used when validating signatures with this certificate</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">signatureAlgorithm</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/X509/SignatureAlgorithm.html">SignatureAlgorithm</a></span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p><code><a href="../Classes/X509/SignatureAlgorithm.html">SignatureAlgorithm</a></code></p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C29issuerX500PrincipalDEREncoded10Foundation4DataVSgyF"></a>
+                      <a name="//apple_ref/swift/Method/issuerX500PrincipalDEREncoded()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C29issuerX500PrincipalDEREncoded10Foundation4DataVSgyF">issuerX500PrincipalDEREncoded()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Return the certificate&rsquo;s issuer X500 Principal representation as DER encoded <code>Data</code>
+(ex: &ldquo;CN=GEM.KOMP-CA10 TEST-ONLY, OU=Komponenten-CA der Telematikinfrastruktur, O=gematik GmbH NOT-VALID, C=DE&rdquo;)</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">issuerX500PrincipalDEREncoded</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Data</span><span class="p">?</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>issuer DER encoded data if successful, else nil</p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C30subjectX500PrincipalDEREncoded10Foundation4DataVSgyF"></a>
+                      <a name="//apple_ref/swift/Method/subjectX500PrincipalDEREncoded()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C30subjectX500PrincipalDEREncoded10Foundation4DataVSgyF">subjectX500PrincipalDEREncoded()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Return the certificate&rsquo;s subject X500 Principal representation as DER encoded <code>Data</code>
+(ex: &ldquo;CN=GEM.KOMP-CA10 TEST-ONLY, OU=Komponenten-CA der Telematikinfrastruktur, O=gematik GmbH NOT-VALID, C=DE&rdquo;)</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">subjectX500PrincipalDEREncoded</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Data</span><span class="p">?</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>subject DER encoded data if successful, else nil</p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C13issuerOneLineSSyKF"></a>
+                      <a name="//apple_ref/swift/Method/issuerOneLine()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C13issuerOneLineSSyKF">issuerOneLine()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Convenience function that return the certificate&rsquo;s issuer in one line</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code><a href="../Structs/OpenSSLError.html">OpenSSLError</a></code> when retrieving issuer from X509 certificate
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">issuerOneLine</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>formatted issuer <code>String</code></p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C14subjectOneLineSSyKF"></a>
+                      <a name="//apple_ref/swift/Method/subjectOneLine()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C14subjectOneLineSSyKF">subjectOneLine()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Convenience function that return the certificate&rsquo;s subject in one line</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code><a href="../Structs/OpenSSLError.html">OpenSSLError</a></code> when retrieving subject from X509 certificate
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">subjectOneLine</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>formatted subject <code>String</code></p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C9notBefore10Foundation4DateVyKF"></a>
+                      <a name="//apple_ref/swift/Method/notBefore()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C9notBefore10Foundation4DateVyKF">notBefore()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Return the certificate&rsquo;s <code>notBefore</code> field</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code><a href="../Structs/OpenSSLError.html">OpenSSLError</a></code> when converting certificate date
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notBefore</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Date</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>the certificate&rsquo;s <code>notBefore</code> field as <code>Date</code></p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C8notAfter10Foundation4DateVyKF"></a>
+                      <a name="//apple_ref/swift/Method/notAfter()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C8notAfter10Foundation4DateVyKF">notAfter()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Return the certificate&rsquo;s <code>notAfter</code> field.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code><a href="../Structs/OpenSSLError.html">OpenSSLError</a></code> when converting certificate date
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notAfter</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Date</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>the certificate&rsquo;s <code>notAfter</code> field as <code>Date</code></p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C20isValidCaCertificateSbvp"></a>
+                      <a name="//apple_ref/swift/Property/isValidCaCertificate" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C20isValidCaCertificateSbvp">isValidCaCertificate</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Check whether the certificate is a valid CA certificate</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isValidCaCertificate</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C6issuedySbACF"></a>
+                      <a name="//apple_ref/swift/Method/issued(_:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C6issuedySbACF">issued(_:<wbr>)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Check whether another certificate is issued by the subject of <code>self</code>.
+E.g. self is the signing authority (CA) for the given <code>other</code> certificate.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">issued</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt">X509</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>other</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>other <code>X509</code> holding the supposed issuer</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>true, if subject of <code>self</code> issued the other certificate</p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C17sha256Fingerprint10Foundation4DataVyKF"></a>
+                      <a name="//apple_ref/swift/Method/sha256Fingerprint()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C17sha256Fingerprint10Foundation4DataVyKF">sha256Fingerprint()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Compute the SHA256 fingerprint of the certificate</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code><a href="../Structs/OpenSSLError.html">OpenSSLError</a></code> when computing fingerprint
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sha256Fingerprint</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Data</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>the computed SHA256 fingerprint as <code>Data</code></p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C12validateWith10trustStoreSbx_tKSlRzAC7ElementRtzlF"></a>
+                      <a name="//apple_ref/swift/Method/validateWith(trustStore:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C12validateWith10trustStoreSbx_tKSlRzAC7ElementRtzlF">validateWith(trustStore:<wbr>)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Validate the certificate with a trust store</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code><a href="../Structs/OpenSSLError.html">OpenSSLError</a></code> when trust store is empty
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">validateWith</span><span class="o">&lt;</span><span class="kt">C</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">trustStore</span><span class="p">:</span> <span class="kt">C</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="k">where</span> <span class="kt">C</span> <span class="p">:</span> <span class="kt">Collection</span><span class="p">,</span> <span class="kt">C</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">X509</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>trustStore</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Array of <code>X509</code> certificates composing the trusted store</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>true, if the certificate could be validated</p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:SQ2eeoiySbx_xtFZ"></a>
+                      <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:<wbr>_:<wbr>)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">X509</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">X509</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C30brainpoolP256r1VerifyPublicKeyAA09BrainpoolE0O0F0O0gH0VSgyF"></a>
+                      <a name="//apple_ref/swift/Method/brainpoolP256r1VerifyPublicKey()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C30brainpoolP256r1VerifyPublicKeyAA09BrainpoolE0O0F0O0gH0VSgyF">brainpoolP256r1VerifyPublicKey()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Convenience function for parsing the certificate&rsquo;s BrainpoolP256r1 PublicKey for verification, if it exists</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">brainpoolP256r1VerifyPublicKey</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/BrainpoolP256r1.html">BrainpoolP256r1</a></span><span class="o">.</span><span class="kt">Verify</span><span class="o">.</span><span class="kt">PublicKey</span><span class="p">?</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>Parsed <code><a href="../Enums/BrainpoolP256r1/Verify/PublicKey.html">BrainpoolP256r1.Verify.PublicKey</a></code>, if the certificate actually supports one, else nil</p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:7OpenSSL4X509C032brainpoolP256r1KeyExchangePublicF0AA09BrainpoolE0O0fG0O0hF0VSgyF"></a>
+                      <a name="//apple_ref/swift/Method/brainpoolP256r1KeyExchangePublicKey()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7OpenSSL4X509C032brainpoolP256r1KeyExchangePublicF0AA09BrainpoolE0O0fG0O0hF0VSgyF">brainpoolP256r1KeyExchangePublicKey()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Convenience function for parsing the certificate&rsquo;s BrainpoolP256r1 PublicKey for key exchange, if it exists</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">brainpoolP256r1KeyExchangePublicKey</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/BrainpoolP256r1.html">BrainpoolP256r1</a></span><span class="o">.</span><span class="kt">KeyExchange</span><span class="o">.</span><span class="kt">PublicKey</span><span class="p">?</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>Parsed <code><a href="../Enums/BrainpoolP256r1/KeyExchange/PublicKey.html">BrainpoolP256r1.KeyExchange.PublicKey</a></code>, if the certificate actually supports one, else nil</p>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </section>
+          </section>
+        </article>
+      </div>
+      <div class="nav-wrapper">
+        <nav class="nav-bottom">
+          <ul class="nav-groups">
+            <li class="nav-group-name">
+              <a href="../Classes.html">Classes</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Classes/OCSPResponse.html">OCSPResponse</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/OCSPResponse/Status.html">– Status</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/OCSPResponse/CertStatus.html">– CertStatus</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/OCSPResponse/BasicVerifyOptions.html">– BasicVerifyOptions</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/OpenSSLECGroup.html">OpenSSLECGroup</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/OpenSSLECGroup/Name.html">– Name</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/X509.html">X509</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/X509/SignatureAlgorithm.html">– SignatureAlgorithm</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Enums.html">Enumerations</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Enums/BrainpoolP256r1.html">BrainpoolP256r1</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Enums/BrainpoolP256r1/KeyExchange.html">– KeyExchange</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Enums/BrainpoolP256r1/Verify.html">– Verify</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Enums/CMAC.html">CMAC</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Enums/Hash.html">Hash</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Enums/Hash/SHA256.html">– SHA256</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Protocols.html">Protocols</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Protocols/DiffieHellman.html">DiffieHellman</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/DigestSigner.html">DigestSigner</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/ECCurve.html">ECCurve</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/ECPrivateKey.html">ECPrivateKey</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/ECPublicKey.html">ECPublicKey</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/ECSignature.html">ECSignature</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/PACE.html">PACE</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/SignatureVerifier.html">SignatureVerifier</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/Signer.html">Signer</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Structs.html">Structures</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Structs/OpenSSLError.html">OpenSSLError</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Typealiases.html">Type Aliases</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Typealiases.html#/s:7OpenSSL6Digesta">Digest</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-wrapper">
+        <section id="footer">
+          <p>&copy; 2021 <a class="link" href="http://www.gematik.de" target="_blank" rel="external">gematik GmbH</a>. All rights reserved. (Last updated: 2021-07-14)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.7</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </div>
+    </div>
+  </body>
+</div>
+</html>
