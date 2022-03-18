@@ -1,3 +1,8 @@
+# Release 1.0.1
+
+- SDK 15
+- update OpenSSL to 1.1.1n
+
 # Release 1.0.0
 Initial release with support/wrappers for:
 

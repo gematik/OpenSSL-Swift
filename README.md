@@ -4,7 +4,7 @@ Swift extension wrapper for gematik specific crypto operations with embedded Ope
 
 ## Overview
 
-This Xcode-project downloads, compiles and embeds OpenSSL version 1.1.0j in a Swift framework that can be included
+This Xcode-project downloads, compiles and embeds OpenSSL version 1.1.1n in a Swift framework that can be included
 in MacOS/iOS Frameworks and Apps.
 
 There are three main parts of this project.
@@ -190,5 +190,5 @@ let cmac = CMAC.aes128cbc(key: key, data: message) // == hex: "bb1d6929e95937287
 
 ## OpenSSL version update
 
-To update the OpenSSL version embedded with the library you simply update the `scripts/install_openssl` on lines 11:12
+To update the OpenSSL version embedded with the library you simply update the `scripts/install_openssl` on lines 18:19
 with the new OpenSSL version and appropriate SHA256 hash value.
