@@ -37,22 +37,88 @@ extension CMAC {
             throw OpenSSLError(name: "Key length invalid for CMAC calculation")
         }
         var macT = [UInt8](repeating: 0x0, count: byteCount)
-        var macTCount = byteCount
+        var outLen = 0
+        let macTCount = byteCount
 
-        let ctx: OpaquePointer = CMAC_CTX_new()
+        let mac = EVP_MAC_fetch(nil, "cmac", nil)
         defer {
-            CMAC_CTX_free(ctx)
+            EVP_MAC_free(mac)
+        }
+        let ctx: OpaquePointer = EVP_MAC_CTX_new(mac)
+        defer {
+            EVP_MAC_CTX_free(ctx)
+        }
+        var cipher = "aes-128-cbc".cString(using: .utf8)! // swiftlint:disable:this force_unwrapping
+        let cipherTag = "cipher".cString(using: .utf8)! // swiftlint:disable:this force_unwrapping
+        let subalgParam0 = OSSL_PARAM_construct_utf8_string(cipherTag, &cipher, 0)
+        let subalgParam1 = OSSL_PARAM_construct_end()
+        let subalgParams = [subalgParam0, subalgParam1]
+
+        guard EVP_MAC_CTX_set_params(ctx, subalgParams) == 1 else {
+            throw OpenSSLError(name: "Could not add OSSL_PARAM")
         }
 
         try key.withUnsafeBytes { (keyPtr: UnsafeRawBufferPointer) in
             try data.withUnsafeBytes { (msgPtr: UnsafeRawBufferPointer) in
-                guard let keyPtrBaseAddress = keyPtr.baseAddress,
-                      let msgPtrBaseAddress = msgPtr.baseAddress else {
+                guard let keyPtrBaseAddress = keyPtr.bindMemory(to: UInt8.self).baseAddress,
+                      let msgPtrBaseAddress = msgPtr.bindMemory(to: UInt8.self).baseAddress else {
                     throw OpenSSLError(name: "Error deriving CMAC")
                 }
-                CMAC_Init(ctx, keyPtrBaseAddress, byteCount, EVP_aes_128_cbc(), nil)
-                CMAC_Update(ctx, msgPtrBaseAddress, msgPtr.count)
-                CMAC_Final(ctx, &macT, &macTCount)
+
+                guard EVP_MAC_init(ctx, keyPtrBaseAddress, byteCount, nil) == 1
+                else {
+                    throw OpenSSLError(name: "Error EVP_MAC life cycle begin")
+                }
+                guard EVP_MAC_update(ctx, msgPtrBaseAddress, msgPtr.count) == 1
+                else {
+                    throw OpenSSLError(name: "Error EVP_MAC life cycle update")
+                }
+                guard EVP_MAC_final(ctx, &macT, &outLen, macTCount) == 1
+                else {
+                    throw OpenSSLError(name: "Error EVP_MAC life cycle final")
+                }
+            }
+        }
+        return Data(macT)
+    }
+
+    /// Stateless, one-shot AES 128 CBC CMAC function
+    /// see: https://tools.ietf.org/html/rfc4493
+    ///
+    /// - Parameters:
+    ///   - key: raw key `Data` - must be 16 bytes
+    ///   - data: raw message `Data`
+    /// - Throws: `OpenSSLError`
+    /// - Returns: calculated MAC as `Data`
+    public static func aes128cbc_oneShot(key: Data, data: Data) throws -> Data {
+        let byteCount = 16
+        guard key.count == byteCount else {
+            throw OpenSSLError(name: "Key length invalid for CMAC calculation")
+        }
+        var macT = [UInt8](repeating: 0x0, count: byteCount)
+        var outLen = 0
+        let macTCount = byteCount
+
+        try key.withUnsafeBytes { (keyPtr: UnsafeRawBufferPointer) in
+            try data.withUnsafeBytes { (msgPtr: UnsafeRawBufferPointer) in
+                guard let keyPtrBaseAddress = keyPtr.bindMemory(to: UInt8.self).baseAddress,
+                      let msgPtrBaseAddress = msgPtr.bindMemory(to: UInt8.self).baseAddress else {
+                    throw OpenSSLError(name: "Error deriving CMAC")
+                }
+                EVP_Q_mac(
+                    nil,
+                    "cmac",
+                    nil,
+                    "aes-128-cbc",
+                    nil,
+                    keyPtrBaseAddress,
+                    byteCount,
+                    msgPtrBaseAddress,
+                    msgPtr.count,
+                    &macT,
+                    macTCount,
+                    &outLen
+                )
             }
         }
         return Data(macT)

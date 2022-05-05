@@ -28,10 +28,12 @@ final class CMACTests: XCTestCase {
 
         // when
         let cmac = try CMAC.aes128cbc(key: key, data: message)
+        let cmacOneShot = try CMAC.aes128cbc_oneShot(key: key, data: message)
 
         // then
         let expectedCmac = try Data(hex: "bb1d6929e95937287fa37d129b756746")
         XCTAssertEqual(cmac, expectedCmac)
+        XCTAssertEqual(cmacOneShot, expectedCmac)
     }
 
     func testAes128CbcCmacMessageLength16() throws {
@@ -41,10 +43,12 @@ final class CMACTests: XCTestCase {
 
         // when
         let cmac = try CMAC.aes128cbc(key: key, data: message)
+        let cmacOneShot = try CMAC.aes128cbc_oneShot(key: key, data: message)
 
         // then
         let expectedCmac = try Data(hex: "070a16b46b4d4144f79bdd9dd04a287c")
         XCTAssertEqual(cmac, expectedCmac)
+        XCTAssertEqual(cmacOneShot, expectedCmac)
     }
 
     func testAes128CbcCmacMessageLength64() throws {
@@ -58,10 +62,12 @@ final class CMACTests: XCTestCase {
 
         // when
         let cmac = try CMAC.aes128cbc(key: key, data: message)
+        let cmacOneShot = try CMAC.aes128cbc_oneShot(key: key, data: message)
 
         // then
         let expectedCmac = try Data(hex: "51f0bebf7e3b9d92fc49741779363cfe")
         XCTAssertEqual(cmac, expectedCmac)
+        XCTAssertEqual(cmacOneShot, expectedCmac)
     }
 
     func testAes128CbcCmacInvalidKey() throws {
@@ -75,5 +81,7 @@ final class CMACTests: XCTestCase {
         // then
         XCTAssertThrowsError(try CMAC.aes128cbc(key: invalidKeyShort, data: message))
         XCTAssertThrowsError(try CMAC.aes128cbc(key: invalidKeyLong, data: message))
+        XCTAssertThrowsError(try CMAC.aes128cbc_oneShot(key: invalidKeyShort, data: message))
+        XCTAssertThrowsError(try CMAC.aes128cbc_oneShot(key: invalidKeyLong, data: message))
     }
 }

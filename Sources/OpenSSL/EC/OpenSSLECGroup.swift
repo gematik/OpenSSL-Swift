@@ -99,7 +99,7 @@ extension OpenSSLECGroup {
         let number = field.withUnsafeBignumPointer { fieldPtr in
             a.withUnsafeBignumPointer { aPtr in
                 b.withUnsafeBignumPointer { bPtr in
-                    EC_GROUP_get_curve_GFp(self.curve, fieldPtr, aPtr, bPtr, nil)
+                    EC_GROUP_get_curve(self.curve, fieldPtr, aPtr, bPtr, nil)
                 }
             }
         }

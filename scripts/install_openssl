@@ -15,8 +15,8 @@ echo "ARCHS: $ARCHS"
 cd "$(dirname $0)/.."
 DIRNAME=$(pwd)
 
-VERSION=${1-"1.1.1n"}
-VERSION_SHA256_CHECKSUM=${2-"40dceb51a4f6a5275bde0e6bf20ef4b91bfc32ed57c0552e2e8e15463372b17a"}
+VERSION=${1-"3.0.2"}
+VERSION_SHA256_CHECKSUM=${2-"98e91ccead4d4756ae3c9cde5e09191a8e586d9f4d50838e7ec09d6411dfdb63"}
 
 ####################################
 OPENSSL_IMAGE="${DIRNAME}/openssl-${VERSION}.tar.gz"
@@ -60,13 +60,22 @@ function build_for()
 
   pushd "$PLATFORM_DIR"
   patch "Configurations/10-main.conf" < "${DIRNAME}/Config/ios-conf.patch"
+  if [ ${PLATFORM_NAME} != "macosx" ]; then
+  patch "Configurations/shared-info.pl" < "${DIRNAME}/Config/shared-info.pl.patch"
+  fi
+  export MACOSX_DEPLOYMENT_TARGET="10.4"
 
   if [ ! -z $3 ]; then
     echo "Setting CROSS_TOP and CROSS_SDK"
     export CROSS_TOP="${!CROSS_TOP_ENV}"
     export CROSS_SDK="${!CROSS_SDK_ENV}"
   fi
-  ./Configure $PLATFORM "-arch $ARCH -fembed-bitcode" no-shared no-asm no-ssl3 no-comp no-hw no-engine no-async --prefix="${TARGET_DIR}" || exit 1
+  echo "./Configure $PLATFORM \"-arch $ARCH -fembed-bitcode\" no-asm no-ssl3 no-comp no-engine no-async --prefix=\"${TARGET_DIR}\""
+  if [ ${PLATFORM_NAME} == "macosx" ]; then
+    ./Configure $PLATFORM "-arch $ARCH" no-asm no-ssl3 no-comp no-engine no-async --prefix="${TARGET_DIR}" || exit 1
+  else
+    ./Configure $PLATFORM "-arch $ARCH -fembed-bitcode" no-asm no-ssl3 no-comp no-engine no-async --prefix="${TARGET_DIR}" || exit 1
+  fi
   # problem of concurrent build; make -j8
   echo "Building $PLATFORM:$ARCH static library..."
   make >> /dev/null 2>&1 || exit 1
@@ -165,7 +174,7 @@ if [ $SKIP_BUILD != 1 ]; then
     export CROSS_COMPILE=`xcode-select --print-path`/Toolchains/XcodeDefault.xctoolchain/usr/bin/
 
     build_for ios64sim-cross x86_64 SIM || exit 1
-    build_for ios64-cross arm64 IOS || exit 1
+    build_for ios64-cross-fix arm64 IOS || exit 1
 
     export CROSS_COMPILE="" # set via `CC` within ios-conf.patch
 
@@ -175,7 +184,7 @@ if [ $SKIP_BUILD != 1 ]; then
   fi
 
   # Copy include and License into main OpenSSL folder (done after configure so <openssl/opensslconf.h> can be generated)
-  #cp "${DIRNAME}/openssl_ios64-cross_${VERSION}/LICENSE" "${OPENSSL_LIB_FOLDER}" # Copy License
+  #cp "${DIRNAME}/openssl_ios64-cross-fix_${VERSION}/LICENSE" "${OPENSSL_LIB_FOLDER}" # Copy License
 
   # Link
   echo "Linking..."
@@ -185,8 +194,8 @@ if [ $SKIP_BUILD != 1 ]; then
     pack_for $OPENSSL_CRYPTO_LIBNAME "$OPENSSL_LIB_FOLDER" darwin64-x86_64-cc,darwin64-arm64-cc macOS || exit 1
   else
     # iOS
-    pack_for $OPENSSL_SSL_LIBNAME "$OPENSSL_LIB_FOLDER" ios64-cross iphoneos || exit 1
-    pack_for $OPENSSL_CRYPTO_LIBNAME "$OPENSSL_LIB_FOLDER" ios64-cross iphoneos || exit 1
+    pack_for $OPENSSL_SSL_LIBNAME "$OPENSSL_LIB_FOLDER" ios64-cross-fix iphoneos || exit 1
+    pack_for $OPENSSL_CRYPTO_LIBNAME "$OPENSSL_LIB_FOLDER" ios64-cross-fix iphoneos || exit 1
     pack_for $OPENSSL_SSL_LIBNAME "$OPENSSL_LIB_FOLDER" ios64sim-cross,ios64sim-arm64-cross iphonesimulator || exit 1
     pack_for $OPENSSL_CRYPTO_LIBNAME "$OPENSSL_LIB_FOLDER" ios64sim-cross,ios64sim-arm64-cross iphonesimulator || exit 1
   fi

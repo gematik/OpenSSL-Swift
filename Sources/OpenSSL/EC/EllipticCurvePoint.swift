@@ -139,7 +139,7 @@ extension EllipticCurvePoint {
         try x.withUnsafeBignumPointer { xPtr in
             try y.withUnsafeBignumPointer { yPtr in
                 try group.withUnsafeGroupPointer { groupPtr in
-                    guard EC_POINT_get_affine_coordinates_GFp(groupPtr, point, xPtr, yPtr, nil) == 1
+                    guard EC_POINT_get_affine_coordinates(groupPtr, point, xPtr, yPtr, nil) == 1
                     else {
                         throw OpenSSLError(name: "EC_POINT get affine coordinates GFp failed")
                     }

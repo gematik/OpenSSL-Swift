@@ -4,7 +4,7 @@ Swift extension wrapper for gematik specific crypto operations with embedded Ope
 
 ## Overview
 
-This Xcode-project downloads, compiles and embeds OpenSSL version 1.1.1n in a Swift framework that can be included
+This Xcode-project downloads, compiles and embeds OpenSSL version 3.0.2 in a Swift framework that can be included
 in MacOS/iOS Frameworks and Apps.
 
 There are three main parts of this project.
@@ -40,7 +40,7 @@ the binary libraries that are built by this project. [We don't support CocoaPods
 
 ```Cartfile
 
-git "https://github.com/gematik/openssl-swift.git" ~> 1.0
+git "https://github.com/gematik/openssl-swift.git" ~> 3.0
 ```
 
 ```shell script
@@ -101,6 +101,21 @@ print(try ocspResponse.basicVerifyWith(trustedStore: [ocspSignerCa, rootCa])) //
 // After successful path validation the function returns success if the OCSP_NOCHECKS flag is set.
 let options: OCSPResponse.BasicVerifyOptions = [.noChecks]
 try vauOcspResponse.basicVerifyWith(trustedStore: [ocspSignerCa, rootCa], options: options)
+```
+
+### Cryptographic Message Syntax
+
+CMS-Encryption of a message for (multiple) `X509` recipient certificate(s) (for now only RSA!) is supported. An *Authenticated-Enveloped-Data Content Type* structure using *AES 256 GCM* will be created.
+
+```swift
+let x509rsa = try X509(pem: x509rsaPem.data(using: .utf8)!)
+let x509ecc = try X509(pem: x509eccPem.data(using: .utf8)!)
+let recipients = [x509rsa, x509ecc]
+let data = message.data(using: .utf8)!
+let cms = try CMSContentInfo.encryptPartial(data: data)
+try cms.addRecipientsRSAOnly(recipients)
+try cms.final(data: data)
+print(cms.derBytes?.hexString())
 ```
 
 ### Key Management

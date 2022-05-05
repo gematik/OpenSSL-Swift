@@ -337,7 +337,7 @@ extension X509 {
             EVP_PKEY_free(publicKey)
         }
 
-        guard NID_X9_62_id_ecPublicKey == EVP_PKEY_id(publicKey),
+        guard NID_X9_62_id_ecPublicKey == EVP_PKEY_get_id(publicKey),
               let ecKey = EVP_PKEY_get0_EC_KEY(publicKey),
               NID_brainpoolP256r1 == EC_GROUP_get_curve_name(EC_KEY_get0_group(ecKey)),
               let duplicate = EC_KEY_dup(ecKey) else {
@@ -356,7 +356,7 @@ extension X509 {
             EVP_PKEY_free(publicKey)
         }
 
-        guard NID_X9_62_id_ecPublicKey == EVP_PKEY_id(publicKey),
+        guard NID_X9_62_id_ecPublicKey == EVP_PKEY_get_id(publicKey),
               let ecKey = EVP_PKEY_get0_EC_KEY(publicKey),
               NID_brainpoolP256r1 == EC_GROUP_get_curve_name(EC_KEY_get0_group(ecKey)),
               let duplicate = EC_KEY_dup(ecKey) else {

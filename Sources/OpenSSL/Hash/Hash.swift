@@ -16,7 +16,7 @@
 //  
 //
 
-@_implementationOnly import COpenSSL
+import CryptoKit
 import Foundation
 
 /// Hashing package
@@ -31,20 +31,7 @@ public extension Hash { // swiftlint:disable:this no_extension_access_modifier
         /// - Parameter data: hash input
         /// - Returns: SHA-256 hash
         public static func hash(data: Data) -> Data {
-            let sha256 = UnsafeMutablePointer<SHA256_CTX>.allocate(capacity: 1)
-            defer {
-                sha256.deallocate()
-            }
-            var hash = [UInt8](repeating: 0x0, count: Int(SHA256_DIGEST_LENGTH))
-            SHA256_Init(sha256)
-            _ = data.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> CInt in
-                guard let baseAddress = bytes.baseAddress else {
-                    return CInt(0)
-                }
-                return SHA256_Update(sha256, baseAddress, bytes.count)
-            }
-            SHA256_Final(&hash, sha256)
-            return Data(hash)
+            Data(CryptoKit.SHA256.hash(data: data))
         }
 
         /// Hash the given string with SHA-256

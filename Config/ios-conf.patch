@@ -1,16 +1,25 @@
-1574a1575,1589
+1671a1672,1695
 >     "ios64sim-cross" => {
->         inherit_from     => [ "darwin-common", asm("no_asm") ],
+>         inherit_from     => [ "ios-common" ],
 >         cflags           => add("-arch x86_64 -DOPENSSL_NO_ASM -mios-version-min=7.0.0 -isysroot \$(CROSS_TOP)/SDKs/\$(CROSS_SDK) -fno-common"),
+>         module_ldflags   => "-shared",
+>         LDFLAGS          => "-shared",
 >         sys_id           => "iOS",
 >         bn_ops           => "SIXTY_FOUR_BIT_LONG RC4_CHAR",
 >         perlasm_scheme   => "ios64",
 >     },
 >     "ios64sim-arm64-cross" => {
->         inherit_from     => [ "darwin-common", asm("no_asm") ],
+>         inherit_from     => [ "darwin-common" ],
 >         CC               => "xcrun -sdk iphonesimulator cc",
 >         cflags           => add("-arch arm64 -DOPENSSL_NO_ASM -mios-simulator-version-min=14.0.0 -isysroot \$(CROSS_TOP)/SDKs/\$(CROSS_SDK) -fno-common"),
 >         sys_id           => "iOS",
+>         module_ldflags   => "-shared",
+>         LDFLAGS          => "-shared",
 >         bn_ops           => "SIXTY_FOUR_BIT_LONG RC4_CHAR",
 >         perlasm_scheme   => "ios64",
+>     },
+>     "ios64-cross-fix" => {
+>         inherit_from     => [ "ios64-cross" ],
+>         module_ldflags   => "-shared",
+>         LDFLAGS          => "-shared",
 >     },

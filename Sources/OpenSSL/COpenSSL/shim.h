@@ -1,6 +1,7 @@
 #ifndef COpenSSL_H
 #define COpenSSL_H
 
+#include <openssl/cms.h>
 #include <openssl/conf.h>
 #include <openssl/bn.h>
 #include <openssl/cmac.h>
