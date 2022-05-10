@@ -31,7 +31,7 @@ extension CMAC {
     ///   - data: raw message `Data`
     /// - Throws: `OpenSSLError`
     /// - Returns: calculated MAC as `Data`
-    public static func aes128cbc(key: Data, data: Data) throws -> Data {
+    public static func aes128cbc_bySteps(key: Data, data: Data) throws -> Data {
         let byteCount = 16
         guard key.count == byteCount else {
             throw OpenSSLError(name: "Key length invalid for CMAC calculation")
@@ -90,7 +90,7 @@ extension CMAC {
     ///   - data: raw message `Data`
     /// - Throws: `OpenSSLError`
     /// - Returns: calculated MAC as `Data`
-    public static func aes128cbc_oneShot(key: Data, data: Data) throws -> Data {
+    public static func aes128cbc(key: Data, data: Data) throws -> Data {
         let byteCount = 16
         guard key.count == byteCount else {
             throw OpenSSLError(name: "Key length invalid for CMAC calculation")

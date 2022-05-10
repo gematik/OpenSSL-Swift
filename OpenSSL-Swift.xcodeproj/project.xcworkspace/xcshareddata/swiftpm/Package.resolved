@@ -1,25 +1,23 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "DataKit",
-        "repositoryURL": "https://github.com/SwiftCommon/DataKit",
-        "state": {
-          "branch": null,
-          "revision": "0aca955ad82c44c5a1668916d95538f90f2b7e43",
-          "version": "1.0.2"
-        }
-      },
-      {
-        "package": "Nimble",
-        "repositoryURL": "https://github.com/Quick/Nimble",
-        "state": {
-          "branch": null,
-          "revision": "7a46a5fc86cb917f69e3daf79fcb045283d8f008",
-          "version": "8.1.2"
-        }
+  "pins" : [
+    {
+      "identity" : "datakit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftCommon/DataKit",
+      "state" : {
+        "revision" : "0aca955ad82c44c5a1668916d95538f90f2b7e43",
+        "version" : "1.0.2"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "nimble",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Quick/Nimble",
+      "state" : {
+        "revision" : "7a46a5fc86cb917f69e3daf79fcb045283d8f008",
+        "version" : "8.1.2"
+      }
+    }
+  ],
+  "version" : 2
 }

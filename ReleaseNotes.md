@@ -1,3 +1,9 @@
+# Release 3.0.3
+
+- Fix CMAC method `aes128cbc(key:, data:) throws -> Data`
+- Change Xcode version to 13.3.1
+- Upgrade OpenSSL version to 3.0.3
+
 # Release 3.0.2
 
 # OpenSSL 3.0.2
