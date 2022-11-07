@@ -1,6 +1,7 @@
 #ifndef COpenSSL_H
 #define COpenSSL_H
 
+#include <define_wrapper.h>
 #include <openssl/cms.h>
 #include <openssl/conf.h>
 #include <openssl/bn.h>
@@ -15,6 +16,7 @@
 #include <openssl/sha.h>
 #include <openssl/hmac.h>
 #include <openssl/rand.h>
+#include <openssl/param_build.h>
 #include <openssl/pkcs12.h>
 #include <openssl/ocsp.h>
 #include <openssl/x509v3.h>

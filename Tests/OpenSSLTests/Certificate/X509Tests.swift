@@ -113,7 +113,7 @@ final class X509Tests: XCTestCase {
             )
         )
         XCTAssertNotNil(brainpoolP256r1PublicKey)
-        XCTAssertEqual(brainpoolP256r1PublicKey?.rawValue, expected.rawValue)
+        XCTAssertEqual(try brainpoolP256r1PublicKey?.rawValue(), try expected.rawValue())
     }
 
     func testX509CertificateBrainpoolP256r1KeyExchangePublicKey() throws {
@@ -128,7 +128,7 @@ final class X509Tests: XCTestCase {
                 )
             )
         XCTAssertNotNil(brainpoolP256r1PublicKey)
-        XCTAssertEqual(brainpoolP256r1PublicKey?.rawValue, expected.rawValue)
+        XCTAssertEqual(try brainpoolP256r1PublicKey?.rawValue(), try expected.rawValue())
     }
 
     func testIsValidCaCertificate() {

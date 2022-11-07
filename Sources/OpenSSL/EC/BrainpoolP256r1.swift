@@ -26,6 +26,8 @@ public enum BrainpoolP256r1 {}
 
 extension BrainpoolP256r1 {
     struct Curve: ECCurve {
+        static var name: String = OpenSSLECGroup.Name.brainpoolP256r1.rawValue
+
         static var group: OpenSSLECGroup {
             guard let group = try? OpenSSLECGroup(curve: .brainpoolP256r1) else {
                 preconditionFailure("BrainpoolP256r1 OpenSSL ECGroup could not be initialized")

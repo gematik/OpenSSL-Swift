@@ -38,16 +38,16 @@ public extension BrainpoolP256r1 { // swiftlint:disable:this no_extension_access
                 pubKey = try ECPublicKeyImpl(x962: x962)
             }
 
-            public var rawValue: Data {
-                pubKey.rawValue
+            public func rawValue() throws -> Data {
+                try pubKey.rawValue()
             }
 
-            public var x962Value: Data {
-                pubKey.x962Value
+            public func x962Value() throws -> Data {
+                try pubKey.x962Value()
             }
 
-            public var compactValue: Data? {
-                pubKey.compactValue
+            public func compactValue() throws -> Data {
+                try pubKey.compactValue()
             }
 
             public func verify(signature: Signature, message: Data) throws -> Bool {
@@ -82,8 +82,8 @@ public extension BrainpoolP256r1 { // swiftlint:disable:this no_extension_access
                 try Signature(signature: key.sign(digest: Hash.SHA256.hash(data: message)))
             }
 
-            public static func generateKey(compactRepresentable flag: Bool) throws -> PrivateKey {
-                try Self(key: ECPrivateKeyImpl<BrainpoolP256r1.Curve>.generateKey(compactRepresentable: flag))
+            public static func generateKey() throws -> PrivateKey {
+                try Self(key: ECPrivateKeyImpl<BrainpoolP256r1.Curve>.generateKey())
             }
         }
 

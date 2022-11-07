@@ -20,31 +20,46 @@
 import XCTest
 
 final class ECPublicKeyTests: XCTestCase {
-    func testBrainpoolP256r1InitX962() throws {
+    func testBrainpoolP256r1PublicKey_InitData() throws {
+        // given
         let pubKeyX962 =
             try Data(
                 hex: "048634212830DAD457CA05305E6687134166B9C21A65FFEBF555F4E75DFB04888866E4B6843624CBDA43C97EA89968BC41FD53576F82C03EFA7D601B9FACAC2B29" // swiftlint:disable:this line_length
             )
 
-        let pubKey: ECPublicKey = try ECPublicKeyImpl<BrainpoolP256r1.Curve>(x962: pubKeyX962)
-        XCTAssertNotNil(pubKey)
-        XCTAssertEqual(pubKeyX962, pubKey.rawValue)
-        XCTAssertEqual(pubKeyX962, pubKey.x962Value)
-        let compactKey = try Data(hex: "038634212830DAD457CA05305E6687134166B9C21A65FFEBF555F4E75DFB048888")
-        XCTAssertEqual(compactKey, pubKey.compactValue)
+        // when
+        let sut: ECPublicKey = try ECPublicKeyImpl<BrainpoolP256r1.Curve>(data: pubKeyX962)
+
+        // then
+        XCTAssertNotNil(sut)
+        XCTAssertEqual(try sut.rawValue(), pubKeyX962)
+        XCTAssertEqual(try sut.rawValue(), pubKeyX962)
+
+        let expectedCompactKey = try Data(hex: "038634212830DAD457CA05305E6687134166B9C21A65FFEBF555F4E75DFB048888")
+        XCTAssertEqual(try sut.compactValue(), expectedCompactKey)
     }
 
-    func testBrainpoolP256r1InitCompact() throws {
+    func testBrainpoolP256r1PublicKey_InitCompact() throws {
+        // given
         let compactKey = try Data(hex: "038634212830DAD457CA05305E6687134166B9C21A65FFEBF555F4E75DFB048888")
-        let pubKeyX962 =
+
+        // when
+        let sut = try ECPublicKeyImpl<BrainpoolP256r1.Curve>(compact: compactKey)
+
+        // then
+        XCTAssertNotNil(sut)
+        XCTAssertEqual(try sut.compactValue(), compactKey)
+
+        let expectedPubKeyX962 =
             try Data(
                 hex: "048634212830DAD457CA05305E6687134166B9C21A65FFEBF555F4E75DFB04888866E4B6843624CBDA43C97EA89968BC41FD53576F82C03EFA7D601B9FACAC2B29" // swiftlint:disable:this line_length
             )
+        XCTAssertEqual(try sut.rawValue(), expectedPubKeyX962)
+        XCTAssertEqual(try sut.rawValue(), expectedPubKeyX962)
+    }
 
-        let pubKey: ECPublicKey = try ECPublicKeyImpl<BrainpoolP256r1.Curve>(compact: compactKey)
-        XCTAssertNotNil(pubKey)
-        XCTAssertEqual(pubKeyX962, pubKey.rawValue)
-        XCTAssertEqual(pubKeyX962, pubKey.x962Value)
-        XCTAssertEqual(compactKey, pubKey.compactValue)
+    func testBrainpoolP256r1_ThrowsInitEmpty() throws {
+        XCTAssertThrowsError(try ECPublicKeyImpl<BrainpoolP256r1.Curve>(x962: Data()))
+        XCTAssertThrowsError(try ECPublicKeyImpl<BrainpoolP256r1.Curve>(compact: Data()))
     }
 }

@@ -1,12 +1,30 @@
 {
   "pins" : [
     {
+      "identity" : "cwlcatchexception",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mattgallagher/CwlCatchException.git",
+      "state" : {
+        "revision" : "35f9e770f54ce62dd8526470f14c6e137cef3eea",
+        "version" : "2.1.1"
+      }
+    },
+    {
+      "identity" : "cwlpreconditiontesting",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mattgallagher/CwlPreconditionTesting.git",
+      "state" : {
+        "revision" : "c21f7bab5ca8eee0a9998bbd17ca1d0eb45d4688",
+        "version" : "2.1.0"
+      }
+    },
+    {
       "identity" : "datakit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SwiftCommon/DataKit",
       "state" : {
-        "revision" : "0aca955ad82c44c5a1668916d95538f90f2b7e43",
-        "version" : "1.0.2"
+        "revision" : "08cc443adbe1103ba36e1c187fa313b8e412ad60",
+        "version" : "1.1.0"
       }
     },
     {
@@ -14,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Quick/Nimble",
       "state" : {
-        "revision" : "7a46a5fc86cb917f69e3daf79fcb045283d8f008",
-        "version" : "8.1.2"
+        "revision" : "c93f16c25af5770f0d3e6af27c9634640946b068",
+        "version" : "9.2.1"
       }
     }
   ],

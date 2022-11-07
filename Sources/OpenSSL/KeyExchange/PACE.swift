@@ -46,9 +46,9 @@ extension ECPrivateKeyImpl: PACE {
     public func paceMapNonce(
         nonce: Data,
         peerKey1: ECPublicKeyImpl<Curve>
-    ) throws -> (ECPublicKeyImpl<Curve>, ECPrivateKeyImpl<Curve>) {
+    ) throws -> (ECPublicKeyImpl<Curve>, ECPrivateKeyImpl) {
         try paceMapNonce(nonce: nonce, peerKey1: peerKey1) {
-            try Self.generateKey(compactRepresentable: false)
+            try Self.generateKey()
         }
     }
 
@@ -56,38 +56,35 @@ extension ECPrivateKeyImpl: PACE {
         nonce: Data,
         peerKey1: ECPublicKeyImpl<Curve>,
         keyPair generator: () throws -> PrivateKey
-    ) throws -> (ECPublicKeyImpl<Curve>, ECPrivateKeyImpl<Curve>) {
-        let gTilde = try ephemeralGenerator(nonce: nonce, peerKey1: peerKey1)
+    ) throws -> (ECPublicKeyImpl<Curve>, ECPrivateKeyImpl) {
+        let gTilde = try paceMapNoncePart1(nonce: nonce, peerKey1: peerKey1)
         return try paceMapNoncePart2(gTilde: gTilde, keyPair: generator)
     }
 
     // Part 1:
     // Calculate ephemeral shared secret Point g~ = nonce * g + ownKey1.priv * peerKey1
-    private func ephemeralGenerator(nonce: Data, peerKey1: ECPublicKeyImpl<Curve>) throws -> EllipticCurvePoint {
+    private func paceMapNoncePart1(nonce: Data, peerKey1: ECPublicKeyImpl<Curve>) throws -> EllipticCurvePoint<Curve> {
         // summand1 = nonce * G
         let nonce = try BigNumber(bytes: nonce)
-        let summand1 = try EllipticCurvePoint(multiplying: nonce, on: Curve.group)
+        let summand1 = try EllipticCurvePoint<Curve>(multiplyWithBasePoint: nonce)
 
         // summand2 = ownKey1.priv * peerKey1
-        let summand2 = try multiply(with: peerKey1.point)
+        let summand2 = try multiply(with: EllipticCurvePoint<Curve>(raw: peerKey1.rawValue()))
 
         // g~ = summand1 + summand2
-        return try EllipticCurvePoint(add: summand1, to: summand2, on: Curve.group)
+        return try summand1.add(summand2)
     }
 
     // Part2:
     // Generate a second private key (pair) and return derived ownPubKey2 = privKey2 * g~ and keyPair2
     private func paceMapNoncePart2(
-        gTilde: EllipticCurvePoint,
+        gTilde: EllipticCurvePoint<Curve>,
         keyPair generator: () throws -> PrivateKey
-    ) throws -> (ECPublicKeyImpl<Curve>, ECPrivateKeyImpl<Curve>) {
+    ) throws -> (ECPublicKeyImpl<Curve>, ECPrivateKeyImpl) {
         let privateKey2 = try generator()
         let ownPubKeyPoint2: EllipticCurvePoint = try privateKey2.multiply(with: gTilde)
 
-        guard let ownPubKeyX962 = ownPubKeyPoint2.export(using: POINT_CONVERSION_UNCOMPRESSED, group: Curve.group)
-        else {
-            throw OpenSSLError(name: "Failed to export point data")
-        }
+        let ownPubKeyX962 = try ownPubKeyPoint2.export(pointConversion: .uncompressed)
         let ownPubKey = try ECPublicKeyImpl<Curve>(x962: ownPubKeyX962)
 
         return (ownPubKey, privateKey2)

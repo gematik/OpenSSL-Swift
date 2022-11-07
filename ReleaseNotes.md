@@ -1,3 +1,12 @@
+# Release 4.0.0
+
+- Modify ECPublicKey's export API
+- Change ECPrivateKeyImpl's underlying data type to EVP_PKEY
+- Remove all usage of deprecated low level OpenSSL-API
+- Make EllipticCurvePoint generic in a Curve type
+- Upgrade OpenSSL version to 3.0.7
+- Change Xcode version to 14.0
+
 # Release 3.0.3
 
 - Fix CMAC method `aes128cbc(key:, data:) throws -> Data`

@@ -35,36 +35,79 @@ public protocol ECPublicKey {
     init(x962: Data) throws
 
     /// The raw EC Public Key representation in Octet-String
-    var rawValue: Data { get }
+    func rawValue() throws -> Data
+
     /// The raw EC Public Key representation using ANSI X9.62 standard [04 || X || Y]. (uncompressed)
-    var x962Value: Data { get }
+    func x962Value() throws -> Data
+
     /// The raw EC Public Key compressed representation
-    var compactValue: Data? { get }
+    func compactValue() throws -> Data
 }
 
 final class ECPublicKeyImpl<Curve: ECCurve>: ECPublicKey {
-    let pubKey: EC_KEY
+    let pkey: EVP_PKEY
 
     /// Owning Non-copying initializer for EC Public Key
     ///
-    /// - Parameter pubKey: pointer to the EC_KEY to own and manage
-    internal init(pubKey: EC_KEY) {
-        self.pubKey = pubKey
+    /// - Parameter pkey: pointer to the EVP_PKEY to own and manage
+    init(pkey: EVP_PKEY) {
+        self.pkey = pkey
     }
 
-    private init(data: Data, curve group: OpenSSLECGroup) throws {
-        pubKey = try group.makeUnsafeOwnedECKey()
-        let point = EC_POINT_new(group.curve)
-        let resultCode = try data.withUnsafeBytes { buffer -> CInt in
-            guard let bufferPointer = buffer.bindMemory(to: UInt8.self).baseAddress else {
-                throw OpenSSLError(name: "Public key data unavailable")
+    /// Initialize a public key from data (regardless whether in compressed or uncompressed representation.
+    ///
+    /// - Parameter data: Data encoding the public key
+    /// - Throws: OpenSSLError
+    init(data: Data) throws {
+        var pkey = EVP_PKEY_new()
+
+        // set up OSSL_PARAMs
+        let osslParamBuilder = OSSL_PARAM_BLD_new()
+        defer { OSSL_PARAM_BLD_free(osslParamBuilder) }
+        guard
+            OSSL_PARAM_BLD_push_utf8_string(osslParamBuilder, OSSL_PKEY_PARAM_GROUP_NAME_W, Curve.name.asCChar, 0) == 1
+        else {
+            throw OpenSSLError(name: "Error setting up OSSL_PARAM")
+        }
+
+        try data.withUnsafeBytes { buffer in
+            guard
+                let bufferPointer = buffer.bindMemory(to: UInt8.self).baseAddress,
+                OSSL_PARAM_BLD_push_octet_string(
+                    osslParamBuilder,
+                    OSSL_PKEY_PARAM_PUB_KEY_W,
+                    bufferPointer,
+                    buffer.count
+                ) == 1
+            else {
+                throw OpenSSLError(name: "Error setting up OSSL_PARAM")
             }
-            return EC_POINT_oct2point(group.curve, point, bufferPointer, buffer.count, nil)
         }
-        guard resultCode == 1 else {
-            throw OpenSSLError(name: "incorrect public key encoding")
+        let osslParams = OSSL_PARAM_BLD_to_param(osslParamBuilder)
+        defer { OSSL_PARAM_free(osslParams) }
+
+        // write OSSL_PARAMs to EVP_PKEY
+        let ctx = EVP_PKEY_CTX_new_from_name(nil, EVP_PKEY_CTX_NAME_EC, nil)
+        defer { EVP_PKEY_CTX_free(ctx) }
+        guard
+            EVP_PKEY_fromdata_init(ctx) == 1,
+            EVP_PKEY_fromdata(ctx, &pkey, EVP_PKEY_PUBLIC_KEY_W, osslParams) == 1,
+            let pkey = pkey
+        else {
+            throw OpenSSLError(name: "Error reading data to pkey")
         }
-        EC_KEY_set_public_key(pubKey, point)
+
+        let validationContext = EVP_PKEY_CTX_new_from_pkey(nil, pkey, nil)
+        defer { EVP_PKEY_CTX_free(validationContext) }
+        // NOTE: Functions return -2 if the operation is not supported for the specific algorithm. Not an issue now.
+        guard
+            EVP_PKEY_param_check(validationContext) > 0,
+            EVP_PKEY_public_check(validationContext) > 0
+        else {
+            throw OpenSSLError(name: "Error when validating the components of the key (bad data?)")
+        }
+
+        self.pkey = pkey
     }
 
     convenience init(x962: Data) throws {
@@ -73,7 +116,7 @@ final class ECPublicKeyImpl<Curve: ECCurve>: ECPublicKey {
         guard length == (group.coordinateByteCount * 2) + 1 else {
             throw OpenSSLError(name: "incorrectParameterSize")
         }
-        try self.init(data: x962, curve: group)
+        try self.init(data: x962)
     }
 
     convenience init(compact: Data) throws {
@@ -82,7 +125,7 @@ final class ECPublicKeyImpl<Curve: ECCurve>: ECPublicKey {
         guard length == group.coordinateByteCount + 1 else {
             throw OpenSSLError(name: "incorrectParameterSize")
         }
-        try self.init(data: compact, curve: group)
+        try self.init(data: compact)
     }
 
     init(pem _: Data) throws {
@@ -90,63 +133,56 @@ final class ECPublicKeyImpl<Curve: ECCurve>: ECPublicKey {
     }
 
     deinit {
-        EC_KEY_free(pubKey)
+        EVP_PKEY_free(pkey)
     }
 
-    var rawValue: Data {
-        exportKey(using: POINT_CONVERSION_UNCOMPRESSED) ?? Data()
-    }
-
-    var x962Value: Data {
-        rawValue
-    }
-
-    var compactValue: Data? {
-        exportKey(using: POINT_CONVERSION_COMPRESSED)
-    }
-
-    private func exportKey(using compression: point_conversion_form_t) -> Data? {
+    // - NOTE: Unexpectedly, the output format of EVP_PKEY_todata() is POINT_CONVERSION_COMPRESSED(!) for the pub key
+    //      and therefore cannot be used here. Work around for now is the usage of i2d_PublicKey().
+    // see: https://github.com/openssl/openssl/issues/16595 and
+    //      https://github.com/openssl/openssl/pull/16624
+    func rawValue() throws -> Data {
         var buffer: UnsafeMutablePointer<UInt8>?
-        let size = EC_KEY_key2buf(pubKey, compression, &buffer, nil)
+        let size = i2d_PublicKey(pkey, &buffer)
         guard size > 0, let safeBuffer = buffer else {
-            return nil
+            throw OpenSSLError(name: "Unable to retrieve public key data")
         }
-        return Data(bytesNoCopy: safeBuffer, count: size, deallocator: .free)
+        return Data(bytesNoCopy: safeBuffer, count: Int(size), deallocator: .free)
     }
 
-    var point: EllipticCurvePoint {
-        let pubKeyPtr = EC_KEY_get0_public_key(pubKey)
-        guard let pointPtr = Curve.group.withUnsafeGroupPointer({ groupPtr in
-            EC_POINT_dup(pubKeyPtr, groupPtr)
-        }) else {
-            preconditionFailure("Public key has no point value! Malformed initialization?")
-        }
-        return EllipticCurvePoint(point: pointPtr)
+    func x962Value() throws -> Data {
+        try rawValue()
+    }
+
+    func compactValue() throws -> Data {
+        let dup = EVP_PKEY_dup(pkey)
+        defer { EVP_PKEY_free(dup) }
+        return try publicKeyCompactDataFromEvpPkey(dup)
     }
 }
 
 extension ECPublicKeyImpl {
     func verify(signature: ECDSASignature, digest: Digest) throws -> Bool {
-        let success = signature.withUnsafeSignaturePointer { signaturePtr in
-            digest.withUnsafeBytes { (digestPtr: UnsafeRawBufferPointer) in
-                /** Verifies that the supplied signature is a valid ECDSA
-                 *  signature of the supplied hash value using the supplied public key.
-                 *  \param  dgst      pointer to the hash value
-                 *  \param  dgst_len  length of the hash value
-                 *  \param  sig       ECDSA_SIG structure
-                 *  \param  eckey     EC_KEY object containing a public EC key
-                 *  \return 1 if the signature is valid, 0 if the signature is invalid
-                 *          and -1 on error
-                 */
-                ECDSA_do_verify(
+        let success = try signature.derBytes.withUnsafeBytes { (signaturePtr: UnsafeRawBufferPointer) in
+            try digest.withUnsafeBytes { (digestPtr: UnsafeRawBufferPointer) -> Int32 in
+                let verificationContext = EVP_PKEY_CTX_new_from_pkey(nil, pkey, nil)
+                defer { EVP_PKEY_CTX_free(verificationContext) }
+                guard EVP_PKEY_verify_init(verificationContext) == 1 else {
+                    throw OpenSSLError(name: "Error setting up the signature verification context")
+                }
+
+                let result = EVP_PKEY_verify(
+                    verificationContext,
+                    signaturePtr.bindMemory(to: UInt8.self).baseAddress,
+                    signaturePtr.count,
                     digestPtr.bindMemory(to: UInt8.self).baseAddress,
-                    CInt(digestPtr.count),
-                    signaturePtr,
-                    self.pubKey
+                    digestPtr.count
                 )
+                guard result >= 0 else {
+                    throw OpenSSLError(name: "Serious error when verifying signature (e.g. bad data format, etc.)")
+                }
+                return result
             }
         }
-
         return success == 1
     }
 }

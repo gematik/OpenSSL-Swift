@@ -16,11 +16,16 @@
 //  
 //
 
-@testable import OpenSSL
-import XCTest
+import Foundation
 
-final class BrainpoolP256r1KeyGenerationTests: XCTestCase {
-    func testBrainpoolP256r1GenerateKey() throws {
-        XCTAssertNotNil(try BrainpoolP256r1.KeyExchange.generateKey())
+extension String {
+    var asCChar: UnsafeMutablePointer<Int8> {
+        let count = utf8.count + 1
+        let result = UnsafeMutablePointer<Int8>.allocate(capacity: count)
+        withCString { baseAddress in
+            // func initialize(from: UnsafePointer<Pointee>, count: Int)
+            result.initialize(from: baseAddress, count: count)
+        }
+        return result
     }
 }

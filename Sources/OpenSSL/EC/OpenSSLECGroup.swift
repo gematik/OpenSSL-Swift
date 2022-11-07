@@ -21,6 +21,8 @@ import Foundation
 
 /// Elliptic-Curve protocol
 public protocol ECCurve {
+    /// Name of the ECCurve (group) in OpenSSL (e.g. "brainpoolP256r1", "P-256", etc ...)
+    static var name: String { get }
     /// Elliptic-Curve group information
     static var group: OpenSSLECGroup { get }
 }
@@ -53,7 +55,7 @@ public class OpenSSLECGroup {
 
 extension OpenSSLECGroup {
     /// Curves
-    public enum Name {
+    public enum Name: String {
         /// BrainpoolP256r1 as defined in https://tools.ietf.org/html/rfc5639
         case brainpoolP256r1
 
@@ -70,41 +72,5 @@ extension OpenSSLECGroup {
 extension OpenSSLECGroup {
     @usableFromInline var coordinateByteCount: Int {
         (Int(EC_GROUP_get_degree(curve)) + 7) / 8
-    }
-
-    @usableFromInline
-    func makeUnsafeOwnedECKey() throws -> OpaquePointer {
-        guard let key = EC_KEY_new(),
-              EC_KEY_set_group(key, curve) == 1 else {
-            throw OpenSSLError(name: "EC key initialization error")
-        }
-
-        return key
-    }
-
-    @usableFromInline var order: BigNumber {
-        // Groups must have an order.
-        let baseOrder = EC_GROUP_get0_order(curve) as BIGNUM
-        return BigNumber(copying: baseOrder)
-    }
-
-    /// An elliptic curve can be represented in a Weierstrass form: `y² = x³ + ax + b`. This
-    /// property provides the values of a and b on the curve.
-    @usableFromInline var weierstrassCoefficients: (field: BigNumber, a: BigNumber, b: BigNumber) {
-        // swiftlint:disable:previous large_tuple
-        let field = BigNumber()
-        let a = BigNumber() // swiftlint:disable:this identifier_name
-        let b = BigNumber() // swiftlint:disable:this identifier_name
-
-        let number = field.withUnsafeBignumPointer { fieldPtr in
-            a.withUnsafeBignumPointer { aPtr in
-                b.withUnsafeBignumPointer { bPtr in
-                    EC_GROUP_get_curve(self.curve, fieldPtr, aPtr, bPtr, nil)
-                }
-            }
-        }
-        precondition(number == 1, "Unable to extract curve weierstrass parameters")
-
-        return (field: field, a: a, b: b)
     }
 }

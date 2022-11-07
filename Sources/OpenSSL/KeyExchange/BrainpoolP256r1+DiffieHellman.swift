@@ -24,9 +24,9 @@ public extension BrainpoolP256r1 { // swiftlint:disable:this no_extension_access
     enum KeyExchange {
         /// The BrainpoolP256r1 Public Key for ECDH KeyExchange
         public struct PublicKey: ECPublicKey {
-            let pubKey: ECPublicKeyImpl<BrainpoolP256r1.Curve>
+            let pubKey: ECPublicKeyImpl<Curve>
 
-            internal init(impl: ECPublicKeyImpl<BrainpoolP256r1.Curve>) {
+            internal init(impl: ECPublicKeyImpl<Curve>) {
                 pubKey = impl
             }
 
@@ -38,24 +38,24 @@ public extension BrainpoolP256r1 { // swiftlint:disable:this no_extension_access
                 pubKey = try ECPublicKeyImpl(x962: x962)
             }
 
-            public var rawValue: Data {
-                pubKey.rawValue
+            public func rawValue() throws -> Data {
+                try pubKey.rawValue()
             }
 
-            public var x962Value: Data {
-                pubKey.x962Value
+            public func x962Value() throws -> Data {
+                try pubKey.x962Value()
             }
 
-            public var compactValue: Data? {
-                pubKey.compactValue
+            public func compactValue() throws -> Data {
+                try pubKey.compactValue()
             }
         }
 
         /// The BrainpoolP256r1 Private Key for ECDH KeyExchange
         public struct PrivateKey: ECPrivateKey, DiffieHellman, PACE {
-            private let key: ECPrivateKeyImpl<BrainpoolP256r1.Curve>
+            private let key: ECPrivateKeyImpl<Curve>
 
-            init(key: ECPrivateKeyImpl<BrainpoolP256r1.Curve>) {
+            init(key: ECPrivateKeyImpl<Curve>) {
                 self.key = key
             }
 
@@ -80,18 +80,17 @@ public extension BrainpoolP256r1 { // swiftlint:disable:this no_extension_access
                 return (PublicKey(impl: pub), PrivateKey(key: priv))
             }
 
-            public static func generateKey(compactRepresentable flag: Bool) throws -> PrivateKey {
-                try Self(key: ECPrivateKeyImpl<BrainpoolP256r1.Curve>.generateKey(compactRepresentable: flag))
+            public static func generateKey() throws -> PrivateKey {
+                try Self(key: ECPrivateKeyImpl.generateKey())
             }
         }
 
         /// Generate a key
         ///
-        /// - Parameter compactRepresentable: whether the public key needs to be compact representable [e.g. compressed]
         /// - Returns: the generated key pair
         /// - Throws: when no key pair could be generated
-        public static func generateKey(compactRepresentable flag: Bool) throws -> PrivateKey {
-            try KeyExchange.PrivateKey.generateKey(compactRepresentable: flag)
+        public static func generateKey() throws -> PrivateKey {
+            try KeyExchange.PrivateKey.generateKey()
         }
     }
 }

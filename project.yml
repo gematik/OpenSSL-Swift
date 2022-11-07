@@ -8,7 +8,7 @@ options:
 packages:
   DataKit:
     url: https://github.com/SwiftCommon/DataKit
-    version: 1.0.2
+    version: 1.1.0
 settings:
   base:
     CURRENT_PROJECT_VERSION: -1

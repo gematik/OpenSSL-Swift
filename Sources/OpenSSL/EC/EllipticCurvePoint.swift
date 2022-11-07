@@ -20,106 +20,142 @@
 import Foundation
 
 @usableFromInline
-class EllipticCurvePoint {
-    @usableFromInline var point: OpaquePointer
+class EllipticCurvePoint<Curve: ECCurve> {
+    let point: OpaquePointer // internally EC_POINT is used
 
     init(point: OpaquePointer) {
         self.point = point
     }
 
-    /// Perform a point addition with the two points on the given curve
+    /// Initialize an `EllipticCurvePoint` from raw data in un-/compressed encoding.
     ///
-    /// - Parameters:
-    ///   - summand1: first `EllipticCurvePoint`
-    ///   - summand2: second `EllipticCurvePoint`
-    ///   - group: curve as `OpenSSLECGroup`
-    /// - Throws: `OpenSSLError`
-    @usableFromInline
-    init(add summand1: EllipticCurvePoint, to summand2: EllipticCurvePoint, on group: OpenSSLECGroup) throws {
-        let point: OpaquePointer = try group.withUnsafeGroupPointer { groupPtr in
-            guard let pointPtr = EC_POINT_new(groupPtr) else {
-                throw OpenSSLError(name: "EC_POINT internal error")
+    /// - Parameter raw: Can be either in compressed (0x02 / 0x03) or uncompressed (0x04) encoding.
+    /// - Throws: OpenSSLError
+    /// - Note: No check whether the encoded point actually lies on the curve is employed during initialisation.
+    init(raw: Data) throws {
+        point = try raw.withUnsafeBytes { (buffer: UnsafeRawBufferPointer) -> OpaquePointer in
+            let group = Curve.group
+            let point = EC_POINT_new(group.curve)
+            guard let bufferPointer = buffer.bindMemory(to: UInt8.self).baseAddress else {
+                throw OpenSSLError(name: "EC_POINT data unavailable")
             }
-            return pointPtr
-        }
 
-        try group.withUnsafeGroupPointer { groupPtr in
-            try summand1.withPointPointer { summand1Ptr in
-                try summand2.withPointPointer { summand2Ptr in
-                    guard EC_POINT_add(groupPtr, point, summand1Ptr, summand2Ptr, nil) != 0 else {
-                        EC_POINT_free(point)
-                        throw OpenSSLError(name: "EC_POINT internal error")
-                    }
-                }
+            guard
+                EC_POINT_oct2point(group.curve, point, bufferPointer, buffer.count, nil) == 1,
+                let point = point
+            else {
+                throw OpenSSLError(name: "Incorrect EC_POINT encoding")
             }
+            return point
         }
-        self.point = point
     }
 
-    /// Multiply a scalar with a curve's base point.
-    ///
-    /// - Parameters:
-    ///   - scalar: `BigNumber` to multiply the base point with
-    ///   - group: curve as `OpenSSLECGroup`
-    /// - Throws: `OpenSSLError`
-    @usableFromInline
-    init(multiplying scalar: BigNumber, on group: OpenSSLECGroup) throws {
-        let point: OpaquePointer = try group.withUnsafeGroupPointer { groupPtr in
-            guard let pointPtr = EC_POINT_new(groupPtr) else {
-                throw OpenSSLError(name: "EC_POINT internal error")
-            }
-            return pointPtr
-        }
-
-        try group.withUnsafeGroupPointer { groupPtr in
-            try scalar.withUnsafeBignumPointer { bigNumPtr in
-                guard EC_POINT_mul(groupPtr, point, bigNumPtr, nil, nil, nil) != 0 else {
-                    EC_POINT_free(point)
-                    throw OpenSSLError(name: "EC_POINT internal error")
-                }
-            }
-        }
-        self.point = point
-    }
-
-    /// Multiply a scalar with a point.
-    ///
-    /// - Parameters:
-    ///   - scalar: `BigNumber` to multiply the other point with
-    ///   - otherPoint: `EllipticCurvePoint`
-    ///   - group: curve as `OpenSSLECGroup`
-    /// - Throws: `OpenSSLError`
-    @usableFromInline
-    init(multiplying scalar: BigNumber, with otherPoint: EllipticCurvePoint, on group: OpenSSLECGroup) throws {
-        let point: OpaquePointer = try group.withUnsafeGroupPointer { groupPtr in
-            guard let pointPtr = EC_POINT_new(groupPtr) else {
-                throw OpenSSLError(name: "EC_POINT internal error")
-            }
-            return pointPtr
-        }
-
-        try group.withUnsafeGroupPointer { groupPtr in
-            try scalar.withUnsafeBignumPointer { bigNumPtr in
-                guard EC_POINT_mul(groupPtr, point, nil, otherPoint.point, bigNumPtr, nil) != 0 else {
-                    EC_POINT_free(point)
-                    throw OpenSSLError(name: "EC_POINT internal error")
-                }
-            }
-        }
-        self.point = point
+    var group: OpenSSLECGroup {
+        Curve.group
     }
 
     deinit {
         EC_POINT_free(point)
     }
 
-    func export(using compression: point_conversion_form_t, group: OpenSSLECGroup) -> Data? {
+    enum PointConversion {
+        case uncompressed
+        case compressed
+    }
+
+    func export(pointConversion: PointConversion) throws -> Data {
+        let group = Curve.group
         var buffer: UnsafeMutablePointer<UInt8>?
-        let size = EC_POINT_point2buf(group.curve, point, compression, &buffer, nil)
+        let pointConversionForm: point_conversion_form_t
+        switch pointConversion {
+        case .uncompressed: pointConversionForm = POINT_CONVERSION_UNCOMPRESSED
+        case .compressed: pointConversionForm = POINT_CONVERSION_COMPRESSED
+        }
+        let size = EC_POINT_point2buf(group.curve, point, pointConversionForm, &buffer, nil)
         guard size > 0, let safeBuffer = buffer else {
-            return nil
+            throw OpenSSLError(name: "Error exporting encoded data from EllipticCurvePoint")
         }
         return Data(bytesNoCopy: safeBuffer, count: size, deallocator: .free)
+    }
+
+    /// Perform a point addition with the two points on the given curve
+    ///
+    /// - Parameter other: the `EllipticCurvePoint` to be added
+    /// - Returns: Sum of the addition as `EllipticCurvePoint`
+    /// - Throws: `OpenSSLError`
+    func add(_ other: EllipticCurvePoint) throws -> EllipticCurvePoint {
+        let sumPoint: OpaquePointer = try group.withUnsafeGroupPointer { groupPtr in
+            guard let pointPtr = EC_POINT_new(groupPtr) else {
+                throw OpenSSLError(name: "EC_POINT internal error")
+            }
+            return pointPtr
+        }
+
+        try group.withUnsafeGroupPointer { groupPtr in
+            try other.withPointPointer { otherPtr in
+                guard
+                    EC_POINT_add(groupPtr, sumPoint, point, otherPtr, nil) == 1
+                else {
+                    EC_POINT_free(sumPoint)
+                    throw OpenSSLError(name: "EC_POINT internal error")
+                }
+            }
+        }
+        return EllipticCurvePoint(point: sumPoint)
+    }
+
+    /// Create an `EllipticCurvePoint` by multiplying a scalar with a curve's base point.
+    ///
+    /// - Parameters:
+    ///   - scalar: `BigNumber` to multiply the base point with
+    /// - Throws: `OpenSSLError`
+    @usableFromInline
+    init(multiplyWithBasePoint scalar: BigNumber) throws {
+        let group = Curve.group
+        let productPoint: OpaquePointer = try group.withUnsafeGroupPointer { groupPtr in
+            guard let pointPtr = EC_POINT_new(groupPtr) else {
+                throw OpenSSLError(name: "EC_POINT internal error")
+            }
+            return pointPtr
+        }
+
+        try group.withUnsafeGroupPointer { groupPtr in
+            try scalar.withUnsafeBignumPointer { bigNumPtr in
+                guard
+                    EC_POINT_mul(groupPtr, productPoint, bigNumPtr, nil, nil, nil) != 0
+                else {
+                    EC_POINT_free(productPoint)
+                    throw OpenSSLError(name: "EC_POINT internal error")
+                }
+            }
+        }
+        point = productPoint
+    }
+
+    /// Multiply a scalar with this point.
+    ///
+    /// - Parameter scalar: `BigNumber` to multiply the other point with
+    /// - Returns: Product of the multiplication as `EllipticCurvePoint`
+    /// - Throws: `OpenSSLError`
+    func multiply(_ scalar: BigNumber) throws -> EllipticCurvePoint {
+        let productPoint: OpaquePointer = try group.withUnsafeGroupPointer { groupPtr in
+            guard let pointPtr = EC_POINT_new(groupPtr) else {
+                throw OpenSSLError(name: "EC_POINT internal error")
+            }
+            return pointPtr
+        }
+
+        try group.withUnsafeGroupPointer { groupPtr in
+            try scalar.withUnsafeBignumPointer { bigNumPtr in
+                guard
+                    EC_POINT_mul(groupPtr, productPoint, nil, point, bigNumPtr, nil) != 0
+                else {
+                    EC_POINT_free(productPoint)
+                    throw OpenSSLError(name: "EC_POINT internal error")
+                }
+            }
+        }
+        return EllipticCurvePoint(point: productPoint)
     }
 }
 
@@ -127,26 +163,5 @@ extension EllipticCurvePoint {
     @usableFromInline
     func withPointPointer<T>(_ body: (OpaquePointer) throws -> T) rethrows -> T {
         try body(point)
-    }
-}
-
-extension EllipticCurvePoint {
-    @usableFromInline
-    func affineCoordinates(group: OpenSSLECGroup) throws -> (x: BigNumber, y: BigNumber) {
-        let x = BigNumber() // swiftlint:disable:this identifier_name
-        let y = BigNumber() // swiftlint:disable:this identifier_name
-
-        try x.withUnsafeBignumPointer { xPtr in
-            try y.withUnsafeBignumPointer { yPtr in
-                try group.withUnsafeGroupPointer { groupPtr in
-                    guard EC_POINT_get_affine_coordinates(groupPtr, point, xPtr, yPtr, nil) == 1
-                    else {
-                        throw OpenSSLError(name: "EC_POINT get affine coordinates GFp failed")
-                    }
-                }
-            }
-        }
-
-        return (x: x, y: y)
     }
 }

@@ -44,7 +44,7 @@ final class BrainpoolP256r1ExtPACETests: XCTestCase {
             try Data(
                 hex: "04A1D37688F62647E4B7CCEB64881142EEEC48FCF148BA2B518E3246166EF8495C81D0644A59DD6927E7492A4BD52926957450BEDED208B2E616D03D9504F9FE12" // swiftlint:disable:this line_length
             )
-        XCTAssertEqual(ownPubKey2.rawValue, expectedPubKey2Raw)
-        XCTAssertEqual(keyPair2.publicKey.rawValue, try keyPairGen().publicKey.rawValue)
+        XCTAssertEqual(try ownPubKey2.rawValue(), expectedPubKey2Raw)
+        XCTAssertEqual(try keyPair2.publicKey.rawValue(), try keyPairGen().publicKey.rawValue())
     }
 }

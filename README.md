@@ -132,7 +132,7 @@ A private key can also be randomly generated.
 ### Generate Private Key (KeyPair)
 
 ```swift
-let key = try BrainpoolP256r1.KeyExchange.generateKey(compactRepresentable: true)
+let key = try BrainpoolP256r1.KeyExchange.generateKey()
 ```
 
 ### ECDH Shared Secret computation

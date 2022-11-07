@@ -40,7 +40,7 @@ public class X509 {
 
     /// Initialize a X509 certificate from DER representation
     ///
-    /// - Parameter derRepresentation: raw DER bytes
+    /// - Parameter der: raw DER bytes
     /// - Throws:  `OpenSSLError` when the certificate could not be initialized
     public init(der: Data) throws {
         x509 = try der.withUnsafeBytes { (buffer: UnsafeRawBufferPointer) in
@@ -337,14 +337,12 @@ extension X509 {
             EVP_PKEY_free(publicKey)
         }
 
-        guard NID_X9_62_id_ecPublicKey == EVP_PKEY_get_id(publicKey),
-              let ecKey = EVP_PKEY_get0_EC_KEY(publicKey),
-              NID_brainpoolP256r1 == EC_GROUP_get_curve_name(EC_KEY_get0_group(ecKey)),
-              let duplicate = EC_KEY_dup(ecKey) else {
+        guard Self.containedPublicKeyIsBrainpoolP256r1BackedEvpPkey(publicKey),
+              let duplicate = EVP_PKEY_dup(publicKey) else {
             return nil
         }
 
-        return BrainpoolP256r1.Verify.PublicKey(impl: ECPublicKeyImpl<BrainpoolP256r1.Curve>(pubKey: duplicate))
+        return BrainpoolP256r1.Verify.PublicKey(impl: ECPublicKeyImpl<BrainpoolP256r1.Curve>(pkey: duplicate))
     }
 
     /// Convenience function for parsing the certificate's BrainpoolP256r1 PublicKey for key exchange, if it exists
@@ -356,13 +354,29 @@ extension X509 {
             EVP_PKEY_free(publicKey)
         }
 
-        guard NID_X9_62_id_ecPublicKey == EVP_PKEY_get_id(publicKey),
-              let ecKey = EVP_PKEY_get0_EC_KEY(publicKey),
-              NID_brainpoolP256r1 == EC_GROUP_get_curve_name(EC_KEY_get0_group(ecKey)),
-              let duplicate = EC_KEY_dup(ecKey) else {
+        guard Self.containedPublicKeyIsBrainpoolP256r1BackedEvpPkey(publicKey),
+              let duplicate = EVP_PKEY_dup(publicKey) else {
             return nil
         }
 
-        return BrainpoolP256r1.KeyExchange.PublicKey(impl: ECPublicKeyImpl<BrainpoolP256r1.Curve>(pubKey: duplicate))
+        return BrainpoolP256r1.KeyExchange.PublicKey(impl: ECPublicKeyImpl<BrainpoolP256r1.Curve>(pkey: duplicate))
+    }
+
+    private static func containedPublicKeyIsBrainpoolP256r1BackedEvpPkey(_ pkey: OpaquePointer?) -> Bool {
+        // Validate, whether pkey is actually BrainpoolP256r1 backed
+        var osslParamsToData: UnsafeMutablePointer<OSSL_PARAM>?
+        defer { OSSL_PARAM_free(osslParamsToData) }
+        var resultGroupParam: UnsafePointer<CChar>?
+        guard
+            NID_X9_62_id_ecPublicKey == EVP_PKEY_get_id(pkey),
+            EVP_PKEY_todata(pkey, EVP_PKEY_PUBLIC_KEY_W, &osslParamsToData) == 1,
+            let groupParam = OSSL_PARAM_locate(osslParamsToData, OSSL_PKEY_PARAM_GROUP_NAME_W),
+            OSSL_PARAM_get_utf8_string_ptr(groupParam, &resultGroupParam) == 1,
+            let resultGroupParam = resultGroupParam,
+            SN_brainpoolP256r1 == String(validatingUTF8: resultGroupParam)
+        else {
+            return false
+        }
+        return true
     }
 }

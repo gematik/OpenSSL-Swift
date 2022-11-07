@@ -93,7 +93,7 @@ final class OCSPResponseTests: XCTestCase {
 
         // After successful path validation the function returns success if the OCSP_NOCHECKS flag is set.
         // Note: Path validation could possibly fail in the future when certificates expire.
-        var options: OCSPResponse.BasicVerifyOptions = [.noChecks]
-        try vauOcspResponse.basicVerifyWith(trustedStore: [ocspSignerCa, rootCa], options: options)
+        let options: OCSPResponse.BasicVerifyOptions = [.noChecks]
+        XCTAssertTrue(try vauOcspResponse.basicVerifyWith(trustedStore: [ocspSignerCa, rootCa], options: options))
     }
 }

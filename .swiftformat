@@ -1,7 +1,7 @@
 --exclude Package.swift,.build,vendor,Carthage,DerivedData,build,**/Generated
 
 # format options
---swiftversion 5.2
+--swiftversion 5.5
 
 --indent 4
 --ifdef no-indent
