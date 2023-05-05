@@ -58,27 +58,48 @@ final class ECPublicKeyImpl<Curve: ECCurve>: ECPublicKey {
     ///
     /// - Parameter data: Data encoding the public key
     /// - Throws: OpenSSLError
-    init(data: Data) throws {
+    convenience init(data: Data) throws {
+        try self.init(data: data, pointFormatUncompressed: true)
+    }
+
+    // swiftlint:disable:next function_body_length
+    private init(data: Data, pointFormatUncompressed: Bool = true) throws {
         var pkey = EVP_PKEY_new()
 
         // set up OSSL_PARAMs
         let osslParamBuilder = OSSL_PARAM_BLD_new()
         defer { OSSL_PARAM_BLD_free(osslParamBuilder) }
-        guard
-            OSSL_PARAM_BLD_push_utf8_string(osslParamBuilder, OSSL_PKEY_PARAM_GROUP_NAME_W, Curve.name.asCChar, 0) == 1
+        guard OSSL_PARAM_BLD_push_utf8_string(
+            osslParamBuilder,
+            OSSL_PKEY_PARAM_GROUP_NAME_W,
+            Curve.name.asCChar,
+            0
+        ) == 1
+        else {
+            throw OpenSSLError(name: "Error setting up OSSL_PARAM")
+        }
+
+        let pointFormat = pointFormatUncompressed ?
+            OSSL_PKEY_EC_POINT_CONVERSION_FORMAT_UNCOMPRESSED_W : OSSL_PKEY_EC_POINT_CONVERSION_FORMAT_COMPRESSED_W
+
+        guard OSSL_PARAM_BLD_push_utf8_string(
+            osslParamBuilder,
+            OSSL_PKEY_PARAM_EC_POINT_CONVERSION_FORMAT_W,
+            pointFormat,
+            0
+        ) == 1
         else {
             throw OpenSSLError(name: "Error setting up OSSL_PARAM")
         }
 
         try data.withUnsafeBytes { buffer in
-            guard
-                let bufferPointer = buffer.bindMemory(to: UInt8.self).baseAddress,
-                OSSL_PARAM_BLD_push_octet_string(
-                    osslParamBuilder,
-                    OSSL_PKEY_PARAM_PUB_KEY_W,
-                    bufferPointer,
-                    buffer.count
-                ) == 1
+            guard let bufferPointer = buffer.bindMemory(to: UInt8.self).baseAddress,
+                  OSSL_PARAM_BLD_push_octet_string(
+                      osslParamBuilder,
+                      OSSL_PKEY_PARAM_PUB_KEY_W,
+                      bufferPointer,
+                      buffer.count
+                  ) == 1
             else {
                 throw OpenSSLError(name: "Error setting up OSSL_PARAM")
             }
@@ -136,10 +157,6 @@ final class ECPublicKeyImpl<Curve: ECCurve>: ECPublicKey {
         EVP_PKEY_free(pkey)
     }
 
-    // - NOTE: Unexpectedly, the output format of EVP_PKEY_todata() is POINT_CONVERSION_COMPRESSED(!) for the pub key
-    //      and therefore cannot be used here. Work around for now is the usage of i2d_PublicKey().
-    // see: https://github.com/openssl/openssl/issues/16595 and
-    //      https://github.com/openssl/openssl/pull/16624
     func rawValue() throws -> Data {
         var buffer: UnsafeMutablePointer<UInt8>?
         let size = i2d_PublicKey(pkey, &buffer)
@@ -154,9 +171,7 @@ final class ECPublicKeyImpl<Curve: ECCurve>: ECPublicKey {
     }
 
     func compactValue() throws -> Data {
-        let dup = EVP_PKEY_dup(pkey)
-        defer { EVP_PKEY_free(dup) }
-        return try publicKeyCompactDataFromEvpPkey(dup)
+        try Self(data: rawValue(), pointFormatUncompressed: false).rawValue()
     }
 }
 
