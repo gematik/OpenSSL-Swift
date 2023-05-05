@@ -63,14 +63,6 @@ Setup dependencies and project
 
 Lane that (auto) genarates API documentation from inline comments.
 
-### carthage_resolve_dependencies
-
-```sh
-[bundle exec] fastlane carthage_resolve_dependencies
-```
-
-Lane that resolves the project dependencies using Carthage.
-
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

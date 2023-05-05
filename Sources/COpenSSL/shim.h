@@ -1,7 +1,7 @@
 #ifndef COpenSSL_H
 #define COpenSSL_H
 
-#include <define_wrapper.h>
+#include "define_wrapper.h"
 #include <openssl/cms.h>
 #include <openssl/conf.h>
 #include <openssl/bn.h>

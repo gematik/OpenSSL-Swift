@@ -1,3 +1,7 @@
+# Next Release
+
+- Introduce Package.swift for importing
+
 # Release 4.0.0
 
 - Modify ECPublicKey's export API

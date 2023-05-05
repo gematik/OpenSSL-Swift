@@ -9,6 +9,4 @@ cd "$(dirname "$0")/.."
 
 scripts/bootstrap
 
-bundle exec fastlane setup
-
 echo "==> Project is now ready to go!"

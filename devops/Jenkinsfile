@@ -1,29 +1,27 @@
 import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
 
 pipeline {
-    agent { label 'IOSDEV' }
+    agent { label 'IOSDEV2' }
 
     triggers {
         gitlab(
-            triggerOnNoteRequest: true
+            triggerOnNoteRequest: true,
+            noteRegex: "[jJ]enkins"
         )
-        cron('H H * * *') //run at 23:30:00 
     }
 
     environment {
         KEYCHAIN_PASSWORD = credentials('KEYCHAIN_PASSWORD')
-
-        CIBUILD = true 
     }
 
     options {
         ansiColor('xterm')
+        copyArtifactPermission('*')
     }
 
     stages {
         stage('Fastlane cibuild') {
             steps {
-                // Actual CI Build, Tests
                 sh label: 'starting ios test run', script: '''#!/bin/bash -l
                     if [ -f $HOME/.bash_profile ]; then source $HOME/.bash_profile; fi
 
@@ -32,12 +30,6 @@ pipeline {
                     make cibuild
                     '''
             }
-        }
-    }
-
-    post {
-        failure {
-            sendEMailNotification(getIOSDevEMailList())
         }
     }
 }
