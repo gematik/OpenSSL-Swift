@@ -8,11 +8,16 @@ lib/include/*
 tmp/
 openssl_*/
 
+# Temporarily downloaded file
+openssl-*.tar.gz
+
 # Generated documentation
 docs/
 
 # AppCode project files
 .idea/
+
+.vscode/
 
 # Third party files
 vendor/
@@ -98,5 +103,3 @@ iOSInjectionProject/
 
 # R.swift generated
 *.generated.swift
-
-devops

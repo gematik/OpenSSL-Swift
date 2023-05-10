@@ -33,22 +33,32 @@ Accessing OpenSSL crypto operations directly from Swift allows us to not having 
 memory that was allocated by the low-level OpenSSL operation, but instead hide this complex code from
 the casual user/developer that may need to use some of the features provided by this framework.
 
-## Installation
+## Getting Started
 
-Installation is only possible with Carthage at this point in time, since SPM doesn't support including and linking to
-the binary libraries that are built by this project. [We don't support CocoaPods at all, however it might also work when setup accordingly]
+### Setup for integration
 
-```Cartfile
+We don't support CocoaPods at all, however it might also work when setup accordingly
 
-git "https://github.com/gematik/openssl-swift.git" ~> 3.0
+**SPM:** Add via XCode or `Package.swift`
+
 ```
+.package(url: "https://github.com/gematik/OpenSSL-Swift", from: "4.0.0"),
+```
+
+ **Carthage:** Put this into your `Cartfile`:
+
+```
+github "gematik/OpenSSL-Swift" ~> 4.0
+```
+
+### Setup for development
+
 
 ```shell script
-$ carthage build --no-use-binaries --platform macOS,iOS [--cache-builds]
+$ make setup
 ```
 
-Import it to your Xcodeproj [accordingly](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
-Or use [Xcodegen to add the carthage dependency](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/Usage.md#carthage) to your project.yml.
+Opening `OpenSSL-Swift.xcodeproj` and building/testing a scheme will execute the script `scripts/install_openssl`. The script will perform a download from [OpenSSL](https://www.openssl.org/) and compile frameworks for multiple platform/architecture combinations.
 
 ## Supported operations
 

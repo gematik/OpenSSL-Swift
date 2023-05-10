@@ -33,6 +33,7 @@ targets:
       - path: Sources/OpenSSL
         excludes:
           - "**/.swiftlint.yml"
+      - path: Sources/COpenSSL
       - path: lib/include
         copyFiles:
           destination: productsDirectory
@@ -46,8 +47,6 @@ targets:
       testTargets:
         - OpenSSLTests_${platform}
       gatherCoverageData: true
-    dependencies:
-        - framework: Carthage/Build/DataKit.xcframework
   OpenSSLTests:
     type: bundle.unit-test
     platform: [iOS,macOS]
