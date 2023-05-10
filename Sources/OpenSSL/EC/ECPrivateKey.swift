@@ -71,12 +71,15 @@ final class ECPrivateKeyImpl<Curve: ECCurve>: ECPrivateKey {
             throw OpenSSLError(name: "Could not generate key pair.")
         }
         self.pkey = pkey
+        
+        var buffer: UnsafeMutablePointer<UInt8>?
+        let size = i2d_PublicKey(pkey, &buffer)
+        guard size > 0, let safeBuffer = buffer else {
+            throw OpenSSLError(name: "Unable to retrieve public key data")
+        }
+        let pubKeyData = Data(bytesNoCopy: safeBuffer, count: Int(size), deallocator: .free)
 
-        // create the associated public key from (generated) pkey w/o the private key data portion
-        let dup = EVP_PKEY_dup(pkey)
-        defer { EVP_PKEY_free(dup) }
-        let pubKeyCompactData = try publicKeyCompactDataFromEvpPkey(dup)
-        associatedPublicKey = try ECPublicKeyImpl(compact: pubKeyCompactData)
+        associatedPublicKey = try ECPublicKeyImpl(x962: pubKeyData)
     }
 
     /// Initialize a private key (key pair) from data.
@@ -152,7 +155,7 @@ final class ECPrivateKeyImpl<Curve: ECCurve>: ECPrivateKey {
             EVP_PKEY_private_check(validationContext) > 0,
             EVP_PKEY_pairwise_check(validationContext) > 0
         else {
-            throw OpenSSLError(name: "Error when validating the components of the key (bad data?)")
+            throw OpenSSLError(name: "Error when validating the components of the ECPrivateKey (bad data?)")
         }
 
         self.pkey = pkey
@@ -284,27 +287,3 @@ extension ECPrivateKeyImpl: DiffieHellman {
 }
 
 extension ECPrivateKeyImpl: DigestSigner {}
-
-func publicKeyCompactDataFromEvpPkey(_ pkey: OpaquePointer?) throws -> Data {
-    // - NOTE: Unexpectedly, the output format of EVP_PKEY_todata() is POINT_CONVERSION_COMPRESSED(!) for the pub key
-    //      and the following implementation for now relies on that fact (that might be subject to change soon).
-    // see: https://github.com/openssl/openssl/issues/16595 and
-    //      https://github.com/openssl/openssl/pull/16624
-    var osslParamsToData: UnsafeMutablePointer<OSSL_PARAM>?
-    defer { OSSL_PARAM_free(osslParamsToData) }
-    guard EVP_PKEY_todata(pkey, EVP_PKEY_PUBLIC_KEY_W, &osslParamsToData) == 1 else {
-        throw OpenSSLError(name: "Unable to retrieve public key data")
-    }
-
-    let pubParam = OSSL_PARAM_locate(osslParamsToData, OSSL_PKEY_PARAM_PUB_KEY_W)
-    var pubBuffer: UnsafeRawPointer?
-    var size = 0
-    guard
-        OSSL_PARAM_get_octet_string_ptr(pubParam, &pubBuffer, &size) == 1,
-        size > 0,
-        let safeBuffer = pubBuffer
-    else {
-        throw OpenSSLError(name: "Unable to retrieve public key data")
-    }
-    return Data(bytes: safeBuffer, count: size)
-}

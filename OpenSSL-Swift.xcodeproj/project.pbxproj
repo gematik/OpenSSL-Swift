@@ -23,7 +23,6 @@
 		23DAAA992A04E91D0054E840 /* define_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 23DAAA942A04E91D0054E840 /* define_wrapper.h */; };
 		23DAAA9A2A04E91D0054E840 /* shim.h in Headers */ = {isa = PBXBuildFile; fileRef = 23DAAA952A04E91D0054E840 /* shim.h */; };
 		23DAAA9B2A04E91E0054E840 /* shim.h in Headers */ = {isa = PBXBuildFile; fileRef = 23DAAA952A04E91D0054E840 /* shim.h */; };
-		23DAAA9C2A04E9920054E840 /* define_wrapper.c in Headers */ = {isa = PBXBuildFile; fileRef = 23DAAA932A04E91D0054E840 /* define_wrapper.c */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B15C0D566F9A5C3FB46E0AF /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D761C86A6012F4608C229C /* Hash.swift */; };
 		2BA6A8EF5D2D347FBBB34064 /* BrainpoolP256r1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0A01DA7E3E8F1A1A85BA13 /* BrainpoolP256r1.swift */; };
 		34E35163B5A684A122AB9B20 /* BrainpoolP256r1KeyGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C801E4919888D317525BE2A7 /* BrainpoolP256r1KeyGenerationTests.swift */; };
@@ -498,7 +497,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23DAAA9C2A04E9920054E840 /* define_wrapper.c in Headers */,
 				23DAAA9A2A04E91D0054E840 /* shim.h in Headers */,
 				23DAAA982A04E91D0054E840 /* define_wrapper.h in Headers */,
 			);

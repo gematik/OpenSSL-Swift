@@ -15,8 +15,8 @@ echo "ARCHS: $ARCHS"
 cd "$(dirname $0)/.."
 DIRNAME=$(pwd)
 
-VERSION=${1-"3.0.7"}
-VERSION_SHA256_CHECKSUM=${2-"83049d042a260e696f62406ac5c08bf706fd84383f945cf21bd61e9ed95c396e"}
+VERSION=${1-"3.1.0"}
+VERSION_SHA256_CHECKSUM=${2-"aaa925ad9828745c4cad9d9efeb273deca820f2cdcf2c3ac7d7c1212b7c497b4"}
 
 ####################################
 OPENSSL_IMAGE="${DIRNAME}/openssl-${VERSION}.tar.gz"

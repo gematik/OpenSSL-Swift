@@ -33,7 +33,6 @@ final class ECPublicKeyTests: XCTestCase {
         // then
         XCTAssertNotNil(sut)
         XCTAssertEqual(try sut.rawValue(), pubKeyX962)
-        XCTAssertEqual(try sut.rawValue(), pubKeyX962)
 
         let expectedCompactKey = try Data(hex: "038634212830DAD457CA05305E6687134166B9C21A65FFEBF555F4E75DFB048888")
         XCTAssertEqual(try sut.compactValue(), expectedCompactKey)
@@ -54,7 +53,6 @@ final class ECPublicKeyTests: XCTestCase {
             try Data(
                 hex: "048634212830DAD457CA05305E6687134166B9C21A65FFEBF555F4E75DFB04888866E4B6843624CBDA43C97EA89968BC41FD53576F82C03EFA7D601B9FACAC2B29" // swiftlint:disable:this line_length
             )
-        XCTAssertEqual(try sut.rawValue(), expectedPubKeyX962)
         XCTAssertEqual(try sut.rawValue(), expectedPubKeyX962)
     }
 
