@@ -45,16 +45,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### setup
-
-```sh
-[bundle exec] fastlane setup
-```
-
-Setup dependencies and project
-
-
-
 ### generate_documentation
 
 ```sh
