@@ -1,5 +1,6 @@
-# Next Release
+# Release 4.1.0
 
+- Upgrade OpenSSL version to 3.1.0
 - Introduce Package.swift for importing
 
 # Release 4.0.0
