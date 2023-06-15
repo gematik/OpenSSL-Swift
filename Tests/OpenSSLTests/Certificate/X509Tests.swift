@@ -24,7 +24,7 @@ import XCTest
 // swiftlint:disable line_length force_try
 final class X509Tests: XCTestCase {
     let bundle = Bundle(for: X509Tests.self)
-    lazy var sut: X509 = {
+    lazy var discoveryDocument: X509 = {
         let filename = "X509/GEM.DISCOVERY-DOC-TEST-ONLY.pem"
         return try! X509(pem: ResourceFileReader.readFileInResourceBundle(filePath: filename, for: bundle))
     }()
@@ -39,9 +39,19 @@ final class X509Tests: XCTestCase {
         return try! X509(pem: ResourceFileReader.readFileInResourceBundle(filePath: filename, for: bundle))
     }()
 
+    lazy var pharmacyAdelheidRsaPubKeyCertificate: X509 = {
+        let filename = "X509/PHARMACY.ADELHEID-RSA-TEST-ONLY.pem"
+        return try! X509(pem: ResourceFileReader.readFileInResourceBundle(filePath: filename, for: bundle))
+    }()
+
+    lazy var pharmacyAdelheidEcPubKeyCertificate: X509 = {
+        let filename = "X509/PHARMACY.ADELHEID-EC-TEST-ONLY.pem"
+        return try! X509(pem: ResourceFileReader.readFileInResourceBundle(filePath: filename, for: bundle))
+    }()
+
     func testDerBytes() throws {
         // when
-        let derBytes = sut.derBytes
+        let derBytes = discoveryDocument.derBytes
 
         // then
         let base64 =
@@ -52,23 +62,21 @@ final class X509Tests: XCTestCase {
 
     func testX509CertificateSerialNumber() throws {
         // when
-        let serialNumber = try sut.serialNumber()
+        let serialNumber = try discoveryDocument.serialNumber()
 
         // then
         XCTAssertEqual(serialNumber, "1034953504625805")
     }
 
-    func testX509CertificateSignatureAlgorithm() {
-        // when
-        let signatureAlgorithm = sut.signatureAlgorithm()
+    func testX509CertificatePublicKeyAlgorithm() {
+        XCTAssertEqual(pharmacyAdelheidRsaPubKeyCertificate.publicKeyAlgorithm(), .rsaEncryption)
 
-        // then
-        XCTAssertEqual(signatureAlgorithm, .ecdsaWithSHA256)
+        XCTAssertEqual(pharmacyAdelheidEcPubKeyCertificate.publicKeyAlgorithm(), .ellipticCurve)
     }
 
     func testIssuer() throws {
         // when
-        let issuerData = sut.issuerX500PrincipalDEREncoded()
+        let issuerData = discoveryDocument.issuerX500PrincipalDEREncoded()
 
         // then
         XCTAssertEqual(
@@ -80,7 +88,7 @@ final class X509Tests: XCTestCase {
 
     func testSubject() {
         // when
-        let subjectData = sut.subjectX500PrincipalDEREncoded()
+        let subjectData = discoveryDocument.subjectX500PrincipalDEREncoded()
 
         // then
         XCTAssertEqual(
@@ -92,8 +100,8 @@ final class X509Tests: XCTestCase {
 
     func testX509CertificateNotBeforeAfter() throws {
         // when
-        let notBefore = try sut.notBefore()
-        let notAfter = try sut.notAfter()
+        let notBefore = try discoveryDocument.notBefore()
+        let notAfter = try discoveryDocument.notAfter()
 
         // then
         let formatter = ISO8601DateFormatter()
@@ -105,7 +113,7 @@ final class X509Tests: XCTestCase {
 
     func testX509CertificateBrainpoolP256r1VerifyPublicKey() throws {
         // when
-        let brainpoolP256r1PublicKey = sut.brainpoolP256r1VerifyPublicKey()
+        let brainpoolP256r1PublicKey = discoveryDocument.brainpoolP256r1VerifyPublicKey()
 
         // then
         let expected = try BrainpoolP256r1.Verify.PublicKey(
@@ -119,7 +127,7 @@ final class X509Tests: XCTestCase {
 
     func testX509CertificateBrainpoolP256r1KeyExchangePublicKey() throws {
         // when
-        let brainpoolP256r1PublicKey = sut.brainpoolP256r1KeyExchangePublicKey()
+        let brainpoolP256r1PublicKey = discoveryDocument.brainpoolP256r1KeyExchangePublicKey()
 
         // then
         let expected = try BrainpoolP256r1.KeyExchange
@@ -135,30 +143,36 @@ final class X509Tests: XCTestCase {
     func testIsValidCaCertificate() {
         XCTAssertTrue(rootCertificate.isValidCaCertificate)
         XCTAssertTrue(caCertificate.isValidCaCertificate)
-        XCTAssertFalse(sut.isValidCaCertificate)
+        XCTAssertFalse(discoveryDocument.isValidCaCertificate)
     }
 
     func testIsIssuedBy() throws {
-        XCTAssertTrue(caCertificate.issued(sut))
+        XCTAssertTrue(caCertificate.issued(discoveryDocument))
         XCTAssertTrue(rootCertificate.issued(caCertificate))
-        XCTAssertFalse(rootCertificate.issued(sut))
+        XCTAssertFalse(rootCertificate.issued(discoveryDocument))
     }
 
     func testValidate() throws {
-        XCTAssertTrue(try sut.validateWith(trustStore: [caCertificate, rootCertificate]))
+        XCTAssertTrue(try discoveryDocument.validateWith(trustStore: [caCertificate, rootCertificate]))
         XCTAssertTrue(try caCertificate.validateWith(trustStore: [rootCertificate]))
         XCTAssertTrue(try rootCertificate.validateWith(trustStore: [rootCertificate]))
 
-        XCTAssertFalse(try sut.validateWith(trustStore: [rootCertificate]))
-        XCTAssertFalse(try sut.validateWith(trustStore: [caCertificate]))
+        XCTAssertFalse(try discoveryDocument.validateWith(trustStore: [rootCertificate]))
+        XCTAssertFalse(try discoveryDocument.validateWith(trustStore: [caCertificate]))
     }
 
     func testX509CertificateComputeSha256Fingerprint() throws {
         // when
-        let sha256Fingerprint = try sut.sha256Fingerprint()
+        let sha256Fingerprint = try discoveryDocument.sha256Fingerprint()
 
         // then
         let expected = try Data(hex: "AB9590D2B1764E21277927A1E084EB2E041E022E62F21C4E59155EB747249CFA")
         XCTAssertEqual(sha256Fingerprint, expected)
+    }
+
+    func testX509CertificateSignatureAlgorithm() {
+        XCTAssertEqual(discoveryDocument.signatureAlgorithm(), .ecdsaWithSHA256)
+
+        XCTAssertEqual(pharmacyAdelheidRsaPubKeyCertificate.signatureAlgorithm(), .sha256WithRsaEncryption)
     }
 }

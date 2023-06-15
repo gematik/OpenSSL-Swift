@@ -22,10 +22,12 @@ import Foundation
 
 /// X509 certificate
 public class X509 {
-    /// Corresponding signature algorithms of `X.509` certificates.
+    /// (Incomplete collection of) signature algorithm types of `X.509` certificates.
     public enum SignatureAlgorithm {
         /// ECDSA with SHA 256
         case ecdsaWithSHA256
+        /// RSA with SHA 256 and MGF1
+        case sha256WithRsaEncryption
         /// Not supported by this class
         case unsupported
     }
@@ -114,18 +116,6 @@ public class X509 {
         return String(cString: dec)
     }
 
-    /// Return the the signature algorithm used when validating signatures with this certificate
-    ///
-    /// - Returns: `SignatureAlgorithm`
-    public func signatureAlgorithm() -> SignatureAlgorithm {
-        let nid = Int(X509_get_signature_nid(x509))
-        if nid == NID_ecdsa_with_SHA256 {
-            return .ecdsaWithSHA256
-        } else {
-            return .unsupported
-        }
-    }
-
     /// Return the certificate's issuer X500 Principal representation as DER encoded `Data`
     /// (ex: "CN=GEM.KOMP-CA10 TEST-ONLY, OU=Komponenten-CA der Telematikinfrastruktur, O=gematik GmbH NOT-VALID, C=DE")
     ///
@@ -158,7 +148,7 @@ public class X509 {
         return Data(bytesNoCopy: safeDataPtr, count: Int(length), deallocator: .free)
     }
 
-    /// Convenience function that return the certificate's issuer in one line
+    /// Convenience function that returns the certificate's issuer in one line
     ///
     /// - Returns: formatted issuer `String`
     /// - Throws: `OpenSSLError` when retrieving issuer from X509 certificate
@@ -239,6 +229,18 @@ public class X509 {
         }
 
         return Data(digestBuffer[0 ..< Int(digestLength)])
+    }
+
+    /// Returns the signature algorithm that validates this certificate
+    ///
+    /// - Returns: `SignatureAlgorithm`
+    public func signatureAlgorithm() -> SignatureAlgorithm {
+        let temp = X509_get_signature_nid(x509)
+        switch X509_get_signature_nid(x509) {
+        case NID_ecdsa_with_SHA256: return .ecdsaWithSHA256
+        case NID_sha256WithRSAEncryption: return .sha256WithRsaEncryption
+        default: return .unsupported
+        }
     }
 
     /// Validate the certificate with a trust store
@@ -329,6 +331,36 @@ extension X509: Equatable {
 }
 
 extension X509 {
+    /// X.509 certificates may convey a public key for any public key algorithm.
+    /// https://www.rfc-editor.org/rfc/rfc3279#section-2.3
+    public enum PublicKeyAlgorithm {
+        /// As in https://www.rfc-editor.org/rfc/rfc3279#section-2.3.1
+        case rsaEncryption
+        /// As in https://www.rfc-editor.org/rfc/rfc3279#section-2.3.3
+        case dhKeyExchange
+        /// As in https://www.rfc-editor.org/rfc/rfc3279#section-2.3.5
+        case ellipticCurve
+        /// Not supported by this class
+        case notSupported
+    }
+
+    /// Returns the certificate's public key algorithm
+    ///
+    /// - Returns: `PublicKeyAlgorithm`
+    public func publicKeyAlgorithm() -> PublicKeyAlgorithm {
+        let publicKey = X509_get_pubkey(x509) // EVP_PKEY
+        defer {
+            EVP_PKEY_free(publicKey)
+        }
+
+        switch EVP_PKEY_get_id(publicKey) {
+        case NID_rsaEncryption: return .rsaEncryption
+        case NID_dhpublicnumber: return .dhKeyExchange
+        case NID_X9_62_id_ecPublicKey: return .ellipticCurve
+        default: return .notSupported
+        }
+    }
+
     /// Convenience function for parsing the certificate's BrainpoolP256r1 PublicKey for verification, if it exists
     ///
     /// - Returns: Parsed `BrainpoolP256r1.Verify.PublicKey`, if the certificate actually supports one, else nil

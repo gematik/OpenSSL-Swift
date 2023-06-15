@@ -4,7 +4,7 @@ Swift extension wrapper for gematik specific crypto operations with embedded Ope
 
 ## Overview
 
-This Xcode-project downloads, compiles and embeds OpenSSL version 3.0.2 in a Swift framework that can be included
+This Xcode-project downloads, compiles and embeds OpenSSL version 3.1.0 in a Swift framework that can be included
 in MacOS/iOS Frameworks and Apps.
 
 There are three main parts of this project.
