@@ -7,6 +7,7 @@ lib/include/*
 !lib/include/.gitkeep
 tmp/
 openssl_*/
+.swiftpm
 
 # Temporarily downloaded file
 openssl-*.tar.gz
