@@ -13,13 +13,13 @@ date "+%H:%M:%S"
 # Setup project
 scripts/setup
 
-rm -f lib/*.a
-scripts/build
-
 # Lint
 echo "Linting"
 date "+%H:%M:%S"
 scripts/lint
+
+rm -f lib/*.a
+scripts/build
 
 # run tests
 echo "Running tests…"

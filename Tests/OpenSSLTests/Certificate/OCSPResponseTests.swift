@@ -17,7 +17,6 @@
 // See the Licence for the specific language governing permissions and limitations under the Licence.
 //
 
-import DataKit
 import Foundation
 @testable import OpenSSL
 import XCTest
@@ -28,13 +27,13 @@ final class OCSPResponseTests: XCTestCase {
     lazy var vauOcspResponse: OCSPResponse = {
         let fileName = "OCSP/vau-oscp-response.der.base64"
         let base64 = try! ResourceFileReader.readFileInResourceBundle(filePath: fileName, for: bundle)
-        return try! OCSPResponse(der: Base64.decode(data: base64))
+        return try! OCSPResponse(der: Data(base64Encoded: base64)!)
     }()
 
     lazy var vauOcspResponseNoKnownSignerCa: OCSPResponse = {
         let fileName = "OCSP/vau-ocsp-response-no-signing-ca.der.base64"
         let base64 = try! ResourceFileReader.readFileInResourceBundle(filePath: fileName, for: bundle)
-        return try! OCSPResponse(der: Base64.decode(data: base64))
+        return try! OCSPResponse(der: Data(base64Encoded: base64)!)
     }()
 
     func testOCSPResponseStatus() {
