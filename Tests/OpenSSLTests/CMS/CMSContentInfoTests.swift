@@ -17,7 +17,6 @@
 // See the Licence for the specific language governing permissions and limitations under the Licence.
 //
 
-import DataKit
 import Foundation
 @testable import OpenSSL
 import XCTest
@@ -27,7 +26,7 @@ final class CMSContentInfoTests: XCTestCase {
     func testEncryptRSAOnly() throws {
         // given
         let x509rsa1 = try X509(pem: x509rsa1.data(using: .utf8)!)
-        let x509rsa2 = try X509(der: Base64.decode(string: x509rsa2))
+        let x509rsa2 = try X509(der: Data(base64Encoded: x509rsa2)!)
         let recipients = [x509rsa1, x509rsa2]
         let data = message.data(using: .utf8)!
 
@@ -48,8 +47,7 @@ final class CMSContentInfoTests: XCTestCase {
         //                  OBJECT IDENTIFIER 1.2.840.113549.1.1.8 pkcs1-MGF (PKCS #1)
         //                  SEQUENCE (1 elem)
         //                    OBJECT IDENTIFIER 2.16.840.1.101.3.4.2.1 sha-256 (NIST Algorithm)
-        XCTAssertTrue(cms.derBytes?.hexString()
-            .contains(
+        XCTAssertTrue(cms.derBytes?.hexString().uppercased().contains(
                 "303806092A864886F70D010107302BA00D300B0609608648016503040201A11A301806092A864886F70D010108300B0609608648016503040201"
             ) ??
             false)

@@ -18,7 +18,6 @@
 //
 
 @_implementationOnly import COpenSSL
-import DataKit
 @testable import OpenSSL
 import XCTest
 

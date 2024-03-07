@@ -5,10 +5,6 @@ options:
   deploymentTarget:
     macOS: 10.15
     iOS: 13.0
-packages:
-  DataKit:
-    url: https://github.com/SwiftCommon/DataKit
-    version: 1.1.0
 settings:
   base:
     CURRENT_PROJECT_VERSION: -1
@@ -56,5 +52,4 @@ targets:
       - Tests/OpenSSLTests
     dependencies:
       - target: OpenSSL_${platform}
-      - package: DataKit
 buildImplicitDependencies: true
