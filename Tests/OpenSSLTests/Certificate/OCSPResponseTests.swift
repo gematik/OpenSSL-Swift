@@ -22,9 +22,9 @@ import Foundation
 @testable import OpenSSL
 import XCTest
 
+// swiftlint:disable force_try
 final class OCSPResponseTests: XCTestCase {
     let bundle = Bundle(for: OCSPResponseTests.self)
-    // swiftlint:disable force_try
     lazy var vauOcspResponse: OCSPResponse = {
         let fileName = "OCSP/vau-oscp-response.der.base64"
         let base64 = try! ResourceFileReader.readFileInResourceBundle(filePath: fileName, for: bundle)
@@ -98,3 +98,5 @@ final class OCSPResponseTests: XCTestCase {
         XCTAssertTrue(try vauOcspResponse.basicVerifyWith(trustedStore: [ocspSignerCa, rootCa], options: options))
     }
 }
+
+// swiftlint:enable force_try

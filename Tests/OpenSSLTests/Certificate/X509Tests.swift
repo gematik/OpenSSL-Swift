@@ -176,3 +176,5 @@ final class X509Tests: XCTestCase {
         XCTAssertEqual(pharmacyAdelheidRsaPubKeyCertificate.signatureAlgorithm(), .sha256WithRsaEncryption)
     }
 }
+
+// swiftlint:enable line_length force_try

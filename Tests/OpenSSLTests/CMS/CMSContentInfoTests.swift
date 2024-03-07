@@ -141,3 +141,5 @@ final class CMSContentInfoTests: XCTestCase {
         -----END CERTIFICATE-----
         """
 }
+
+// swiftlint:enable line_length force_try
