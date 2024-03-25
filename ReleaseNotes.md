@@ -1,3 +1,8 @@
+# Release 4.2.0
+
+- Upgrade OpenSSL version to 3.2.1
+- Remove dependency on DataKit
+
 # Release 4.1.0
 
 - Upgrade OpenSSL version to 3.1.0
