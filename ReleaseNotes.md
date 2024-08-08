@@ -1,3 +1,8 @@
+# Release 4.3.0
+
+- Add PrivacyInfo.xcprivacy 
+- Sign xcframework with Apple Distribution 
+
 # Release 4.2.0
 
 - Upgrade OpenSSL version to 3.2.1
