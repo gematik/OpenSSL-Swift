@@ -56,6 +56,8 @@
 		21590B4452007B0E80CCD517 /* HashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F338114212FCC0D416F83C /* HashTests.swift */; };
 		21E8331BE4AB104F0A749821 /* lhash.h in Headers */ = {isa = PBXBuildFile; fileRef = E59E53381B2897434FACB9A2 /* lhash.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2313264FF62E10ACD0F674EE /* pemerr.h in Headers */ = {isa = PBXBuildFile; fileRef = 42DEDCD437834BAC1F7DCDB2 /* pemerr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2349F7372C64FD4600567308 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 2349F7342C64FD3F00567308 /* PrivacyInfo.xcprivacy */; };
+		2349F7392C64FD6200567308 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 2349F7342C64FD3F00567308 /* PrivacyInfo.xcprivacy */; };
 		2387EE5C2B9096040092734F /* Data+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387EE5B2B9096040092734F /* Data+Hex.swift */; };
 		2387EE5D2B9096040092734F /* Data+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387EE5B2B9096040092734F /* Data+Hex.swift */; };
 		24CE3EDB2EAB0542839C5FF6 /* e_os2.h in Headers */ = {isa = PBXBuildFile; fileRef = 98C35626ADBA6853A42F82B9 /* e_os2.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -434,6 +436,7 @@
 		190D9F402D8AA3D22CF066C6 /* tserr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tserr.h; sourceTree = "<group>"; };
 		198BE3AE3B8E598501E534BE /* bio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bio.h; sourceTree = "<group>"; };
 		1D7C30F17D8F88E98A245C49 /* txt_db.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = txt_db.h; sourceTree = "<group>"; };
+		2349F7342C64FD3F00567308 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Sources/OpenSSL/Resources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		2387EE5B2B9096040092734F /* Data+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Hex.swift"; sourceTree = "<group>"; };
 		24DA3A8E81AEB1CF5F42D680 /* stack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
 		26A56C240DB025895DDFB90C /* String+CChar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+CChar.swift"; sourceTree = "<group>"; };
@@ -1011,6 +1014,7 @@
 		E9095D9B512C84EF78657EAC = {
 			isa = PBXGroup;
 			children = (
+				2349F7342C64FD3F00567308 /* PrivacyInfo.xcprivacy */,
 				EEA23D476112A6FC78D505B0 /* lib */,
 				5934BFA296B9A5C7372048FF /* Sources */,
 				E3C669AE1FA818CA131FFD38 /* Tests */,
@@ -1371,6 +1375,7 @@
 				5997BEAE3D6A4D1E7A662032 /* Install OpenSSL */,
 				130030CCDD19F2C3077553A8 /* Headers */,
 				08D649F2DCDE27782CE7F458 /* Sources */,
+				2349F7382C64FD5C00567308 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -1388,6 +1393,7 @@
 				B0B751BE4EB17530CE476004 /* Install OpenSSL */,
 				3C7788457F5C02501768E1AF /* Headers */,
 				0083CFB491411C75F1E7C390 /* Sources */,
+				2349F7322C64FD1000567308 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -1427,6 +1433,22 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2349F7322C64FD1000567308 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2349F7372C64FD4600567308 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2349F7382C64FD5C00567308 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2349F7392C64FD6200567308 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F88F5EED67E0286481CDB91 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
