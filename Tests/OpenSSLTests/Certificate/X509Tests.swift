@@ -83,7 +83,10 @@ final class X509Tests: XCTestCase {
             issuerData?.hexString().uppercased(),
             "308184310B3009060355040613024445311F301D060355040A0C1667656D6174696B20476D6248204E4F542D56414C494431323030060355040B0C294B6F6D706F6E656E74656E2D4341206465722054656C656D6174696B696E667261737472756B7475723120301E06035504030C1747454D2E4B4F4D502D4341313020544553542D4F4E4C59"
         )
-        XCTAssertTrue(String(data: issuerData!, encoding: .ascii)!.contains("GEM.KOMP-CA10 TEST-ONLY"))
+
+        if #available(iOS 16.0, macOS 13.0, *) {
+            XCTAssertTrue(issuerData!.contains("GEM.KOMP-CA10 TEST-ONLY".data(using: .ascii)!))
+        }
     }
 
     func testSubject() {
@@ -95,7 +98,9 @@ final class X509Tests: XCTestCase {
             subjectData?.hexString().uppercased(),
             "3049310B300906035504061302444531263024060355040A0C1D67656D6174696B20544553542D4F4E4C59202D204E4F542D56414C49443112301006035504030C09494450205369672031"
         )
-        XCTAssertTrue(String(data: subjectData!, encoding: .ascii)!.contains("IDP Sig 1"))
+        if #available(iOS 16.0, macOS 13.0, *) {
+            XCTAssertTrue(subjectData!.contains("IDP Sig 1".data(using: .ascii)!))
+        }
     }
 
     func testX509CertificateNotBeforeAfter() throws {

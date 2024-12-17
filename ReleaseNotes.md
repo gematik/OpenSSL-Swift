@@ -1,3 +1,8 @@
+# Release 4.3.1
+
+- Fix an unit test
+- Re-sign xcframework
+
 # Release 4.3.0
 
 - Add PrivacyInfo.xcprivacy 
