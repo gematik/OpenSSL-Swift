@@ -12,6 +12,11 @@ pipeline {
 
     environment {
         KEYCHAIN_PASSWORD = credentials('KEYCHAIN_PASSWORD')
+        NEXUS_CREDENTIALS = credentials('Nexus')
+    }
+
+    parameters {
+        booleanParam(name: 'BUILD_AND_UPLOAD_XCFRAMEWORK', defaultValue: false, description: 'Manual trigger for building xcframework and uploading to Nexus')
     }
 
     options {
@@ -28,6 +33,41 @@ pipeline {
                     security -v unlock-keychain -p "${KEYCHAIN_PASSWORD}" ~/Library/Keychains/login.keychain
 
                     make cibuild
+                    '''
+            }
+        }
+
+        stage('Build xcframework and upload to Nexus') {
+            when {
+                anyOf {
+                    branch pattern: "xcframework/.*", comparator: "REGEXP";
+                    expression {
+                       return params.BUILD_AND_UPLOAD_XCFRAMEWORK
+                    }
+                }
+            }
+
+            steps {
+                sh label: 'Build xcframework', script: '''#!/bin/bash -l
+                    if [ -f $HOME/.bash_profile ]; then source $HOME/.bash_profile; fi
+
+                    security -v unlock-keychain -p "${KEYCHAIN_PASSWORD}" ~/Library/Keychains/login.keychain
+
+                    bundle exec fastlane build_xcframework
+                    '''
+
+                sh label: 'Upload xcframework', script: '''#!/bin/bash -l
+                    if [ -f $HOME/.bash_profile ]; then source $HOME/.bash_profile; fi
+
+                    set -ev
+
+                    # At this point we expect a branch name like xcframework/1.29.0
+                    # Remove everything before the last "/" (if exists) from BRANCH_NAME
+                    VERSION=$(echo "$BRANCH_NAME" | sed 's|.*/||')
+                    GIT_HASH=$(git rev-parse --short HEAD)
+                    curl -u "${NEXUS_CREDENTIALS}" --http1.1 --upload-file "artifacts/xcframework/OpenSSL_${BUILD_NUMBER}.xcframework.zip" "https://nexus.prod.ccs.gematik.solutions/repository/Apps/de/gematik/OpenSSL-Swift/${VERSION}/OpenSSL_${BUILD_NUMBER}_${GIT_HASH}.xcframework.zip"
+                    curl -u "${NEXUS_CREDENTIALS}" --http1.1 --upload-file "artifacts/xcframework/OpenSSL_${BUILD_NUMBER}.xcframework.zip.checksum" "https://nexus.prod.ccs.gematik.solutions/repository/Apps/de/gematik/OpenSSL-Swift/${VERSION}/OpenSSL_${BUILD_NUMBER}_${GIT_HASH}.xcframework.zip.checksum"
+    
                     '''
             }
         }

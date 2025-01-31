@@ -50,3 +50,25 @@ lane :generate_documentation do
     config: ".jazzy.yml"
     )
 end
+
+lane :build_xcframework do
+  # Build OpenSSL xcframework for iOS and macOS
+  sh "pushd ..; mint run carthage build --platform iOS,Mac --configuration Release --cache-builds --use-xcframeworks --no-skip-current; popd"
+
+  # Move and rename it
+  sh "pushd ..; mkdir -p artifacts/xcframework && rm -rf artifacts/xcframework/* && mv Carthage/Build/OpenSSL.xcframework artifacts/xcframework/; popd"
+  sh "pushd ../artifacts/xcframework; mv OpenSSL.xcframework OpenSSL_#{build_version}.xcframework; popd"
+  
+  sh "pushd ../artifacts/xcframework; xcrun codesign --timestamp -s \"Apple Distribution\" OpenSSL_#{build_version}.xcframework; popd"
+
+  # Zip it
+  sh "pushd ../artifacts/xcframework; zip -ry OpenSSL_#{build_version}.xcframework.zip OpenSSL_#{build_version}.xcframework; popd"
+
+  # Compute checksum
+  sh "pushd ../artifacts/xcframework; swift package compute-checksum OpenSSL_#{build_version}.xcframework.zip > OpenSSL_#{build_version}.xcframework.zip.checksum; popd"
+
+end
+
+def build_version()
+  ENV['BUILD_NUMBER'] || 'LOCAL_BUILD'
+end
