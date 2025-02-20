@@ -1,4 +1,4 @@
-1687a1688,1711
+1747a1748,1771
 >     "ios64sim-cross" => {
 >         inherit_from     => [ "ios-common" ],
 >         cflags           => add("-arch x86_64 -DOPENSSL_NO_ASM -mios-version-min=7.0.0 -isysroot \$(CROSS_TOP)/SDKs/\$(CROSS_SDK) -fno-common"),
