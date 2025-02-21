@@ -1,6 +1,7 @@
 # Current
 
 - Fix some outdated test data
+- Add Jenkinsfile for attaching an asset to GitHub releases
 
 # Release 4.3.1
 

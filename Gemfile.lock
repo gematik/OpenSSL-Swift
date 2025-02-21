@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/gematik/Fastlane-Plugin-CI-CD.git
+  revision: b93979c294bbfda870a80470ab133938f628e1f6
+  tag: 0.1.0
+  specs:
+    fastlane-plugin-ci_cd (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -316,6 +323,7 @@ PLATFORMS
 
 DEPENDENCIES
   fastlane (~> 2.187)
+  fastlane-plugin-ci_cd!
   jazzy (~> 0.14)
   xcode-install (~> 2.6.6)
 

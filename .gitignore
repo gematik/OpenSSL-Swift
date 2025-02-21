@@ -8,6 +8,7 @@ lib/include/*
 tmp/
 openssl_*/
 .swiftpm
+DownLoads/
 
 # Temporarily downloaded file
 openssl-*.tar.gz
