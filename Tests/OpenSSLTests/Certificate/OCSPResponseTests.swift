@@ -78,8 +78,9 @@ final class OCSPResponseTests: XCTestCase {
     func testOcspBasicVerify_pathValidation() throws {
         // given
         let ocspSignerCa: X509 = {
-            let filename = "X509/GEM.OCSP-CA9-TEST-ONLY.pem"
-            return try! X509(pem: ResourceFileReader.readFileInResourceBundle(filePath: filename, for: bundle))
+            let fileName = "X509/GEM.KOMP-CA28 TEST-ONLY.der.base64"
+            let base64 = try! ResourceFileReader.readFileInResourceBundle(filePath: fileName, for: bundle)
+            return try! X509(der: Data(base64Encoded: base64)!)
         }()
         let rootCa: X509 = {
             let filename = "X509/GEM.RCA3-TEST-ONLY.pem"
@@ -88,13 +89,20 @@ final class OCSPResponseTests: XCTestCase {
         let trustedStore = [ocspSignerCa, rootCa]
 
         // then
-        // Signer certificate does not meet the OCSP issuer criteria including potential delegation
-        XCTAssertFalse(try vauOcspResponse.basicVerifyWith(trustedStore: trustedStore))
+        /*
+          Note: With the updated test data the basicVerifyWith check passes now without setting the flag options.
+          The code remains in here for reference.
 
-        // After successful path validation the function returns success if the OCSP_NOCHECKS flag is set.
-        // Note: Path validation could possibly fail in the future when certificates expire.
-        let options: OCSPResponse.BasicVerifyOptions = [.noChecks]
-        XCTAssertTrue(try vauOcspResponse.basicVerifyWith(trustedStore: [ocspSignerCa, rootCa], options: options))
+         // Signer certificate does not meet the OCSP issuer criteria including potential delegation
+         XCTAssertFalse(try vauOcspResponse.basicVerifyWith(trustedStore: trustedStore))
+
+         // After successful path validation the function returns success if the OCSP_NOCHECKS flag is set.
+         // Note: Path validation could possibly fail in the future when certificates expire.
+         let options: OCSPResponse.BasicVerifyOptions = [.noChecks]
+         XCTAssertTrue(try vauOcspResponse.basicVerifyWith(trustedStore: trustedStore, options: options))
+         */
+
+        XCTAssertTrue(try vauOcspResponse.basicVerifyWith(trustedStore: trustedStore))
     }
 }
 
