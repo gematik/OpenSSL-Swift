@@ -61,6 +61,14 @@ Lane that (auto) genarates API documentation from inline comments.
 
 
 
+### download_xcframework_from_nexus_and_attach_to_github_release
+
+```sh
+[bundle exec] fastlane download_xcframework_from_nexus_and_attach_to_github_release
+```
+
+
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

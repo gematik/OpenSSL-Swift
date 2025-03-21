@@ -33,7 +33,7 @@ lane :build_all do
 end
 
 lane :static_code_analysis do
-  swiftlint_mint="mint run swiftlint"
+  swiftlint_mint = "mint run swiftlint"
   swiftlint(
     executable: swiftlint_mint,
     mode: :lint,
@@ -71,4 +71,75 @@ end
 
 def build_version()
   ENV['BUILD_NUMBER'] || 'LOCAL_BUILD'
+end
+
+lane :download_xcframework_from_nexus_and_attach_to_github_release do |options|
+  artefact_path = options[:artefact_path] || ENV['NEXUS_ARTEFACT_PATH']
+
+  unless artefact_path
+    UI.user_error!("artefact_path is required but was not provided.")
+  end
+
+    asset_file = "./Downloads/#{File.basename(artefact_path)}"
+
+  # Download the xcframework.zip from Nexus
+  nexus_file_download(
+    artefact_path: artefact_path,
+    target_file_path: asset_file,
+    repository: "Apps",
+    nexus_url: "https://nexus.prod.ccs.gematik.solutions/"
+  )
+  
+  # Check if the downloaded xcframework file has the same checksum stated in Package.swift
+  nexus_file_download(
+    artefact_path: "#{artefact_path}.checksum",
+    target_file_path: "#{asset_file}.checksum",
+    repository: "Apps",
+    nexus_url: "https://nexus.prod.ccs.gematik.solutions/"
+  )
+  checksum_file_path = "../#{asset_file}.checksum"
+  package_swift_contains_checksum = match_first_line(checksum_file_path, "../Package.swift")
+  UI.user_error!("Checksum in Package.swift does not match the checksum of the downloaded file.") unless package_swift_contains_checksum
+
+  # Upload the xcframework.zip to GitHub release
+  asset_file = "./Downloads/#{File.basename(artefact_path)}"
+  upload_github_release_asset(
+    github_project_name: "OpenSSL-Swift",
+    asset_file: asset_file,
+    asset_name: "OpenSSL.xcframework.zip"
+  )
+end
+
+def match_first_line(file1_path, file2_path)
+  # Open both files
+  File.open(file1_path) do |file1|
+    File.open(file2_path) do |file2|
+      # Read the first line from file1
+      first_line = file1.readline.strip
+
+      # Check if the first line is not empty
+      if first_line && !first_line.empty?
+        UI.message("First line of #{file1_path}: #{first_line}")
+
+        # Check if the contents of the first line matches any part of file2
+        file2.each_line do |line|
+          return true if line.include?(first_line)
+        end
+        UI.message("No match found in #{file2_path}")
+        return false
+      else
+        UI.message("First line of #{file1_path} is empty")
+        return false
+      end
+    end
+  rescue Errno::ENOENT => e
+    UI.error("Error: File not found - #{e.message}")
+    return false
+  rescue Errno::EACCES => e
+    UI.error("Error: Permission denied - #{e.message}")
+    return false
+  rescue IOError => e
+    UI.error("Error: IO error occurred - #{e.message}")
+    return false
+  end
 end
