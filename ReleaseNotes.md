@@ -1,5 +1,6 @@
-# Current
+# Release 4.4.0
 
+- Update OpenSSL to 3.4.0
 - Fix some outdated test data
 - Add Jenkinsfile for attaching an asset to GitHub releases
 
