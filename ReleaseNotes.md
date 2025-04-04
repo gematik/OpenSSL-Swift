@@ -1,3 +1,7 @@
+# Release 4.4.1
+
+- Re-sign xcframework
+
 # Release 4.4.0
 
 - Update OpenSSL to 3.4.0
