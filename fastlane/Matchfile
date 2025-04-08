@@ -1,0 +1,16 @@
+keychain_name("gematik")
+keychain_password("gematikpassword")
+
+git_branch("master")
+readonly(true)
+
+# fastlane will ask for an app identifier if not provided
+# The provided one won't be used when skipping the download of the provisioning profiles
+app_identifier("unused.dummy.app.identifier")
+
+team_name("gematik Gesellschaft für Telematikanwendungen der Gesundheitskarte mbH")
+team_id("A9FL89PFFL")
+
+# Uncomment and fill this lines or add the corresponding ENV (MATCH_USERNAME, MATCH_GIT_URL) to call fastlane locally
+# username("")
+# git_url("")
