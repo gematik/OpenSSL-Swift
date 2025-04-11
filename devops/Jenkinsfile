@@ -11,8 +11,12 @@ pipeline {
     }
 
     environment {
-        KEYCHAIN_PASSWORD = credentials('KEYCHAIN_PASSWORD')
-        NEXUS_CREDENTIALS = credentials('Nexus')
+        KEYCHAIN_PASSWORD     = credentials('KEYCHAIN_PASSWORD')
+        NEXUS_CREDENTIALS     = credentials('Nexus')
+
+        MATCH_PASSWORD        = credentials('MATCH_PASSWORD')
+        MATCH_USERNAME        = credentials('MATCH_USERNAME')
+        MATCH_GIT_URL         = credentials('MATCH_GIT_URL')
     }
 
     parameters {
