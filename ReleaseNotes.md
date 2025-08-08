@@ -1,3 +1,7 @@
+# Release 4.5.0
+
+- Introduce time injection in X509 and OCSPResponse verification checks
+
 # Release 4.4.1
 
 - Re-sign xcframework
