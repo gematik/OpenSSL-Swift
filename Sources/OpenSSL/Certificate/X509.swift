@@ -246,9 +246,11 @@ public class X509 {
     /// Validate the certificate with a trust store
     ///
     /// - Parameter trustStore: Array of `X509` certificates composing the trusted store
+    /// - Parameter validationTime: Optional custom time for certificate validation. If nil, uses current system time.
     /// - Returns: true, if the certificate could be validated
     /// - Throws: `OpenSSLError` when trust store is empty
-    public func validateWith<C: Collection>(trustStore: C) throws -> Bool where C.Element == X509 {
+    public func validateWith<C: Collection>(trustStore: C, validationTime: Date? = nil) throws -> Bool
+        where C.Element == X509 {
         if trustStore.isEmpty {
             throw OpenSSLError(name: "Trust store must not be empty")
         }
@@ -269,6 +271,13 @@ public class X509 {
         }
         guard X509_STORE_CTX_init(ctx, store, x509, nil) == 1 else {
             throw OpenSSLError(name: "Error initialising the X.509 trust store context")
+        }
+
+        // Set custom validation time if provided
+        if let customTime = validationTime {
+            let param = X509_STORE_CTX_get0_param(ctx)
+            let timeT = time_t(customTime.timeIntervalSince1970)
+            X509_VERIFY_PARAM_set_time(param, timeT)
         }
 
         return X509_verify_cert(ctx) == 1

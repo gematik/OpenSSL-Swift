@@ -149,10 +149,12 @@ public class OCSPResponse {
     /// - Parameters:
     ///   - trustedStore: a collection of trusted certificates
     ///   - options: flags for taking influence on the behavior of the function
+    ///   - validationTime: Optional custom time for certificate validation. If nil, uses current system time.
     /// - Returns: true if the OCSP response is correctly signed and the signer certificate can be validated
     /// - Throws: OpenSSLError on a fatal internal error
-    public func basicVerifyWith<C: Collection>(trustedStore: C, options: BasicVerifyOptions = []) throws -> Bool
-        where C.Element == X509 {
+    public func basicVerifyWith<C: Collection>(
+        trustedStore: C, options: BasicVerifyOptions = [], validationTime: Date? = nil
+    ) throws -> Bool where C.Element == X509 {
         let basic = OCSP_response_get1_basic(ocsp)
         defer {
             OCSP_BASICRESP_free(basic)
@@ -161,6 +163,14 @@ public class OCSPResponse {
         defer {
             X509_STORE_free(x509TrustedStore)
         }
+
+        // Set custom validation time if provided
+        if let customTime = validationTime {
+            let param = X509_STORE_get0_param(x509TrustedStore)
+            let timeT = time_t(customTime.timeIntervalSince1970)
+            X509_VERIFY_PARAM_set_time(param, timeT)
+        }
+
         for trustedCert in trustedStore {
             guard X509_STORE_add_cert(x509TrustedStore, trustedCert.x509) == 1 else {
                 throw OpenSSLError(name: "Error populating the X.509 trust store")

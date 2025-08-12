@@ -158,12 +158,35 @@ final class X509Tests: XCTestCase {
     }
 
     func testValidate() throws {
-        XCTAssertTrue(try discoveryDocument.validateWith(trustStore: [caCertificate, rootCertificate]))
-        XCTAssertTrue(try caCertificate.validateWith(trustStore: [rootCertificate]))
-        XCTAssertTrue(try rootCertificate.validateWith(trustStore: [rootCertificate]))
+        // At Wed Jan 08 2025 09:39:49 GMT+0000 the discovery document can be validated
+        XCTAssertTrue(try discoveryDocument.validateWith(
+            trustStore: [caCertificate, rootCertificate],
+            validationTime: Date(timeIntervalSince1970: 1_736_329_189)
+        ))
 
-        XCTAssertFalse(try discoveryDocument.validateWith(trustStore: [rootCertificate]))
-        XCTAssertFalse(try discoveryDocument.validateWith(trustStore: [caCertificate]))
+        // At Fri Aug 08 2025 10:49:49 GMT+0000 the discovery document already expired, so it cannot be validated
+        XCTAssertFalse(try discoveryDocument.validateWith(
+            trustStore: [caCertificate, rootCertificate],
+            validationTime: Date(timeIntervalSince1970: 1_754_650_189)
+        ))
+
+        XCTAssertTrue(try caCertificate.validateWith(
+            trustStore: [rootCertificate],
+            validationTime: Date(timeIntervalSince1970: 1_736_329_189)
+        ))
+        XCTAssertTrue(try rootCertificate.validateWith(
+            trustStore: [rootCertificate],
+            validationTime: Date(timeIntervalSince1970: 1_736_329_189)
+        ))
+
+        XCTAssertFalse(try discoveryDocument.validateWith(
+            trustStore: [rootCertificate],
+            validationTime: Date(timeIntervalSince1970: 1_736_329_189)
+        ))
+        XCTAssertFalse(try discoveryDocument.validateWith(
+            trustStore: [caCertificate],
+            validationTime: Date(timeIntervalSince1970: 1_736_329_189)
+        ))
     }
 
     func testX509CertificateComputeSha256Fingerprint() throws {

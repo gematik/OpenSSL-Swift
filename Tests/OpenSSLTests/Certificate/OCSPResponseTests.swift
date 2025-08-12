@@ -102,7 +102,15 @@ final class OCSPResponseTests: XCTestCase {
          XCTAssertTrue(try vauOcspResponse.basicVerifyWith(trustedStore: trustedStore, options: options))
          */
 
-        XCTAssertTrue(try vauOcspResponse.basicVerifyWith(trustedStore: trustedStore))
+        // Use a specific validation time to prevent test failures when certificates expire
+        let validationTime = Date(timeIntervalSince1970: 1_736_329_189) // Wed Jan 08 2025 09:39:49 GMT+0000
+        XCTAssertTrue(try vauOcspResponse.basicVerifyWith(trustedStore: trustedStore, validationTime: validationTime))
+
+        // Test that validation fails when using a date after certificate expiration
+        // GEM.KOMP-CA28 TEST-ONLY expires on Jun 18 2026, so use a date after that
+        let expiredValidationTime = Date(timeIntervalSince1970: 1_782_259_200) // Mon Jun 22 2026 00:00:00 GMT+0000
+        XCTAssertFalse(try vauOcspResponse
+            .basicVerifyWith(trustedStore: trustedStore, validationTime: expiredValidationTime))
     }
 }
 
