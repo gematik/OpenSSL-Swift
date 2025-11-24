@@ -1,13 +1,37 @@
+<img align="right" width="250" height="47" src="Gematik_Logo_Flag_With_Background.png"/> <br/> 
+  
 # OpenSSL-Swift
 
-Swift extension wrapper for gematik specific crypto operations with embedded OpenSSL
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+       <ul>
+        <li><a href="#release-notes">Release Notes</a></li>
+      </ul>
+	</li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
-## Overview
+## About The Project
+
+Swift extension wrapper for gematik specific crypto operations with embedded OpenSSL.
 
 This Xcode-project downloads, compiles and embeds OpenSSL version 3.1.0 in a Swift framework that can be included
 in MacOS/iOS Frameworks and Apps.
 
-There are three main parts of this project.
+There are three main parts of this project:
 
 1. PreBuildPhase script 'Install OpenSSL' that runs before the OpenSSL target is build.
    Execution of this script [e.g. first time run] takes a while since it compiles and links
@@ -33,11 +57,16 @@ Accessing OpenSSL crypto operations directly from Swift allows us to not having 
 memory that was allocated by the low-level OpenSSL operation, but instead hide this complex code from
 the casual user/developer that may need to use some of the features provided by this framework.
 
+### Release Notes
+See [ReleaseNotes.md](./ReleaseNotes.md) for all information regarding the (newest) releases.
+
 ## Getting Started
 
-### Setup for integration
+### Prerequisites
 
-We don't support CocoaPods at all, however it might also work when setup accordingly
+We don't support CocoaPods at all, however it might also work when setup accordingly.
+
+### Installation
 
 **SPM:** Add via XCode or `Package.swift`
 
@@ -53,14 +82,15 @@ github "gematik/OpenSSL-Swift" ~> 4.0
 
 ### Setup for development
 
-
 ```shell script
 $ make setup
 ```
 
 Opening `OpenSSL-Swift.xcodeproj` and building/testing a scheme will execute the script `scripts/install_openssl`. The script will perform a download from [OpenSSL](https://www.openssl.org/) and compile frameworks for multiple platform/architecture combinations.
 
-## Supported operations
+## Usage
+
+### Supported operations
 
 As mentioned in the Overview section of this document, only a small subset of OpenSSL's operations is made available.
 This section describes the operations that are supported.
@@ -219,21 +249,24 @@ To update the OpenSSL version embedded with the library you simply update the `s
 with the new OpenSSL version and appropriate SHA256 hash value.
 
 ## License
- 
-EUROPEAN UNION PUBLIC LICENCE v. 1.2
- 
-EUPL © the European Union 2007, 2016
- 
-Following terms apply:
- 
+
+Copyright 2020-2025 gematik GmbH
+
+Apache License, Version 2.0
+
+See the [LICENSE](./LICENSE) for the specific language governing permissions and limitations under the License
+
+## Additional Notes and Disclaimer from gematik GmbH
+
 1. Copyright notice: Each published work result is accompanied by an explicit statement of the license conditions for use. These are regularly typical conditions in connection with open source or free software. Programs described/provided/linked here are free software, unless otherwise stated.
- 
-2. Permission notice: Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions::
- 
+2. Permission notice: Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
     1. The copyright notice (Item 1) and the permission notice (Item 2) shall be included in all copies or substantial portions of the Software.
- 
     2. The software is provided "as is" without warranty of any kind, either express or implied, including, but not limited to, the warranties of fitness for a particular purpose, merchantability, and/or non-infringement. The authors or copyright holders shall not be liable in any manner whatsoever for any damages or other claims arising from, out of or in connection with the software or the use or other dealings with the software, whether in an action of contract, tort, or otherwise.
-     
     3. The software is the result of research and development activities, therefore not necessarily quality assured and without the character of a liable product. For this reason, gematik does not provide any support or other user assistance (unless otherwise stated in individual cases and without justification of a legal obligation). Furthermore, there is no claim to further development and adaptation of the results to a more current state of the art.
- 
 3. Gematik may remove published results temporarily or permanently from the place of publication at any time without prior notice or justification.
+4. Please note: Parts of this code may have been generated using AI-supported technology. Please take this into account, especially when troubleshooting, for security analyses and possible adjustments.
+
+## Contact
+
+This software is currently being tested to ensure its technical quality and legal compliance. Your feedback is highly valued. 
+If you find any issues or have any suggestions or comments, or if you see any other ways in which we can improve, please reach out to: ospo@gematik.de.
