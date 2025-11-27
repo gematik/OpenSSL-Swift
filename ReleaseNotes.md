@@ -1,3 +1,10 @@
+# Release 4.6.0
+
+- Change license from EUPL to Apache License 2.0
+- Upgrade Xcode version to 16.4
+- Fix code verification in attach-binary-to-github lane
+- Align xcframework build and artifact naming with SPM requirements
+
 # Release 4.5.0
 
 - Introduce time injection in X509 and OCSPResponse verification checks
