@@ -55,23 +55,22 @@ lane :build_xcframework do
   # Build OpenSSL xcframework for iOS and macOS
   sh "pushd ..; mint run carthage build --platform iOS,Mac --configuration Release --cache-builds --use-xcframeworks --no-skip-current; popd"
 
-  # Move and rename it
+  # Move it to artifacts directory
   sh "pushd ..; mkdir -p artifacts/xcframework && rm -rf artifacts/xcframework/* && mv Carthage/Build/OpenSSL.xcframework artifacts/xcframework/; popd"
-  sh "pushd ../artifacts/xcframework; mv OpenSSL.xcframework OpenSSL_#{build_version}.xcframework; popd"
   
   # Load the Distribution certificate and private key into the keychain
   match(type: "appstore", skip_provisioning_profiles: true)
 
   # Codesign the xcframework
-  sh "pushd ../artifacts/xcframework; xcrun codesign --timestamp -s \"Apple Distribution\" --keychain \"#{keychain_path}\" OpenSSL_#{build_version}.xcframework; popd"
+  sh "pushd ../artifacts/xcframework; xcrun codesign --timestamp -s \"Apple Distribution\" --keychain \"#{keychain_path}\" OpenSSL.xcframework; popd"
 
   # Was it actually signed? A unsuccessful attempt might not have exited with an error
   # A directory "_CodeSignature" should be present in the xcframework directory
-  sh "pushd ../artifacts/xcframework; if [ -d OpenSSL_#{build_version}.xcframework/_CodeSignature ]; then echo 'Code signature directory exists'; else echo 'Code signature directory does not exist'; exit 1; fi; popd"
-  sh "pushd ../artifacts/xcframework; codesign --verify OpenSSL_#{build_version}.xcframework; popd" # Returns code 1 if the signature is invalid or the xcframework is not signed at all
+  sh "pushd ../artifacts/xcframework; if [ -d OpenSSL.xcframework/_CodeSignature ]; then echo 'Code signature directory exists'; else echo 'Code signature directory does not exist'; exit 1; fi; popd"
+  sh "pushd ../artifacts/xcframework; codesign --verify OpenSSL.xcframework; popd" # Returns code 1 if the signature is invalid or the xcframework is not signed at all
 
-  # Zip it
-  sh "pushd ../artifacts/xcframework; zip -ry OpenSSL_#{build_version}.xcframework.zip OpenSSL_#{build_version}.xcframework; popd"
+  # Zip it with build version in the filename for tracking
+  sh "pushd ../artifacts/xcframework; zip -ry OpenSSL_#{build_version}.xcframework.zip OpenSSL.xcframework; popd"
 
   # Compute checksum
   sh "pushd ../artifacts/xcframework; swift package compute-checksum OpenSSL_#{build_version}.xcframework.zip > OpenSSL_#{build_version}.xcframework.zip.checksum; popd"
