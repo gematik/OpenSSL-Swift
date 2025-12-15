@@ -1,3 +1,7 @@
+# Next
+
+- Fix file path issue in attach-binary-to-github lane
+
 # Release 4.6.0
 
 - Change license from EUPL to Apache License 2.0
