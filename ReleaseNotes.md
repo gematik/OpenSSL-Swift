@@ -1,3 +1,7 @@
+# Next
+
+- Upgrade Xcode version to 26.2.0
+
 # Release 4.6.0
 
 - Change license from EUPL to Apache License 2.0
