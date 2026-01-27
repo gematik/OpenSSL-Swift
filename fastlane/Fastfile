@@ -111,17 +111,17 @@ lane :download_xcframework_from_nexus_and_attach_to_github_release do |options|
 
   # Check if the downloaded xcframework file is signed and the signature is valid
   # Extract the zip file to verify the signature
-  sh "unzip -q #{asset_file} -d ./Downloads/"
+  sh "unzip -q ../#{asset_file} -d ../Downloads/"
   
   # Find the .xcframework directory in the extracted content
-  xcframework_path = Dir.glob("./Downloads/*.xcframework").first
+  xcframework_path = Dir.glob("../Downloads/*.xcframework").first
   UI.user_error!("No .xcframework found in the extracted zip file.") unless xcframework_path
   
   # Verify the code signature
   sh "codesign --verify #{xcframework_path}" # Returns code 1 if the signature is invalid or the xcframework is not signed at all
 
   # Upload the xcframework.zip to GitHub release
-  asset_file = "./Downloads/#{File.basename(artefact_path)}"
+  asset_file = "../Downloads/#{File.basename(artefact_path)}"
   upload_github_release_asset(
     github_project_name: "OpenSSL-Swift",
     asset_file: asset_file,
