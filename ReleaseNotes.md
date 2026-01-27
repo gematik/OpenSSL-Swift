@@ -1,6 +1,8 @@
 # Next
 
 - Fix file path issue in attach-binary-to-github lane
+- Upgrade Xcode version to 26.2.0
+
 
 # Release 4.6.0
 
