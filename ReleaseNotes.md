@@ -1,5 +1,7 @@
 # Next
 
+- Fix paths in attach-binary-to-github lane again
+
 # Release 4.6.1
 
 - Fix file path issue in attach-binary-to-github lane

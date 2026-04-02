@@ -121,7 +121,7 @@ lane :download_xcframework_from_nexus_and_attach_to_github_release do |options|
   sh "codesign --verify #{xcframework_path}" # Returns code 1 if the signature is invalid or the xcframework is not signed at all
 
   # Upload the xcframework.zip to GitHub release
-  asset_file = "../Downloads/#{File.basename(artefact_path)}"
+  asset_file = "./Downloads/#{File.basename(artefact_path)}"
   upload_github_release_asset(
     github_project_name: "OpenSSL-Swift",
     asset_file: asset_file,
