@@ -60,7 +60,7 @@ final class BrainpoolP256r1ExtECDSATests: XCTestCase {
         XCTAssertTrue(try pubKey.verify(signature: signature1, message: message.data(using: .utf8)!))
         XCTAssertTrue(try pubKey.verify(signature: signature2, message: message.data(using: .utf8)!))
         XCTAssertFalse(try pubKey.verify(signature: invalidSignature, message: message.data(using: .utf8)!))
-        XCTAssertFalse(try pubKey.verify(signature: signature, message: "wrong message".data(using: .utf8)!))
+        XCTAssertFalse(try pubKey.verify(signature: signature, message: Data("wrong message".utf8)))
     }
 
     func testSignBP256r1() throws {

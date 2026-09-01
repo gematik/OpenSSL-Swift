@@ -258,7 +258,7 @@ final class ECPrivateKeyImpl<Curve: ECCurve>: ECPrivateKey {
         }
     }
 
-    class func generateKey() throws -> ECPrivateKeyImpl {
+    static func generateKey() throws -> ECPrivateKeyImpl {
         try ECPrivateKeyImpl()
     }
 }

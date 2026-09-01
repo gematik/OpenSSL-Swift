@@ -1,7 +1,7 @@
 fastlane_version "2.210.1"
 
 xcodes(
-  version: ENV["FL_XCODE_VERSION"] || "26.2.0",
+  version: ENV["FL_XCODE_VERSION"] || "26.6.0",
   select_for_current_build_only: true, 
   update_list: false
 )
@@ -52,28 +52,37 @@ lane :generate_documentation do
 end
 
 lane :build_xcframework do
+  # Note on the shell steps below: commands are chained with && instead of ; because a trailing
+  # "; popd" would mask a failed command with popd's exit code 0 and the lane would continue.
+
   # Build OpenSSL xcframework for iOS and macOS
-  sh "pushd ..; mint run carthage build --platform iOS,Mac --configuration Release --cache-builds --use-xcframeworks --no-skip-current; popd"
+  sh "pushd .. && mint run carthage build --platform iOS,Mac --configuration Release --cache-builds --use-xcframeworks --no-skip-current && popd"
 
   # Move it to artifacts directory
-  sh "pushd ..; mkdir -p artifacts/xcframework && rm -rf artifacts/xcframework/* && mv Carthage/Build/OpenSSL.xcframework artifacts/xcframework/; popd"
+  sh "pushd .. && mkdir -p artifacts/xcframework && rm -rf artifacts/xcframework/* && mv Carthage/Build/OpenSSL.xcframework artifacts/xcframework/ && popd"
   
   # Load the Distribution certificate and private key into the keychain
   match(type: "appstore", skip_provisioning_profiles: true)
 
-  # Codesign the xcframework
-  sh "pushd ../artifacts/xcframework; xcrun codesign --timestamp -s \"Apple Distribution\" --keychain \"#{keychain_path}\" OpenSSL.xcframework; popd"
+  # Codesign every framework slice inside the xcframework, then the xcframework itself.
+  # The slices have to come first: the xcframework signature seals their contents, so signing a
+  # slice afterwards would invalidate it.
+  sh "pushd ../artifacts/xcframework; for framework in OpenSSL.xcframework/*/OpenSSL.framework; do echo \"Codesigning $framework\"; xcrun codesign --force --timestamp -s \"Apple Distribution\" --keychain \"#{keychain_path}\" \"$framework\" || exit 1; done; popd"
+  sh "pushd ../artifacts/xcframework && xcrun codesign --force --timestamp -s \"Apple Distribution\" --keychain \"#{keychain_path}\" OpenSSL.xcframework && popd"
 
   # Was it actually signed? A unsuccessful attempt might not have exited with an error
   # A directory "_CodeSignature" should be present in the xcframework directory
   sh "pushd ../artifacts/xcframework; if [ -d OpenSSL.xcframework/_CodeSignature ]; then echo 'Code signature directory exists'; else echo 'Code signature directory does not exist'; exit 1; fi; popd"
-  sh "pushd ../artifacts/xcframework; codesign --verify OpenSSL.xcframework; popd" # Returns code 1 if the signature is invalid or the xcframework is not signed at all
+  sh "pushd ../artifacts/xcframework && codesign --verify OpenSSL.xcframework && popd" # Returns code 1 if the signature is invalid or the xcframework is not signed at all
+
+  # Verify every slice on its own.
+  sh "pushd ../artifacts/xcframework; for framework in OpenSSL.xcframework/*/OpenSSL.framework; do echo \"Verifying $framework\"; codesign --verify --strict \"$framework\" || exit 1; done; popd"
 
   # Zip it with build version in the filename for tracking
-  sh "pushd ../artifacts/xcframework; zip -ry OpenSSL_#{build_version}.xcframework.zip OpenSSL.xcframework; popd"
+  sh "pushd ../artifacts/xcframework && zip -ry OpenSSL_#{build_version}.xcframework.zip OpenSSL.xcframework && popd"
 
   # Compute checksum
-  sh "pushd ../artifacts/xcframework; swift package compute-checksum OpenSSL_#{build_version}.xcframework.zip > OpenSSL_#{build_version}.xcframework.zip.checksum; popd"
+  sh "pushd ../artifacts/xcframework && swift package compute-checksum OpenSSL_#{build_version}.xcframework.zip > OpenSSL_#{build_version}.xcframework.zip.checksum && popd"
 
 end
 
@@ -117,8 +126,11 @@ lane :download_xcframework_from_nexus_and_attach_to_github_release do |options|
   xcframework_path = Dir.glob("../Downloads/*.xcframework").first
   UI.user_error!("No .xcframework found in the extracted zip file.") unless xcframework_path
   
-  # Verify the code signature
+  # Verify the code signature of the xcframework and of every framework slice inside it.
+  # The per-slice check is required: an unsigned slice is not detected by verifying the
+  # xcframework, not even with "--deep --strict" (see issue #36).
   sh "codesign --verify #{xcframework_path}" # Returns code 1 if the signature is invalid or the xcframework is not signed at all
+  sh "for framework in #{xcframework_path}/*/OpenSSL.framework; do echo \"Verifying $framework\"; codesign --verify --strict \"$framework\" || exit 1; done"
 
   # Upload the xcframework.zip to GitHub release
   asset_file = "./Downloads/#{File.basename(artefact_path)}"
