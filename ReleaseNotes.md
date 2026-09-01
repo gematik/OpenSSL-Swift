@@ -1,6 +1,10 @@
 # Next
 
-- Fix paths in attach-binary-to-github lane again
+# Release 4.6.2
+
+- Sign every xcframework binary slice
+- Upgrade Xcode version to 26.6.0
+- Update build environment
 
 # Release 4.6.1
 
