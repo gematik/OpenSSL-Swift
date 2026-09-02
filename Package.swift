@@ -42,8 +42,8 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .binaryTarget(
             name: "OpenSSL",
-            url: "https://github.com/gematik/OpenSSL-Swift/releases/download/4.6.1/OpenSSL.xcframework.zip",
-            checksum: "b6f4d04c3fd178f8397db4d436d561d418dfaa6f909382a46aa5a33b88b0b898"
+            url: "https://github.com/gematik/OpenSSL-Swift/releases/download/4.6.2/OpenSSL.xcframework.zip",
+            checksum: "348bf48e8a235478b464c37f71befa455df46e2daadddfb4269912ac323e67ed"
         )
     ]
 )
