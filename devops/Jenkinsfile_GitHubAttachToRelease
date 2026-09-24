@@ -33,7 +33,12 @@ pipeline {
                 sh label: 'Download xcframework from Nexus and attach to GitHub release', script: '''#!/bin/bash -l
                     if [ -f $HOME/.bash_profile ]; then source $HOME/.bash_profile; fi
 
+                    set -e
+
                     security -v unlock-keychain -p "${KEYCHAIN_PASSWORD}" ~/Library/Keychains/login.keychain
+
+                    # executes bundle install (needed for fastlane plugin installation)
+                    make setup
 
                     bundle exec fastlane download_xcframework_from_nexus_and_attach_to_github_release
                     '''
