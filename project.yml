@@ -4,7 +4,7 @@ options:
   createIntermediateGroups: true
   deploymentTarget:
     macOS: 10.15
-    iOS: 13.0
+    iOS: 15.0
 settings:
   base:
     CURRENT_PROJECT_VERSION: -1

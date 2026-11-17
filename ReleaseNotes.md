@@ -1,5 +1,7 @@
 # Next
 
+- Add `X509.subjectKeyIdentifier()`, `X509.hasSamePublicKey(as:)` and `X509.isSignature(verifiableWith:)`
+
 # Release 4.6.2
 
 - Sign every xcframework binary slice
