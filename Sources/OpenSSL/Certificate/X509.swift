@@ -215,6 +215,40 @@ public class X509 {
         X509_check_issued(x509, other.x509) == 0
     }
 
+    /// Returns the value of the SubjectKeyIdentifier extension
+    ///
+    /// - Returns: key identifier bytes, nil if the extension is absent
+    public func subjectKeyIdentifier() -> Data? {
+        guard let ski = X509_get0_subject_key_id(x509) else {
+            return nil
+        }
+        return Data(bytes: ASN1_STRING_get0_data(ski), count: Int(ASN1_STRING_length(ski)))
+    }
+
+    /// Check whether `self` and `other` certify the same public key
+    ///
+    /// - Parameter other: certificate to compare with
+    /// - Returns: true, if both public keys are equal
+    public func hasSamePublicKey(as other: X509) -> Bool {
+        guard let key = X509_get0_pubkey(x509),
+              let otherKey = X509_get0_pubkey(other.x509) else {
+            return false
+        }
+        return EVP_PKEY_eq(key, otherKey) == 1
+    }
+
+    /// Check whether the signature of `self` verifies with the public key of `issuer`.
+    /// Unlike `validateWith(trustStore:)` no chain is built and names are not compared.
+    ///
+    /// - Parameter issuer: certificate holding the supposed signer key
+    /// - Returns: true, if the signature is valid
+    public func isSignature(verifiableWith issuer: X509) -> Bool {
+        guard let key = X509_get0_pubkey(issuer.x509) else {
+            return false
+        }
+        return X509_verify(x509, key) == 1
+    }
+
     /// Compute the SHA256 fingerprint of the certificate
     ///
     /// - Returns: the computed SHA256 fingerprint as `Data`

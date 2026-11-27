@@ -40,6 +40,16 @@ final class X509Tests: XCTestCase {
         return try! X509(pem: ResourceFileReader.readFileInResourceBundle(filePath: filename, for: bundle))
     }()
 
+    lazy var rca5Certificate: X509 = {
+        let filename = "X509/GEM.RCA5-TEST-ONLY.pem"
+        return try! X509(pem: ResourceFileReader.readFileInResourceBundle(filePath: filename, for: bundle))
+    }()
+
+    lazy var rca5CrossRca4Certificate: X509 = {
+        let filename = "X509/GEM.RCA5_TEST-ONLY-CROSS-GEM.RCA4_TEST-ONLY.der"
+        return try! X509(der: ResourceFileReader.readFileInResourceBundle(filePath: filename, for: bundle))
+    }()
+
     lazy var pharmacyAdelheidRsaPubKeyCertificate: X509 = {
         let filename = "X509/PHARMACY.ADELHEID-RSA-TEST-ONLY.pem"
         return try! X509(pem: ResourceFileReader.readFileInResourceBundle(filePath: filename, for: bundle))
@@ -156,6 +166,26 @@ final class X509Tests: XCTestCase {
         XCTAssertTrue(caCertificate.issued(discoveryDocument))
         XCTAssertTrue(rootCertificate.issued(caCertificate))
         XCTAssertFalse(rootCertificate.issued(discoveryDocument))
+    }
+
+    func testSubjectKeyIdentifier() throws {
+        let expected = try Data(hex: "E1ADE007FCD2207924F4DC97BD3264CD6B148509")
+        XCTAssertEqual(rca5Certificate.subjectKeyIdentifier(), expected)
+        XCTAssertEqual(rca5CrossRca4Certificate.subjectKeyIdentifier(), expected)
+        XCTAssertNotEqual(rootCertificate.subjectKeyIdentifier(), expected)
+    }
+
+    func testHasSamePublicKey() {
+        XCTAssertTrue(rca5CrossRca4Certificate.hasSamePublicKey(as: rca5Certificate))
+        XCTAssertFalse(rca5Certificate.hasSamePublicKey(as: rootCertificate))
+    }
+
+    func testIsSignatureVerifiable() {
+        XCTAssertTrue(rca5Certificate.isSignature(verifiableWith: rca5Certificate))
+        XCTAssertTrue(rca5Certificate.isSignature(verifiableWith: rca5CrossRca4Certificate))
+        XCTAssertTrue(caCertificate.isSignature(verifiableWith: rootCertificate))
+        XCTAssertFalse(rca5CrossRca4Certificate.isSignature(verifiableWith: rca5Certificate))
+        XCTAssertFalse(rca5Certificate.isSignature(verifiableWith: rootCertificate))
     }
 
     func testValidate() throws {
